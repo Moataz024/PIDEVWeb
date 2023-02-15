@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block header %}
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <header class="site-navbar py-4" role="banner">
+
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <div class="site-logo">
+                    <a href="{{ asset ('front/index.html') }}">
+                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo">
+                    </a>
+                </div>
+                <div class="ml-auto">
+
+                    <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
+                                class="icon-menu h3 text-white"></span></a>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    {% endblock %}
+
+    {% block content %}
+        <h1>Register</h1>
+
+        {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn">Register</button>
+        {{ form_end(registrationForm) }}
+    {% endblock %}
+
+    {% block score %}
+    {% endblock %}
+    {% block latest %}
+    {% endblock %}
+    {% block nextmatch %}
+    {% endblock %}
+    {% block sitesection %}
+    {% endblock %}
+    {% block blog %}
+    {% endblock %}
+    {% block footer %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('templates/script.js') }}"></script>
+        <script src="{{ asset('build/js/bootstrap.min.js') }}"></script>
+    {% endblock %}

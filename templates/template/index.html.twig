@@ -8,8 +8,29 @@
     <link rel="stylesheet" href="{{ asset('build/css/bootstrap.min.css') }}">
 {% endblock %}
 
-{% block body %}
-{{parent()}}
+{% block header %}
+    {{parent()}}
+{% endblock %}
+{% block content %}
+    {{parent()}}
+{% endblock %}
+{% block score %}
+    {{parent()}}
+{% endblock %}
+{% block latest %}
+    {{ parent() }}
+{% endblock %}
+{% block nextmatch %}
+    {{ parent() }}
+{% endblock %}
+{% block sitesection %}
+    {{ parent() }}
+{% endblock %}
+{% block blog %}
+    {{ parent() }}
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
 {% endblock %}
 
 {% block javascripts %}

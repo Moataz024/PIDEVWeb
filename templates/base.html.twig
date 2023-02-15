@@ -60,7 +60,9 @@
                             <li><a href="{{ asset ('front/players.html') }}" class="nav-link">Players</a></li>
                             <li><a href="{{ asset ('front/blog.html') }}" class="nav-link">Blog</a></li>
                             <li><a href="{{ asset ('front/contact.html') }}" class="nav-link">Contact</a></li>
+{#
                             <li><a href="{{ path('app_produit_index') }}" class="nav-link">Product</a></li>
+#}
                         </ul>
                     </nav>
 
@@ -561,7 +563,7 @@
 
 </div>
 <!-- .site-wrap -->
-
+ {% block js %}
 <script src="{{ asset ('front/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{ asset ('front/js/jquery-migrate-3.0.1.min.js')}}"></script>
 <script src="{{ asset ('front/js/jquery-ui.js')}}"></script>
@@ -577,7 +579,7 @@
 <script src="{{ asset ('front/js/jquery.sticky.js')}}"></script>
 <script src="{{ asset ('front/js/jquery.mb.YTPlayer.min.js')}}"></script>
 <script src="{{ asset ('front/js/main.js')}}"></script>
-
+{% endblock %}
 </body>
 
 </html>

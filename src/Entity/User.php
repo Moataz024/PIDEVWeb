@@ -31,15 +31,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Evenement::class)]
-    private Collection $evenements;
+    #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Event::class)]
+    private Collection $ownedEvents;
 
-    #[ORM\ManyToMany(targetEntity: Evenement::class, mappedBy: 'participants')]
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'participants')]
     private Collection $inscriptions;
 
     public function __construct()
     {
-        $this->evenements = new ArrayCollection();
+        $this->ownedEvents = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
     }
 
@@ -131,31 +131,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+    
 
-    /**
-     * @return Collection<int, Evenement>
-     */
-    public function getEvenements(): Collection
+    public function __toString()
     {
-        return $this->evenements;
+        return $this->email; // or any other string representation of the object
     }
 
-    public function addEvenement(Evenement $evenement): self
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getOwnedEvents(): Collection
     {
-        if (!$this->evenements->contains($evenement)) {
-            $this->evenements->add($evenement);
-            $evenement->setOrganisateur($this);
+        return $this->ownedEvents;
+    }
+
+    public function addOwnedEvent(Event $ownedEvent): self
+    {
+        if (!$this->ownedEvents->contains($ownedEvent)) {
+            $this->ownedEvents->add($ownedEvent);
+            $ownedEvent->setOrganisateur($this);
         }
 
         return $this;
     }
 
-    public function removeEvenement(Evenement $evenement): self
+    public function removeOwnedEvent(Event $ownedEvent): self
     {
-        if ($this->evenements->removeElement($evenement)) {
+        if ($this->ownedEvents->removeElement($ownedEvent)) {
             // set the owning side to null (unless already changed)
-            if ($evenement->getOrganisateur() === $this) {
-                $evenement->setOrganisateur(null);
+            if ($ownedEvent->getOrganisateur() === $this) {
+                $ownedEvent->setOrganisateur(null);
             }
         }
 
@@ -163,14 +169,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Evenement>
+     * @return Collection<int, Event>
      */
     public function getInscriptions(): Collection
     {
         return $this->inscriptions;
     }
 
-    public function addInscription(Evenement $inscription): self
+    public function addInscription(Event $inscription): self
     {
         if (!$this->inscriptions->contains($inscription)) {
             $this->inscriptions->add($inscription);
@@ -180,7 +186,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeInscription(Evenement $inscription): self
+    public function removeInscription(Event $inscription): self
     {
         if ($this->inscriptions->removeElement($inscription)) {
             $inscription->removeParticipant($this);
@@ -188,4 +194,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 }

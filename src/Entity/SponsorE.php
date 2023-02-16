@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\SponsorRepository;
+use App\Repository\SponsorERepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SponsorRepository::class)]
-class Sponsor
+#[ORM\Entity(repositoryClass: SponsorERepository::class)]
+class SponsorE
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,14 +22,14 @@ class Sponsor
     private ?string $emailSponsor = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $numTel = null;
+    private ?string $telSponsor = null;
 
-    #[ORM\ManyToMany(targetEntity: Evenement::class, inversedBy: 'sponsors')]
-    private Collection $event;
+    #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'sponsors')]
+    private Collection $sponsoredEvents;
 
     public function __construct()
     {
-        $this->event = new ArrayCollection();
+        $this->sponsoredEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -61,38 +61,38 @@ class Sponsor
         return $this;
     }
 
-    public function getNumTel(): ?string
+    public function getTelSponsor(): ?string
     {
-        return $this->numTel;
+        return $this->telSponsor;
     }
 
-    public function setNumTel(string $numTel): self
+    public function setTelSponsor(string $telSponsor): self
     {
-        $this->numTel = $numTel;
+        $this->telSponsor = $telSponsor;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Evenement>
+     * @return Collection<int, Event>
      */
-    public function getEvent(): Collection
+    public function getSponsoredEvents(): Collection
     {
-        return $this->event;
+        return $this->sponsoredEvents;
     }
 
-    public function addEvent(Evenement $event): self
+    public function addSponsoredEvent(Event $sponsoredEvent): self
     {
-        if (!$this->event->contains($event)) {
-            $this->event->add($event);
+        if (!$this->sponsoredEvents->contains($sponsoredEvent)) {
+            $this->sponsoredEvents->add($sponsoredEvent);
         }
 
         return $this;
     }
 
-    public function removeEvent(Evenement $event): self
+    public function removeSponsoredEvent(Event $sponsoredEvent): self
     {
-        $this->event->removeElement($event);
+        $this->sponsoredEvents->removeElement($sponsoredEvent);
 
         return $this;
     }

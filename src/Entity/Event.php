@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\EvenementRepository;
+use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EvenementRepository::class)]
-class Evenement
+#[ORM\Entity(repositoryClass: EventRepository::class)]
+class Event
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,21 +19,21 @@ class Evenement
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $categoryEvt = null;
+    private ?string $category = null;
 
-    #[ORM\ManyToMany(targetEntity: Sponsor::class, mappedBy: 'event')]
-    private Collection $sponsors;
-
-    #[ORM\ManyToOne(inversedBy: 'evenements')]
+    #[ORM\ManyToOne(inversedBy: 'ownedEvents')]
     private ?User $organisateur = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'inscriptions')]
     private Collection $participants;
 
+    #[ORM\ManyToMany(targetEntity: SponsorE::class, mappedBy: 'sponsoredEvents')]
+    private Collection $sponsors;
+
     public function __construct()
     {
-        $this->sponsors = new ArrayCollection();
         $this->participants = new ArrayCollection();
+        $this->sponsors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -53,41 +53,14 @@ class Evenement
         return $this;
     }
 
-    public function getCategoryEvt(): ?string
+    public function getCategory(): ?string
     {
-        return $this->categoryEvt;
+        return $this->category;
     }
 
-    public function setCategoryEvt(string $categoryEvt): self
+    public function setCategory(string $category): self
     {
-        $this->categoryEvt = $categoryEvt;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Sponsor>
-     */
-    public function getSponsors(): Collection
-    {
-        return $this->sponsors;
-    }
-
-    public function addSponsor(Sponsor $sponsor): self
-    {
-        if (!$this->sponsors->contains($sponsor)) {
-            $this->sponsors->add($sponsor);
-            $sponsor->addEvent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSponsor(Sponsor $sponsor): self
-    {
-        if ($this->sponsors->removeElement($sponsor)) {
-            $sponsor->removeEvent($this);
-        }
+        $this->category = $category;
 
         return $this;
     }
@@ -126,5 +99,36 @@ class Evenement
         $this->participants->removeElement($participant);
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, SponsorE>
+     */
+    public function getSponsors(): Collection
+    {
+        return $this->sponsors;
+    }
+
+    public function addSponsor(SponsorE $sponsor): self
+    {
+        if (!$this->sponsors->contains($sponsor)) {
+            $this->sponsors->add($sponsor);
+            $sponsor->addSponsoredEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSponsor(SponsorE $sponsor): self
+    {
+        if ($this->sponsors->removeElement($sponsor)) {
+            $sponsor->removeSponsoredEvent($this);
+        }
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->nom; // or any other string representation of the object
     }
 }

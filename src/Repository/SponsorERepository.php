@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Sponsor;
+use App\Entity\SponsorE;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Sponsor>
+ * @extends ServiceEntityRepository<SponsorE>
  *
- * @method Sponsor|null find($id, $lockMode = null, $lockVersion = null)
- * @method Sponsor|null findOneBy(array $criteria, array $orderBy = null)
- * @method Sponsor[]    findAll()
- * @method Sponsor[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method SponsorE|null find($id, $lockMode = null, $lockVersion = null)
+ * @method SponsorE|null findOneBy(array $criteria, array $orderBy = null)
+ * @method SponsorE[]    findAll()
+ * @method SponsorE[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SponsorRepository extends ServiceEntityRepository
+class SponsorERepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Sponsor::class);
+        parent::__construct($registry, SponsorE::class);
     }
 
-    public function save(Sponsor $entity, bool $flush = false): void
+    public function save(SponsorE $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class SponsorRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Sponsor $entity, bool $flush = false): void
+    public function remove(SponsorE $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class SponsorRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Sponsor[] Returns an array of Sponsor objects
+//     * @return SponsorE[] Returns an array of SponsorE objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class SponsorRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Sponsor
+//    public function findOneBySomeField($value): ?SponsorE
 //    {
 //        return $this->createQueryBuilder('s')
 //            ->andWhere('s.exampleField = :val')

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <h1>{{ produit.libelle }}</h1>
+    <h1>{{ produit.id }}</h1>
+    <p>{{ produit.ref }}</p>
+  <h1>{{ produit.categorie.nomCat }}</h2>
+    <h1>{{ produit.stock }}</h1>
+    <!-- display other product details here -->
+{% endblock %}

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
-use App\Form\Produit1Type;
+use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,12 +20,20 @@ class ProduitController extends AbstractController
             'produits' => $produitRepository->findAll(),
         ]);
     }
+    
 
+    #[Route('/myproducts', name: 'app_produit', methods: ['GET'])]
+    public function indexown(ProduitRepository $produitRepository): Response
+    {
+        return $this->render('produit/index.html.twig', [
+            'produits' => $produitRepository->findAll(),
+        ]);
+    }
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProduitRepository $produitRepository): Response
     {
         $produit = new Produit();
-        $form = $this->createForm(Produit1Type::class, $produit);
+        $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

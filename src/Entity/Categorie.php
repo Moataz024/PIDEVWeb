@@ -72,4 +72,9 @@ class Categorie
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->nomCat; // or whatever property you want to use as the string representation
+    }
 }

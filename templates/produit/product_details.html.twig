@@ -2,10 +2,30 @@
 
 {% block content %}
 
-    <h1>{{ produit.libelle }}</h1>
+    
+    <h1><center>{{ produit.libelle }}</center></h1>
+    <hr><hr>
+
+    <div class="row product-container">
+            <div class="col-md-4">
+                <div class="product-item text-center">
+                <img src="{{ asset('public/uploads/' ~ produit.ref ~ '.png' ) }}" alt="{{ produit.id }}" class="img-fluid">
+                    
+                    {#<h5 style="color: red;">{{ produit.id }}</h5>#}
+                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}">
+                    <h5 style="color: red;">{{ produit.libelle }}</h5>
+                    </a>
+                    
+                     <h5 style="color: red;">Rest in stock:{{ produit.stock }}</h5>
+                     <h5 style="color: red;">price: {{ (produit.prix) }} €</h5>
+                    <h5 style="color: red;">price: {{ (produit.categorie.nomCat) }} €</h5>
+                </div>
+            </div>
+        
+   {# <h1>{{ produit.libelle }}</h1>
     <h1>{{ produit.id }}</h1>
     <p>{{ produit.ref }}</p>
   <h1>{{ produit.categorie.nomCat }}</h2>
-    <h1>{{ produit.stock }}</h1>
+    <h1>{{ produit.stock }}</h1>#}
     <!-- display other product details here -->
 {% endblock %}

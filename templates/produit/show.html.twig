@@ -1,45 +1,4 @@
-{#{% extends 'base.html.twig' %}
 
-{% block title %}Nos Produits{% endblock %}
-
-{% block body %}
-    <h1>Produit</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ produit.id }}</td>
-            </tr>
-            <tr>
-                <th>Libelle</th>
-                <td>{{ produit.libelle }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ produit.prix }}</td>
-            </tr>
-            <tr>
-                <th>Stock</th>
-                <td>{{ produit.stock }}</td>
-            </tr>
-            <tr>
-                <th>Ref</th>
-                <td>{{ produit.ref }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_produit_index') }}">back to list</a>
-
-    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
-
-    {{ include('produit/_delete_form.html.twig') }}
-{% endblock %}
-#}
-
-
-{#try 2 #}
 
 {% extends 'template/index.html.twig' %}
 
@@ -87,51 +46,7 @@
     </header>
 {% endblock %}
     {% block content %}
- {#   <h1>Our Product</h1>
-
-   <table class="table">
-        {#<thead>
-            <tr>
-                <th>Id</th>
-                <th>Libelle</th>
-                <th>Prix</th>
-                <th>Stock</th>
-                <th>Ref</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for produit in produits %}
-            <tr>
-                <td><p>{{ produit.id }}</p></td>
-                <td><p>{{ produit.libelle }}</p></td>
-                <td><p>{{ produit.prix }}</p></td>
-                <td><p>{{ produit.stock }}</p></td>
-                <td><p>{{ produit.ref }}</p></td>
-                <td>
-                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    {#<a href="{{ path('app_produit_new') }}">Create new</a>#}
-    {#<ul>
-    {% for produit in produits %}
-        <li>
-            <h2>{{ produit.libelle }}</h2>
-            <p>{{ produit.id }}</p>
-            <p>{{ produit.prix }}</p>
-        </li>
-    {% endfor %}
-</ul>#}
- <h1><center>Nos produits</center></h1>
+    <h1><center>Nos produits</center></h1>
     <hr><hr>
 
     <div class="row product-container">

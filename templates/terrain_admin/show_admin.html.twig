@@ -1,0 +1,58 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Terrain_admin{% endblock %}
+
+{% block body %}
+    <h1>Terrain</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ terrain.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ terrain.name }}</td>
+            </tr>
+            <tr>
+                <th>Capacity</th>
+                <td>{{ terrain.capacity }}</td>
+            </tr>
+            <tr>
+                <th>SportType</th>
+                <td>{{ terrain.sportType }}</td>
+            </tr>
+            <tr>
+                <th>RentPrice</th>
+                <td>{{ terrain.rentPrice }}</td>
+            </tr>
+            <tr>
+                <th>Disponibility</th>
+                <td>{{ terrain.disponibility ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>PostalCode</th>
+                <td>{{ terrain.postalCode }}</td>
+            </tr>
+            <tr>
+                <th>RoadNumber</th>
+                <td>{{ terrain.roadNumber }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ terrain.city }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ terrain.country }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_terrain_index_admin') }}" style="padding-left: 30px">back to list</a>
+
+    <a href="{{ path('app_terrain_edit_admin', {'id': terrain.id}) }}" style="padding-left: 30px">edit</a>
+
+    {{ include('terrain_admin/_delete_form_admin.html.twig') }}
+{% endblock %}

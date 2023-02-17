@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Template{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('templates/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/bootstrap.min.css') }}">
+{% endblock %}
+
+{% block header %}
+    {{parent()}}
+{% endblock %}
+{% block content %}
+    {{parent()}}
+{% endblock %}
+{% block score %}
+    {{parent()}}
+{% endblock %}
+{% block latest %}
+    {{ parent() }}
+{% endblock %}
+{% block nextmatch %}
+    {{ parent() }}
+{% endblock %}
+{% block sitesection %}
+    {{ parent() }}
+{% endblock %}
+{% block blog %}
+    {{ parent() }}
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('templates/script.js') }}"></script>
+    <script src="{{ asset('build/js/bootstrap.min.js') }}"></script>
+{% endblock %}

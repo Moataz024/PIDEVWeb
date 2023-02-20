@@ -53,9 +53,7 @@
         {% for produit in produits %}
             <div class="col-md-4">
                 <div class="product-item text-center">
-                <img src="{{ asset('public/uploads/' ~ produit.ref ~ '.png' ) }}" alt="{{ produit.id }}" class="img-fluid">
-                    
-                    {#<h5 style="color: red;">{{ produit.id }}</h5>#}
+                <img src="{{ asset('public/uploads/rea.png' ) }}" alt="{{ produit.id }}" class="img-fluid">
                     <a href="{{ path('app_produit_show', {'id': produit.id}) }}">
                     <h5 style="color: red;">product name : {{ produit.libelle }}</h5>
                     

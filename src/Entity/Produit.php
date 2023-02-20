@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,27 +11,45 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Assert\NotBlank(message:'ce champ est obligatoire')]
+    // #[Assert\Type (message:'ce champ n est pas valide')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:'Ce champ est obligatoire')]
+    #[Assert\Name]
+    // #[Assert\Type (message:'ce champ n est pas valide')]
     private ?string $libelle = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:'ce champ est obligatoire')]
+    #[Assert\floatval(message:'ce champ n est pas valide')]
     private ?float $prix = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    // #[Assert\Type(message:'ce champ n est pas valide')]
     private ?int $stock = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    // #[Assert\Type(message:'ce champ n est pas valide')]
     private ?string $ref = null;
 
     #[ORM\ManyToOne(inversedBy: 'produits')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
     private ?Categorie $categorie = null;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getLibelle(): ?string

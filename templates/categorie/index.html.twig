@@ -2,7 +2,7 @@
 
 {% block title %}Categorie index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Categorie index</h1>
 
     <table class="table">
@@ -32,4 +32,17 @@
     </table>
 
     <a href="{{ path('app_categorie_new') }}">Create new</a>
+{% endblock %}
+{% block score %}
+{% endblock %}
+{% block latest %}
+{% endblock %}
+{% block nextmatch %}
+{% endblock %}
+{% block sitesection %}
+{% endblock %}
+{% block blog %}
+{% endblock %}
+{% block footer %}
+{{ parent() }}
 {% endblock %}

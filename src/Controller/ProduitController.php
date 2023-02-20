@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/produit')]
 class ProduitController extends AbstractController
@@ -30,20 +32,29 @@ class ProduitController extends AbstractController
         ]);
     }
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProduitRepository $produitRepository): Response
+    public function new(Request $request, ProduitRepository $produitRepository , ValidatorInterface $validator): Response
     {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $produitRepository->add($produit);
+            
+            $produitRepository->add($produit, true);
+            $entityManager->persist($produit);
+            $entityManager->flush();
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+        }
+        else {
+            $errors = $validator->validate($produit);
+            // Afficher les erreurs de validation
         }
 
         return $this->render('produit/new.html.twig', [
             'produit' => $produit,
             'form' => $form->createView(),
+            'errors'=> $errors,
         ]);
     }
 
@@ -58,7 +69,7 @@ class ProduitController extends AbstractController
     #[Route('/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Produit $produit, ProduitRepository $produitRepository): Response
     {
-        $form = $this->createForm(Produit1Type::class, $produit);
+        $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

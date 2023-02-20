@@ -6,6 +6,8 @@ use App\Repository\SponsorERepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: SponsorERepository::class)]
 class SponsorE
@@ -15,13 +17,18 @@ class SponsorE
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message : 'Nom sponsor est obligatoire')]
     #[ORM\Column(length: 255)]
     private ?string $nomSponsor = null;
 
+    #[Assert\Email(message : 'Veuillez indiquer un email valide')]
+    #[Assert\NotBlank(message : 'Email est obligatoire')]
     #[ORM\Column(length: 255)]
     private ?string $emailSponsor = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message : 'Telephone est obligatoire')]
+    #[Assert\Positive(message : 'Ce numéro n\'est pas valide')]
     private ?string $telSponsor = null;
 
     #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'sponsors')]

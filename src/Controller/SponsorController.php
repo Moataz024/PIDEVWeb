@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 #[Route('/sponsor')]
 class SponsorController extends AbstractController
@@ -22,17 +24,22 @@ class SponsorController extends AbstractController
     }
 
     #[Route('/new', name: 'app_sponsor_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SponsorERepository $sponsorERepository): Response
+    public function new(Request $request, SponsorERepository $sponsorERepository,ValidatorInterface $validator): Response
     {
+
         $sponsorE = new SponsorE();
         $form = $this->createForm(SponsorEType::class, $sponsorE);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $sponsorERepository->save($sponsorE, true);
-
-            return $this->redirectToRoute('app_sponsor_index', [], Response::HTTP_SEE_OTHER);
+        $errors = null;
+        if ($form->isSubmitted()) {
+            if ($form->isValid()){
+                $sponsorERepository->save($sponsorE, true);
+                return $this->redirectToRoute('app_sponsor_index', [], Response::HTTP_SEE_OTHER);
+            }else {
+                $errors = $validator->validate($sponsorE);
+            }
         }
+
 
         return $this->renderForm('sponsor/new.html.twig', [
             'sponsor_e' => $sponsorE,

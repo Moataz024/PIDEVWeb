@@ -1,0 +1,36 @@
+{% extends "back/base.html.twig" %}
+
+{% block body %}
+    <h1>Academy index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for academy in academies %}
+            <tr>
+                <td>{{ academy.id }}</td>
+                <td>{{ academy.name }}</td>
+                <td>{{ academy.category }}</td>
+                <td>
+                    <a href="{{ path('app_academy_show', {'id': academy.id}) }}">show</a>
+                    <a href="{{ path('app_academy_edit', {'id': academy.id}) }}">edit</a>
+                    {{ include('academy/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_academy_new') }}">Create new</a>
+{% endblock %}

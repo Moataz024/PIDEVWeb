@@ -13,13 +13,13 @@
         <div class="site-mobile-menu-body"></div>
     </div>
 
-    <header class="site-navbar py-4" role="banner">
+    <header class="site-navbar py-4" role="banner" >
 
         <div class="container">
             <div class="d-flex align-items-center">
-                <div class="site-logo">
-                    <a href="{{ asset ('front/index.html') }}">
-                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo">
+                <div class="logo" >
+                    <a href="{{ path('app_login') }}">
+                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo" width="250" height="140">
                     </a>
                 </div>
                 <div class="ml-auto">
@@ -54,15 +54,13 @@
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}">
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-
     <button class="btn btn-lg btn-primary" type="submit">
         Sign in
     </button>
+    <div class="d-flex align-items-center justify-content-center pb-4">
+        <p class="mb-0 me-2">Don't have an account?</p><pre>  </pre>
+        <a href="{{ path('app_register') }}"><button type="button" class="btn btn-outline-danger"> Sign up</button> </a>
+    </div>
 </form>
 {% endblock %}
     {% block score %}
@@ -83,4 +81,5 @@
         {{ parent() }}
         <script src="{{ asset('templates/script.js') }}"></script>
         <script src="{{ asset('build/js/bootstrap.min.js') }}"></script>
+</div>
     {% endblock %}

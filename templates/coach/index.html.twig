@@ -1,0 +1,38 @@
+{% extends "back/base.html.twig" %}
+
+{% block body %}
+    <h1>Coach index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Telephone</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for coach in coaches %}
+            <tr>
+                <td>{{ coach.id }}</td>
+                <td>{{ coach.name }}</td>
+                <td>{{ coach.email }}</td>
+                <td>{{ coach.telephone }}</td>
+                <td>
+                    <a href="{{ path('app_coach_show', {'id': coach.id}) }}">show</a>
+                    <a href="{{ path('app_coach_edit', {'id': coach.id}) }}">edit</a>
+                    {{ include('coach/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_coach_new') }}">Create new</a>
+{% endblock %}

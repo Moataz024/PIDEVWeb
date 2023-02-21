@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Terrain{% endblock %}
-
-{% block body %}
+{% block header %}
+{{ parent() }}
+{% endblock %}
+{% block score %}
     <h1>Terrain</h1>
 
     <table class="table">

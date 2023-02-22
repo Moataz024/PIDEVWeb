@@ -20,7 +20,7 @@
             <div class="d-flex align-items-center">
                 <div class="logo">
                     <a href="{{ asset ('app_template') }}">
-                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo" width="250" height="140">
+                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo" width="140" height="80">
                     </a>
                 </div>
                 <div class="ml-auto">
@@ -52,13 +52,13 @@
                 </tr>
                 <tr>
                     <td>
-                        {{ form_label(registrationForm.username,"Username : ") }}
+                        {{ form_label(registrationForm.nomutilisateur,"Username : ") }}
                     </td>
                     <td>
-                        {{ form_widget(registrationForm.username) }}
+                        {{ form_widget(registrationForm.nomutilisateur) }}
                     </td>
                     <td>
-                        {{ form_errors(registrationForm.username) }}
+                        {{ form_errors(registrationForm.nomutilisateur) }}
                     </td>
 
                 </tr>
@@ -94,6 +94,18 @@
 
                     <td>
                         {{ form_errors(registrationForm.lastname) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form_label(registrationForm.roles,"Sign up as : ") }}
+                    </td>
+                    <td>
+                        {{ form_widget(registrationForm.roles) }}
+                    </td>
+
+                    <td>
+                        {{ form_errors(registrationForm.roles) }}
                     </td>
                 </tr>
                 <tr>

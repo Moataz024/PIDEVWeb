@@ -58,10 +58,10 @@
 #}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.firstname }} </b>
+                                    <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.nomutilisateur }} </b>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">My profile</a>
+                                    <a class="dropdown-item" href="{{ path('app_profile',{'id': app.user.id}) }}">My profile</a>
                                     <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
                                 </div>
                             </li>

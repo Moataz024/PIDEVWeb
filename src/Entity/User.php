@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $inscriptions;
 
     #[ORM\Column(length: 255)]
-    private ?string $username = null;
+    private ?string $nomutilisateur = null;
 
     #[ORM\Column(length: 255)]
     private ?string $phone = null;
@@ -219,6 +219,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getNomutilisateur(): ?string
+    {
+        return $this->nomutilisateur;
+    }
+
+    /**
+     * @param string|null $nomutilisateur
+     */
+    public function setNomutilisateur(?string $nomutilisateur): void
+    {
+        $this->nomutilisateur = $nomutilisateur;
+    }
+
+
 
     public function getPhone(): ?string
     {

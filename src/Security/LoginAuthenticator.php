@@ -20,9 +20,13 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
+    private $urlGenerator;
+    private $security;
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(UrlGeneratorInterface $urlGenerator,Security $security)
     {
+        $this->urlGenerator = $urlGenerator;
+        $this->security = $security;
     }
 
     public function authenticate(Request $request): Passport
@@ -47,7 +51,11 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_template'));
+        if($this->security->isGranted('ROLE_ADMIN')) {
+            return new RedirectResponse($this->urlGenerator->generate('app_academy_index'));
+        }else{
+            return new RedirectResponse($this->urlGenerator->generate('app_template'));
+        }
     }
 
     protected function getLoginUrl(Request $request): string

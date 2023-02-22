@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/sponsor')]
 class SponsorController extends AbstractController
 {
+
     #[Route('/', name: 'app_sponsor_index', methods: ['GET'])]
     public function index(SponsorERepository $sponsorERepository): Response
     {
@@ -41,8 +42,6 @@ class SponsorController extends AbstractController
                 $errors = $validator->validate($sponsorE);
             }
         }
-
-
         return $this->renderForm('sponsor/new.html.twig', [
             'sponsor_e' => $sponsorE,
             'form' => $form,

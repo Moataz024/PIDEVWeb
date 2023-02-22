@@ -1,0 +1,10 @@
+{% extends 'back/base.html.twig' %}
+
+
+{% block body %}
+    <h1>Create new SponsorE</h1>
+
+    {{ include('sponsor_back/_form.html.twig') }}
+
+    <a href="{{ path('app_sponsor_back') }}">back to list</a>
+{% endblock %}

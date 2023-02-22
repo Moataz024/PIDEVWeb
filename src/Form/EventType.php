@@ -3,9 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Event;
+use App\Entity\SponsorE;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class EventType extends AbstractType
 {
@@ -15,7 +17,8 @@ class EventType extends AbstractType
             ->add('nom')
             ->add('category')
             ->add('organisateur')
-            ->add('participants')
+            ->add('sponsors')
+            //->add('sponsors',EntityType::class,['class'=>SponsorE::class,'choice_label'=>'name','multiple'=>false])
         ;
     }
 

@@ -103,4 +103,9 @@ class SponsorE
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->nomSponsor; // or any other string representation of the object
+    }
 }

@@ -3,17 +3,18 @@
 {% block title %}Terrain{% endblock %}
 {% block header %}
 {{ parent() }}
-{% endblock %}
+{% endblock header %}
+{% block mid %}
+  <div class="hero overlay" style="background-image: url({{ asset('front/images/bg_4.jpg') }});background-color: crimson;">
+         <div id="page-container">
+         <div id="content-wrap">
+            <div class="row align-items-center" >
+                <div class="col-lg-12 ml-auto table-responsive" style="padding: 100px;">
+                 
 {% block content %}
-    <p>Terrain</p>
-{% endblock %}
-{% block score %}
- <div id="page-container">
-<div id="content-wrap">
-
-    <h1>Terrain</h1>
-
-    <table class="table">
+<br>
+    <div class="table-container">
+      <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -57,13 +58,23 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('app_terrain_index') }}">back to list</a>
-
+     <a href="{{ path('app_terrain_index') }}">back to list</a>
+    <br>
     <a href="{{ path('app_terrain_edit', {'id': terrain.id}) }}">edit</a>
 
     {{ include('terrain/_delete_form.html.twig') }}
     </div>
+
+   
+      {% endblock %}
+
+ </div>
+                
+            </div>
+        </div>
+</div>
+
     </div>
 {% endblock %}
+
 

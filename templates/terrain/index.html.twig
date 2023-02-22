@@ -4,11 +4,14 @@
 {% block header %}
 {{ parent() }}
 {% endblock %}
-{% block score %}
+{% block mid %}
+  <div class="hero overlay" style="background-image: url({{ asset('front/images/bg_4.jpg') }});background-color: crimson;">
+        <div class="container">
+            <div class="row align-items-center" >
+                <div class="col-lg-12 ml-auto table-responsive" style="background-color: rgba(54, 69, 79, 0.8);border-radius: 20px;border: groove rgba(120, 69, 79, 0.3);padding: 80px;">
+{% block content %}
 
-    <h1>Terrain index</h1>
-
-    <table class="table">
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -54,4 +57,14 @@
    <button type="button" class="btn" >
     <a href="{{ path('app_terrain_new') }}" >Create new</a>
 </button>
+                    {% endblock %}
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+{% block score %}
+
 {% endblock %}

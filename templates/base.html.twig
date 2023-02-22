@@ -21,14 +21,32 @@
         <link rel="stylesheet" href="{{ asset ('front/css/style.css')}}">
         <link rel="stylesheet" href="{{ asset ('front/css/main.css')}}">
         <link rel="shortcut icon" href="{{ asset ('front/images/icon.png') }}" />
+   <style>
+  .table-container {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  table {
+   
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+</style>
     {% endblock %}
 
 </head>
 
 <body>
   
-{% block header %}
-<div class="site-wrap">
+
+<div class="site-wrap" >
 
     <div class="site-mobile-menu site-navbar-target">
         <div class="site-mobile-menu-header">
@@ -40,6 +58,7 @@
     </div>
 
     <header class="site-navbar py-4" role="banner">
+    {% block header %}
         <div class="container">
             <div class="d-flex align-items-center">
                 <div class="logo">
@@ -64,6 +83,8 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="#">My profile</a>
+                                    <a class="dropdown-item" href="{{ path('app_terrain_new') }}" >Create Propriety</a>
+                                    <a class="dropdown-item" href="{{ path('app_terrain_index') }}" >List of Proprieties</a>
                                     <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
                                 </div>
                             </li>
@@ -75,14 +96,15 @@
                 </div>
             </div>
         </div>
-
-
+         {% endblock %}
     </header>
-    {% endblock %}
+   
+    {% block mid %}
     <div class="hero overlay" style="background-image: url({{ asset('front/images/bg_3.jpg') }});background-color: crimson;">
         <div class="container">
             <div class="row align-items-center" >
                 <div class="col-lg-12 ml-auto" style="background-color: rgba(54, 69, 79, 0.8);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: 100px;">
+                    <div style="max-height: 500px; overflow-y: auto;">
                     {% block content %}
                     <h1 class="text-white">Find Your Playground</h1>
                    
@@ -90,16 +112,16 @@
                     <p>Book sport Piches and Courts in Tunisia.</p>
                     <!--<div id="date-countdown"></div> -->
                     <p>
-                        <a href="#" class="btn btn-primary py-3 px-4 mr-3">Book now</a>
+                        <a href="{{ path('app_terrain_index') }}" class="btn btn-primary py-3 px-4 mr-3">Book now</a>
                         <a href="#" class="more light">Learn More</a>
                     </p>
-
+                    {% endblock %}
                 </div>
-                {% endblock %}
+                </div>
             </div>
         </div>
-
     </div>
+    {% endblock %}
 {% block body %}
 
     {% block score %}
@@ -124,9 +146,9 @@
   
 
 
-    {% block footer %}
+    
         <footer class="footer-section">
-        
+        {% block footer %}
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3">
@@ -197,9 +219,9 @@
 
                 </div>
             </div>
-
+{% endblock %}
         </footer>
-    {% endblock %}
+    
       {% endblock %}
 
 

@@ -23,6 +23,7 @@
         </td>
 
     </tr>
+    {% if is_granted('ROLE_ADMIN') %}
     <tr>
         <td>
             {{ form_label(form.organisateur,"Organisateur evennement: ") }}
@@ -34,6 +35,20 @@
             {{ form_errors(form.organisateur) }}
         </td>
     </tr>
+    {% endif %}
+    {% if is_granted('ROLE_OWNER') %}
+    <tr>
+        <td>
+            {{ form_label(form.organisateur,"Organisateur evennement: ") }}
+        </td>
+        <td>
+            {{ form_widget(form.organisateur,{'attr' : {'disabled' : 'disabled' } })}}
+        </td>
+        <td>
+            {{ form_errors(form.organisateur) }}
+        </td>
+    </tr>
+    {% endif %}
     <tr>
         <td>
             {{ form_label(form.sponsors,"Sponsor evennement: ") }}
@@ -47,7 +62,6 @@
     </tr>
     {{ form_end(form) }}
 </table>
-{{ form_row(form._token) }}
 <button class="btn">{{ button_label|default('Save') }}</button>
 <br/>
 {{ form_end(form) }}

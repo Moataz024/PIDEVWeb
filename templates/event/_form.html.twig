@@ -35,9 +35,10 @@
         </td>
     </tr>
 </table>
-
+{{ form_row(form._token) }}
 <button class="btn">{{ button_label|default('Save') }}</button>
 <br/>
+{{ form_end(form) }}
 {#{% if errors|length > 0 %}
     <ul>
 

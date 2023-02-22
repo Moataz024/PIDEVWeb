@@ -28,8 +28,10 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'ownedEvents')]
     private ?User $organisateur = null;
 
+
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'inscriptions')]
     private Collection $participants;
+
 
     #[ORM\ManyToMany(targetEntity: SponsorE::class, mappedBy: 'sponsoredEvents')]
     private Collection $sponsors;

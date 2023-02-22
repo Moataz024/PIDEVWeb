@@ -2,10 +2,14 @@
 
 {% block title %}New Terrain{% endblock %}
 
-{% block score %}
+{% block content %}
+  <div id="page-container">
+<div id="content-wrap">
     <h1>Create new Terrain</h1>
 
     {{ include('terrain/_form.html.twig') }}
     <br><br>
     <a href="{{ path('app_terrain_index') }} " style="padding-left: 20px">back to list</a>
+    </div>
+    </div>
 {% endblock %}

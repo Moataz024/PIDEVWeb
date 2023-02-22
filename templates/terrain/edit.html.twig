@@ -3,6 +3,9 @@
 {% block title %}Edit Terrain{% endblock %}
 
 {% block content %}
+
+  <div id="page-container">
+<div id="content-wrap">
     <h1>Edit Terrain</h1>
 
     {{ include('terrain/_form.html.twig', {'button_label': 'Update'}) }}
@@ -10,4 +13,12 @@
     <a href="{{ path('app_terrain_index') }}" >back to list</a>
 
     {{ include('terrain/_delete_form.html.twig') }}
+
+   </div>
+   {% block footer %}
+    
+    {% endblock %}
+ </div>
 {% endblock %}
+
+

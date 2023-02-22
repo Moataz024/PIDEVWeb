@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Equipment;
 use App\Entity\Suppliers;
+use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -39,7 +40,7 @@ class EquipmentType extends AbstractType
                     new NotBlank(),
                     new Regex([
                         'pattern'=>'/^[a-zA-Z0-9]+$/',
-                        'message'=>"l'adresse doit contenir que des alphabets"
+                        'message'=>"l'adresse est invalide"
                     
                 ]),
 
@@ -70,10 +71,27 @@ class EquipmentType extends AbstractType
                     
                 ]),
             ]])
+            ->add('Price',TextType::class,[
 
+                'constraints' => [
+                    new NotBlank(),
+                    new Regex([
+                        'pattern'=>'/^[0-9]+$/',
+                        'message'=>'le type doit contenir que des alphabets'
+                    
+                ]),
+
+                ]
+            ])
             ->add('suppliers',EntityType::class,
             ['class'=>Suppliers::class,
             'choice_label'=>'name',
+            'multiple'=>false
+            ])
+            
+            ->add('category',EntityType::class,
+            ['class'=>Category::class,
+            'choice_label'=>'nom',
             'multiple'=>false
             ])
         ;

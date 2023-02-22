@@ -67,6 +67,18 @@ class SuppliersType extends AbstractType
 
                 ]
                 ])
+                ->add('adress',TextType::class, [
+
+                    'constraints' => [
+                        new NotBlank(),
+                        new Regex([
+                            'pattern'=>'/^[a-zA-Z0-9]+$/',
+                            'message'=>'Votre adress est invalide'
+                        
+                    ]),
+    
+                    ]
+                    ])
 
             ->add('notes',TextType::class, [
 

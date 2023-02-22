@@ -2,8 +2,11 @@
 
 {% block body %}
     <h1>Create new Suppliers</h1>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
 
     {{ include('suppliers/_form.html.twig') }}
 
-    <a href="{{ path('app_suppliers_index') }}">back to list</a>
+    <a href="{{ path('app_suppliers_index') }}">  <span class="material-icons">
+        arrow_back</span> back to list</a>
 {% endblock %}

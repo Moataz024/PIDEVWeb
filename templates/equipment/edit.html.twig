@@ -2,10 +2,15 @@
 
 {% block body %}
     <h1>Edit Equipment</h1>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+
 
     {{ include('equipment/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_equipment_index') }}">back to list</a>
+    <a href="{{ path('app_equipment_index') }}"> <span class="material-icons">
+        arrow_back
+        </span> back to list</a>
 
     {{ include('equipment/_delete_form.html.twig') }}
 {% endblock %}

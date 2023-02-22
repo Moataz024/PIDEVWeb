@@ -28,6 +28,12 @@ class Equipment
     #[ORM\ManyToOne(inversedBy: 'equipment')]
     private ?Suppliers $suppliers = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $Price = null;
+
+    #[ORM\ManyToOne(inversedBy: 'equipment')]
+    private ?Category $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +95,30 @@ class Equipment
     public function setSuppliers(?Suppliers $suppliers): self
     {
         $this->suppliers = $suppliers;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->Price;
+    }
+
+    public function setPrice(string $Price): self
+    {
+        $this->Price = $Price;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

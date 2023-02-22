@@ -30,6 +30,9 @@ class Suppliers
     #[ORM\OneToMany(mappedBy: 'suppliers', targetEntity: Equipment::class)]
     private Collection $equipment;
 
+    #[ORM\Column(length: 255)]
+    private ?string $adress = null;
+
     public function __construct()
     {
         $this->equipment = new ArrayCollection();
@@ -114,6 +117,18 @@ class Suppliers
                 $equipment->setSuppliers(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdress(): ?string
+    {
+        return $this->adress;
+    }
+
+    public function setAdress(string $adress): self
+    {
+        $this->adress = $adress;
 
         return $this;
     }

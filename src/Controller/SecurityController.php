@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use App\Repository\CardRepository;
 
 class SecurityController extends AbstractController
 {
@@ -28,5 +30,19 @@ class SecurityController extends AbstractController
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    #[Route('/cart/user/{userId}', name: 'security_cart_by_user')]
+    public function showUserCart($userId, CardRepository $cartRepository)
+    {
+        $cart = $cartRepository->findCartByUser($userId);
+
+        if (!$cart) {
+            throw $this->createNotFoundException('Cart not found.');
+        }
+
+        return $this->render('card/showcard.html.twig', [
+            'cart' => $cart,
+        ]);
     }
 }

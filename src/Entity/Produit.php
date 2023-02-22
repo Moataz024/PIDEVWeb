@@ -4,6 +4,8 @@ namespace App\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -11,28 +13,26 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Assert\NotBlank(message:'ce champ est obligatoire')]
-    // #[Assert\Type (message:'ce champ n est pas valide')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:'Ce champ est obligatoire')]
-    #[Assert\Name]
+    // #[Assert\Name(message:'Ce champ est obligatoire')]
     // #[Assert\Type (message:'ce champ n est pas valide')]
     private ?string $libelle = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message:'ce champ est obligatoire')]
-    #[Assert\floatval(message:'ce champ n est pas valide')]
+    // #[Assert\floatval(message:'ce champ n est pas valide')]
     private ?float $prix = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message:'ce champ est obligatoire')]
     // #[Assert\Type(message:'ce champ n est pas valide')]
     private ?int $stock = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message:'ce champ est obligatoire')]
     // #[Assert\Type(message:'ce champ n est pas valide')]
     private ?string $ref = null;
 
@@ -40,6 +40,15 @@ class Produit
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
     private ?Categorie $categorie = null;
+
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: CardItem::class, orphanRemoval: true)]
+    private Collection $cardItems;
+
+    public function __construct()
+    {
+        $this->cardItems = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -108,6 +117,36 @@ class Produit
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CardItem>
+     */
+    public function getCardItems(): Collection
+    {
+        return $this->cardItems;
+    }
+
+    public function addCardItem(CardItem $cardItem): self
+    {
+        if (!$this->cardItems->contains($cardItem)) {
+            $this->cardItems->add($cardItem);
+            $cardItem->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCardItem(CardItem $cardItem): self
+    {
+        if ($this->cardItems->removeElement($cardItem)) {
+            // set the owning side to null (unless already changed)
+            if ($cardItem->getProduit() === $this) {
+                $cardItem->setProduit(null);
+            }
+        }
 
         return $this;
     }

@@ -17,23 +17,35 @@
     </div>
 
     <header class="site-navbar py-4" role="banner">
-
         <div class="container">
             <div class="d-flex align-items-center">
-                <div class="site-logo">
-                    <a href="{{ asset ('front/index.html') }}">
-                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo">
+                <div class="logo">
+                    <a href="{{ path('app_template') }}">
+                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo" width="140" height="80" >
                     </a>
                 </div>
                 <div class="ml-auto">
                     <nav class="site-navigation position-relative text-right" role="navigation">
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                            <li><a href="{{ asset ('front/index.html') }}" class="nav-link">Home</a></li>
-                            <li><a href="{{ asset ('front/matches.html') }}" class="nav-link">Matches</a></li>
-                            <li><a href="{{ asset ('front/players.html') }}" class="nav-link">Players</a></li>
-                            <li><a href="{{ asset ('front/blog.html') }}" class="nav-link">Blog</a></li>
+                            <li ><a href="{{ asset ('front/index.html') }}" class="nav-link">Home</a></li>
+                            <li><a href="{{ path('app_event_index') }}" class="nav-link">Events</a></li>
+                            <li class="active" ><a href="{{ path('app_produit_index') }}" class="nav-link">Products</a></li>
+                            <li><a href="{{ asset ('front/blog.html') }}" class="nav-link">Equipments</a></li>
                             <li><a href="{{ asset ('front/contact.html') }}" class="nav-link">Contact</a></li>
-                            <li class="active"><a href="{{ path('app_produit_index') }}" class="nav-link">Product</a></li>
+                            {% if app.user %}
+                                {# Generate a URL for the current user's cart #}
+                                <a href="{{ path('security_cart_by_user', { userId: app.user.id }) }}">My Cart</a>
+                                {% endif %}
+                            {# <li><a href="{{ path('cart_by_user') }}" class="nav-link">My Cart</a></li> #}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.firstname }} </b>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">My profile</a>
+                                    <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
+                                </div>
+                            </li>
                         </ul>
                     </nav>
 
@@ -43,8 +55,10 @@
             </div>
         </div>
 
+
     </header>
-{% endblock %}
+    {% endblock %}
+
     {% block content %}
     <h1><center>Nos produits</center></h1>
     <hr><hr>
@@ -53,7 +67,7 @@
         {% for produit in produits %}
             <div class="col-md-4">
                 <div class="product-item text-center">
-                <img src="{{ asset('public/uploads/rea.png' ) }}" alt="{{ produit.id }}" class="img-fluid">
+                <img src="{{ asset('uploads/' ) ~ produit.ref }}" >
                     <a href="{{ path('app_produit_show', {'id': produit.id}) }}">
                     <h5 style="color: red;">product name : {{ produit.libelle }}</h5>
                     
@@ -62,6 +76,11 @@
                      <h5 style="color: red;">price: {{ (produit.prix) }} €</h5>
                     <h5 style="color: red;">price: {{ (produit.categorie.nomCat) }} €</h5>
                     </a>
+                    <form method="POST" action="{{ path('app_cart_add', {'id': produit.id}) }}">
+                    {{ csrf_token('add_to_cart_' ~ produit.id) }}
+                    <input type="submit" class="btn btn-primary" value="Add to cart">
+                </form>
+            
                 </div>
             </div>
         {% endfor %}

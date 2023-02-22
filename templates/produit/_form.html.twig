@@ -3,7 +3,7 @@
 
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }} #}
-{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+{{ form_start(form , {'attr' :  {'novalidate': 'novalidate'} } ) }}
 <table>
     <tr>
         <td>
@@ -65,9 +65,20 @@
         </td>
 
     </tr>
+     {# <tr>
+        <td>
+            {{ form_label(form.imageFile, "product image : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.imageFile) }}
+        </td>
+        <td>
+            {{ form_errors(form.imageFile) }}
+        </td>
+    </tr> #}
 
 </table>
 
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn" type="submit">{{ button_label|default('Save') }}</button>
 
 {{ form_end(form) }}

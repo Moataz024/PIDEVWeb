@@ -40,7 +40,7 @@
     <header class="site-navbar py-4" role="banner">
         <div class="container">
             <div class="d-flex align-items-center">
-                <div class="site-logo">
+                <div class="logo">
                     <a href="{{ path('app_template') }}">
                         <img src="{{ asset ('front/images/logo.png') }}" alt="Logo" width="140" height="80" >
                     </a>
@@ -50,12 +50,14 @@
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                             <li class="active"><a href="{{ asset ('front/index.html') }}" class="nav-link">Home</a></li>
                             <li><a href="{{ path('app_event_index') }}" class="nav-link">Events</a></li>
-                            <li><a href="{{ asset ('front/players.html') }}" class="nav-link">Products</a></li>
+                            <li><a href="{{ path('app_produit_index') }}" class="nav-link">Products</a></li>
+                            {% if app.user %}
+                                {# Generate a URL for the current user's cart #}
+                                <a href="{{ path('security_cart_by_user', { userId: app.user.id }) }}">My Cart</a>
+                                {% endif %}
+                            {# <li><a href="{{ path('cart_by_user') }}" class="nav-link">My Cart</a></li> #}
                             <li><a href="{{ asset ('front/blog.html') }}" class="nav-link">Equipments</a></li>
                             <li><a href="{{ asset ('front/contact.html') }}" class="nav-link">Contact</a></li>
-{#
-                            <li><a href="{{ path('app_produit_index') }}" class="nav-link">Product</a></li>
-#}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.firstname }} </b>

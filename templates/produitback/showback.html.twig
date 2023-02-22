@@ -1,0 +1,42 @@
+{% extends "back/base.html.twig" %}
+
+{% block body %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Prix</th>
+                <th>Stock</th>
+                <th>Ref</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for produit in produits %}
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.libelle }}</td>
+                <td>{{ produit.prix }}</td>
+                <td>{{ produit.stock }}</td>
+                <td>{{ produit.ref }}</td>
+                <td>
+                    <a href="{{ path('app_produitback_show', {'id': produit.id ~'b'}) }}">show</a>
+                    <a href="{{ path('app_produitback_edit', {'id': produit.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_produitback_new') }}">Create new</a>
+
+
+   
+{% endblock %}
+{% block footer %}
+{% endblock %}

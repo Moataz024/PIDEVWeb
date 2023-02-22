@@ -1,0 +1,22 @@
+{% extends "back/base.html.twig" %}
+
+{% block body %}
+
+    
+    <h1><center>{{ categorie.nomCat }}</center></h1>
+    <hr><hr>
+
+    <div class="row product-container">
+            <div class="col-md-4">
+                <div class="product-item text-center">
+                    
+                    {#<h5 style="color: red;">{{ produit.id }}</h5>#}
+                    <h5 style="color: red;">categorie id: {{ categorie.id}}</h5>
+                    <h5 style="color: red;">categorie name: {{ categorie.nomCat }}</h5>
+                    
+                </div>
+            </div>
+            <a href="{{ path('app_categorie_back') }}">back to list</a>
+{% endblock %}
+{% block footer %}
+{% endblock %}

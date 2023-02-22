@@ -1,6 +1,6 @@
-{% extends 'base.html.twig' %}
+{% extends "back/base.html.twig" %}
 
-{% block content %}
+{% block body %}
 
     
     <h1><center>{{ produit.libelle }}</center></h1>
@@ -22,17 +22,5 @@
                     
                 </div>
             </div>
-{% endblock %}
-{% block score %}
-{% endblock %}
-{% block latest %}
-{% endblock %}
-{% block nextmatch %}
-{% endblock %}
-{% block sitesection %}
-{% endblock %}
-{% block blog %}
-{% endblock %}
-{% block footer %}
-{{ parent() }}
+            <a href="{{ path('app_produit_back') }}">back to list</a>
 {% endblock %}

@@ -63,4 +63,15 @@ class EquipmentRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findEquipmentByIdCategory($CategoryId)
+{
+    $qb = $this->createQueryBuilder('e')
+        ->leftJoin('e.category', 'c')
+        ->andWhere('c.id = :CategoryId')
+        ->setParameter('CategoryId', $CategoryId)
+        ->getQuery();
+
+    return $qb->getResult();
+}
+
 }

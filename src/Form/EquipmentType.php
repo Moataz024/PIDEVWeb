@@ -34,6 +34,10 @@ class EquipmentType extends AbstractType
 
                 ]
                 ])
+                
+                ->add('image')
+
+
             ->add('adress',TextType::class, [
 
                 'constraints' => [

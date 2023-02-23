@@ -20,11 +20,12 @@ class EquipmentController extends AbstractController
             'equipment' => $equipmentRepository->findAll(),
         ]);
     }
+    
     #[Route('/category/{id}', name: 'app_equipment_index_category_front', methods: ['GET'])]
-    public function index_ParCategory_Front(EquipmentRepository $equipmentRepository): Response
+    public function index_ParCategory_Front(EquipmentRepository $equipmentRepository,$id): Response
     {
         return $this->render('front/equipement.html.twig', [
-            'equipment' => $equipmentRepository->findAll(),
+            'equipment' => $equipmentRepository->findEquipmentByIdCategory($id),
         ]);
     }
 

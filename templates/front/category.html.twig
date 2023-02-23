@@ -32,7 +32,7 @@
             </div>
             <div class="text">
               <span class="meta">{{category.nom}}</span>
-              <p><a href="{{ path('app_equipment_show', {'id': category.id}) }}">Read more</a></p>
+              <p><a href="{{ path('app_equipment_index_category_front', {'id': category.id}) }}">view equipments</a></p>
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@
         {% endfor %}
       </div>
 
-      <div class="row justify-content-center">
+      {# <div class="row justify-content-center">
         <div class="col-lg-7 text-center">
           <div class="custom-pagination">
             <a href="#">1</a>
@@ -50,7 +50,7 @@
             <a href="#">5</a>
           </div>
         </div>
-      </div>
+      </div> #}
     </div>
 
 

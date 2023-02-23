@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\EquipmentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EquipmentRepository::class)]
@@ -33,6 +36,17 @@ class Equipment
 
     #[ORM\ManyToOne(inversedBy: 'equipment')]
     private ?Category $category = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\OneToMany(mappedBy: 'equipment', targetEntity: Rent::class)]
+    private Collection $rents;
+
+    public function __construct()
+    {
+        $this->rents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +133,48 @@ class Equipment
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Rent>
+     */
+    public function getRents(): Collection
+    {
+        return $this->rents;
+    }
+
+    public function addRent(Rent $rent): self
+    {
+        if (!$this->rents->contains($rent)) {
+            $this->rents->add($rent);
+            $rent->setEquipment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRent(Rent $rent): self
+    {
+        if ($this->rents->removeElement($rent)) {
+            // set the owning side to null (unless already changed)
+            if ($rent->getEquipment() === $this) {
+                $rent->setEquipment(null);
+            }
+        }
 
         return $this;
     }

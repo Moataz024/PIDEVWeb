@@ -1,0 +1,34 @@
+{% extends "front/base.html.twig" %}
+
+
+{% block body %}
+    <h1>Rent index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>RentAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rent in rents %}
+            <tr>
+                <td>{{ rent.id }}</td>
+                <td>{{ rent.rentAt ? rent.rentAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_rent_show', {'id': rent.id}) }}">show</a>
+                    <a href="{{ path('app_rent_edit', {'id': rent.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('app_rent_new') }}">Create new</a> #}
+{% endblock %}

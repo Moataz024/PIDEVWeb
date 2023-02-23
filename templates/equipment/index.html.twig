@@ -10,6 +10,9 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>image</th>
+                <th>Category</th>
+                <th>Supplier</th>
                 <th>Name</th>
                 <th>Adress</th>
                 <th>Type</th>
@@ -22,6 +25,32 @@
         {% for equipment in equipment %}
             <tr>
                 <td>{{ equipment.id }}</td>
+                <td>
+                    {% if equipment.image is not null %}
+                    <img src="{{ equipment.image }}" alt="">
+                    {% else %}
+                        pas d'image affectee
+                    {% endif %}
+
+                </td>
+                <td>
+                    {% if equipment.category is not null %}
+                    {{ equipment.category.nom }}
+                    {% else %}
+                        pas de category affectee
+                    {% endif %}
+
+                </td>
+
+                <td>
+                    {% if equipment.suppliers is not null %}
+                    {{ equipment.suppliers.name }}
+                    {% else %}
+                        pas de supplier affectee
+                    {% endif %}
+
+                </td>
+
                 <td>{{ equipment.name }}</td>
                 <td>{{ equipment.adress }}</td>
                 <td>{{ equipment.type }}</td>

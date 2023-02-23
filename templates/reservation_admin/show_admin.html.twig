@@ -1,9 +1,9 @@
 {% extends 'base_admin.html.twig' %}
 
-{% block title %}Reservation_admin {% endblock %}
+{% block title %}Reservation {% endblock %}
 
 {% block content %}
-    <h1>Reservation</h1>
+    <h1>Reservation : </h1>
 
     <table class="table">
         <tbody>
@@ -25,14 +25,18 @@
             </tr>
             <tr>
                 <th>ResStatus</th>
-                <td>{{ reservation.resStatus ? 'Yes' : 'No' }}</td>
+                <td>{{ reservation.resStatus ? 'Confirmed' : 'Not Confirmed' }}</td>
+            </tr>
+            <tr>
+                <th>nb Personnes</th>
+                <td>{{ reservation.nbPerson }}</td>
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('app_reservation_index_admin') }}">back to list</a>
 
-    <a href="{{ path('app_reservation_edit_admin', {'id': reservation.id}) }}">edit</a>
+   <!-- <a href="{{ path('app_reservation_edit_admin', {'id': reservation.id}) }}">edit</a> -->
 
     {{ include('reservation_admin/_delete_form_admin.html.twig') }}
 {% endblock %}

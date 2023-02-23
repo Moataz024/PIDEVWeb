@@ -38,6 +38,28 @@ class ReservationRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findConflictingReservations(Reservation $reservation): array
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->where('r.terrain = :terrain')
+            ->andWhere('r.startTime < :endTime')
+            ->andWhere('r.endTime > :startTime')
+            ->setParameter('terrain', $reservation->getTerrain())
+            ->setParameter('startTime', $reservation->getStartTime())
+            ->setParameter('endTime', $reservation->getEndTime());
+
+        if ($reservation->getId()) {
+            $qb->andWhere('r.id != :id')
+                ->setParameter('id', $reservation->getId());
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+
+
+
 
 //    /**
 //     * @return Reservation[] Returns an array of Reservation objects

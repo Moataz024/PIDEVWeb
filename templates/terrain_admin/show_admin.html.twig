@@ -1,9 +1,9 @@
 {% extends 'base_admin.html.twig' %}
 
-{% block title %}Terrain_admin{% endblock %}
+{% block title %}Terrain{% endblock %}
 
 {% block content %}
-    <h1>Terrain</h1>
+    <h1>Terrain :</h1>
 
     <table class="table">
         <tbody>
@@ -36,6 +36,10 @@
                 <td>{{ terrain.postalCode }}</td>
             </tr>
             <tr>
+                <th>RoadName</th>
+                <td>{{ terrain.roadName }}</td>
+            </tr>
+            <tr>
                 <th>RoadNumber</th>
                 <td>{{ terrain.roadNumber }}</td>
             </tr>
@@ -52,7 +56,7 @@
 
     <a href="{{ path('app_terrain_index_admin') }}" style="padding-left: 30px">back to list</a>
 
-    <a href="{{ path('app_terrain_edit_admin', {'id': terrain.id}) }}" style="padding-left: 30px">edit</a>
+   <!-- <a href="{{ path('app_terrain_edit_admin', {'id': terrain.id}) }}" style="padding-left: 30px">edit</a>-->
 
     {{ include('terrain_admin/_delete_form_admin.html.twig') }}
 {% endblock %}

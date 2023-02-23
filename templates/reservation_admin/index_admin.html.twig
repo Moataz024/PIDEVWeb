@@ -1,9 +1,9 @@
 {% extends 'base_admin.html.twig' %}
 
-{% block title %}Reservation_admin index{% endblock %}
+{% block title %}Reservation{% endblock %}
 
 {% block content %}
-    <h1>Reservation index</h1>
+    <h1>List of Reservation :</h1>
 
     <table class="table">
         <thead>
@@ -13,6 +13,7 @@
                 <th>StartTime</th>
                 <th>EndTime</th>
                 <th>ResStatus</th>
+                <th>Nb Personne</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,10 +24,15 @@
                 <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ reservation.startTime ? reservation.startTime|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ reservation.endTime ? reservation.endTime|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ reservation.resStatus ? 'Yes' : 'No' }}</td>
+                <td>{{ reservation.resStatus ? 'Confirmed' : 'Not Confirmed' }}</td>
+                <td>{{ reservation.nbPerson }}</td>
                 <td>
                     <a href="{{ path('app_reservation_show_admin', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('app_reservation_edit_admin', {'id': reservation.id}) }}">edit</a>
+                    <form method="post" action="{{ path('app_reservation_delete_admin', {'id': reservation.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.id) }}">
+                    <button class="btn">Delete</button>
+                </form>
+                    <!--<a href="{{ path('app_reservation_edit_admin', {'id': reservation.id}) }}">edit</a>-->
                 </td>
             </tr>
         {% else %}
@@ -37,5 +43,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_reservation_new_admin') }}">Create new</a>
+   <!-- <a href="{{ path('app_reservation_new_admin') }}">Create new</a>-->
 {% endblock %}

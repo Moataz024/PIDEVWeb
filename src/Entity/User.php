@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $inscriptions;
 
     #[ORM\Column(length: 255)]
-    private ?string $username = null;
+    private ?string $nomutilisateur = null;
 
     #[ORM\Column(length: 255)]
     private ?string $phone = null;
@@ -54,11 +54,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Terrain::class, orphanRemoval: true)]
+    private Collection $terrains;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Reservation::class, orphanRemoval: true)]
+    private Collection $reservations;
+
 
     public function __construct()
     {
         $this->ownedEvents = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
+        $this->terrains = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,6 +228,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getNomutilisateur(): ?string
+    {
+        return $this->nomutilisateur;
+    }
+
+    /**
+     * @param string|null $nomutilisateur
+     */
+    public function setNomutilisateur(?string $nomutilisateur): void
+    {
+        $this->nomutilisateur = $nomutilisateur;
+    }
+
+
+
     public function getPhone(): ?string
     {
         return $this->phone;
@@ -252,6 +278,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Terrain>
+     */
+    public function getTerrains(): Collection
+    {
+        return $this->terrains;
+    }
+
+    public function addTerrain(Terrain $terrain): self
+    {
+        if (!$this->terrains->contains($terrain)) {
+            $this->terrains->add($terrain);
+            $terrain->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTerrain(Terrain $terrain): self
+    {
+        if ($this->terrains->removeElement($terrain)) {
+            // set the owning side to null (unless already changed)
+            if ($terrain->getOwner() === $this) {
+                $terrain->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getClient() === $this) {
+                $reservation->setClient(null);
+            }
+        }
 
         return $this;
     }

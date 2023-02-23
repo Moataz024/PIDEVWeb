@@ -15,7 +15,6 @@ class EventType extends AbstractType
             ->add('nom')
             ->add('category')
             ->add('organisateur')
-            ->add('participants')
         ;
     }
 

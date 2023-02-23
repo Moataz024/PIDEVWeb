@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{asset('back/assets/css/style.css')}}">
     <!-- End layout styles -->
     {% endblock %}
-    <link rel="shortcut icon" href="{{asset('back/assets/images/favicon.png')}}" />
+    <link rel="shortcut icon" href="{{asset ('front/images/icon.png')}}" />
   </head>
   {%endblock%}
   {%block body%}
@@ -33,8 +33,8 @@
       {% block sidebar %}
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="index.html"><img src="{{asset('back/assets/images/logo.svg')}}" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="{{asset('back/assets/images/logo-mini.svg')}}" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo" href="index.html"><img src="{{ asset ('front/images/logo.png') }}" alt="Logo" width="100" height="100"></a>
+          <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="{{asset('front/images/logo.png')}}" alt="logo" /></a>
         </div>
         <ul class="nav">
           <li class="nav-item profile">
@@ -116,7 +116,7 @@
           <li class="nav-item menu-items">
             <a class="nav-link" href="{{ path('app_terrain_index_admin') }}">
               <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
+                <i class="mdi mdi-home-map-marker"></i>
               </span>
               <span class="menu-title">Terrain</span>
             </a>
@@ -124,7 +124,7 @@
           <li class="nav-item menu-items">
             <a class="nav-link" href="{{ path('app_reservation_index_admin') }}">
               <span class="menu-icon">
-                <i class="mdi mdi-table-large"></i>
+                <i class="mdi mdi-calendar-multiple-check"></i>
               </span>
               <span class="menu-title">Reservation</span>
             </a>

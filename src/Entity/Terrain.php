@@ -55,6 +55,12 @@ class Terrain
     #[Assert\Positive(message:'Le Code Postale doit etre Positif')]
     private ?int $postalCode = null;
     
+    #[ORM\Column(length: 60)]
+    #[Assert\NotBlank(message:'la rue du Terrain est obligatoir')]
+    #[Assert\Length(max:60,maxMessage:'Votre rue du Terrain ne depasse pas 60 caractères.')]
+    #[Assert\Length(min:3,minMessage:'Votre rue du Terrain doit depasser 3 caractères.')]
+    private ?string $roadName = null;
+
     #[ORM\Column]
     #[Assert\NotNull(message:'le numero de la rue du Terrain est obligatoir')]
     #[Assert\Positive(message:'le numero de la rue doit etre Positif')]
@@ -85,6 +91,12 @@ class Terrain
  
      #[ORM\Column(nullable: true)]
      private ?\DateTimeImmutable $updatedAt = null;
+
+     #[ORM\ManyToOne(inversedBy: 'terrains')]
+     #[ORM\JoinColumn(nullable: false)]
+     private ?User $owner = null;
+
+   
  
      /**
       * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -271,6 +283,30 @@ class Terrain
      public function getImageName(): ?string
      {
          return $this->imageName;
+     }
+
+     public function getOwner(): ?User
+     {
+         return $this->owner;
+     }
+
+     public function setOwner(?User $owner): self
+     {
+         $this->owner = $owner;
+
+         return $this;
+     }
+
+     public function getRoadName(): ?string
+     {
+         return $this->roadName;
+     }
+
+     public function setRoadName(string $roadName): self
+     {
+         $this->roadName = $roadName;
+
+         return $this;
      }
  
 }

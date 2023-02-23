@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -43,6 +45,23 @@ class Reservation
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Terrain $terrain = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $client = null;
+
+    #[ORM\OneToMany(mappedBy: 'reservation', targetEntity: Equipment::class)]
+    private Collection $equipments;
+
+    #[ORM\Column]
+    #[Assert\NotNull(message:'le nombre des personne a reserver est obligatoir')]
+    #[Assert\Positive(message:'le nombre des personne a reserver doit etre Positif')]
+    private ?int $nbPerson = null;
+
+    public function __construct()
+    {
+        $this->equipments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +124,60 @@ class Reservation
     public function setTerrain(?Terrain $terrain): self
     {
         $this->terrain = $terrain;
+
+        return $this;
+    }
+
+    public function getClient(): ?User
+    {
+        return $this->client;
+    }
+
+    public function setClient(?User $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Equipment>
+     */
+    public function getEquipments(): Collection
+    {
+        return $this->equipments;
+    }
+
+    public function addEquipment(Equipment $equipment): self
+    {
+        if (!$this->equipments->contains($equipment)) {
+            $this->equipments->add($equipment);
+            $equipment->setReservation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEquipment(Equipment $equipment): self
+    {
+        if ($this->equipments->removeElement($equipment)) {
+            // set the owning side to null (unless already changed)
+            if ($equipment->getReservation() === $this) {
+                $equipment->setReservation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNbPerson(): ?int
+    {
+        return $this->nbPerson;
+    }
+
+    public function setNbPerson(int $nbPerson): self
+    {
+        $this->nbPerson = $nbPerson;
 
         return $this;
     }

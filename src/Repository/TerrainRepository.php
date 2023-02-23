@@ -38,6 +38,39 @@ class TerrainRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findRecentTerrains(int $limit = 3): array
+    {
+        return $this->findBy([], ['updatedAt' => 'DESC'], $limit);
+    }
+    public function findByFilters(?string $location, ?string $sportType, ?float $rentPrice): array
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->orderBy('t.updatedAt', 'DESC');
+    
+        if ($location) {
+            $qb->andWhere('t.city = :location OR t.country = :location ')
+               ->setParameter('location', $location);
+        }
+    
+        if ($sportType) {
+            $qb->andWhere('t.sportType = :sportType')
+               ->setParameter('sportType', $sportType);
+        }
+    
+        if ($rentPrice) {
+            $qb->andWhere('t.rentPrice <= :rentPrice')
+               ->setParameter('rentPrice', $rentPrice);
+        }
+    
+        return $qb->getQuery()->getResult();
+    }
+    
+    /*public function findByOwner($userId)
+    {
+        $qd= $this->createQueryBuilder('t');
+        $qd->where('t.owner_id = :userId')->setParameter('userId', $userId);
+        return $qd->getQuery()->getResult();
+    }*/
 
 //    /**
 //     * @return Terrain[] Returns an array of Terrain objects

@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="{{ asset ('front/css/aos.css')}}">
         <link rel="stylesheet" href="{{ asset ('front/css/style.css')}}">
         <link rel="stylesheet" href="{{ asset ('front/css/main.css')}}">
+        <link rel="stylesheet" href="{{ asset('bundles/vichuploader/css/vichuploader.css') }}">
         <link rel="shortcut icon" href="{{ asset ('front/images/icon.png') }}" />
    <style>
   .table-container {
@@ -69,7 +70,7 @@
                 <div class="ml-auto">
                     <nav class="site-navigation position-relative text-right" role="navigation">
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                            <li class="active"><a href="{{ asset ('front/index.html') }}" class="nav-link">Home</a></li>
+                            <li class="active"><a href="{{ path('app_template') }}" class="nav-link">Home</a></li>
                             <li><a href="{{ path('app_event_index') }}" class="nav-link">Events</a></li>
                             <li><a href="{{ asset ('front/players.html') }}" class="nav-link">Products</a></li>
                             <li><a href="{{ asset ('front/blog.html') }}" class="nav-link">Equipments</a></li>
@@ -79,12 +80,17 @@
 #}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.firstname }} </b>
+                                    <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.nomutilisateur }} </b>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">My profile</a>
-                                    <a class="dropdown-item" href="{{ path('app_terrain_new') }}" >Create Propriety</a>
-                                    <a class="dropdown-item" href="{{ path('app_terrain_index') }}" >List of Proprieties</a>
+                                    <a class="dropdown-item" href="{{ path('app_profile',{'id': app.user.id}) }}">My profile</a>
+                                    {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
+                                    <a class="dropdown-item" href="{{ path('app_terrain_new', {'id_user': app.user.id}) }}" >Create Propriety</a>
+                                    <a class="dropdown-item" href="{{ path('app_terrain_list',{'id_user': app.user.id}) }}" >List of Proprieties</a>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_CLIENT') %}
+                                  <a class="dropdown-item" href="{{ path('app_reservation_list',{'id_user': app.user.id}) }}" >My Reservation</a>
+                                    {% endif %}
                                     <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
                                 </div>
                             </li>
@@ -106,13 +112,28 @@
                 <div class="col-lg-12 ml-auto" style="background-color: rgba(54, 69, 79, 0.8);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: 100px;">
                     <div style="max-height: 500px; overflow-y: auto;">
                     {% block content %}
+                    {% if is_granted('ROLE_CLIENT')%}
                     <h1 class="text-white">Find Your Playground</h1>
                    
                     <h2>The Scene is set for your Epic match.</h2>
-                    <p>Book sport Piches and Courts in Tunisia.</p>
+                    <p>Book Sport Pitches and Courts in Tunisia.</p>
                     <!--<div id="date-countdown"></div> -->
                     <p>
+                    {% endif %}
+                    {% if is_granted('ROLE_OWNER')%}
+                    <h1 class="text-white">Manage your estates</h1>
+                   
+                    <h2>Grow your business with us.</h2>
+                    <p>Add your Sports pitches and courts in Tunisia.</p>
+                    <!--<div id="date-countdown"></div> -->
+                    <p>
+                    {% endif %}
+                    {% if is_granted('ROLE_OWNER')%}
+                        <a href="{{ path('app_terrain_list',{'id_user': app.user.id}) }}" class="btn btn-primary py-3 px-4 mr-3">Add now</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_CLIENT')%}
                         <a href="{{ path('app_terrain_index') }}" class="btn btn-primary py-3 px-4 mr-3">Book now</a>
+                    {% endif %}
                         <a href="#" class="more light">Learn More</a>
                     </p>
                     {% endblock %}
@@ -155,7 +176,7 @@
                         <div class="widget mb-3">
                             <h3>News</h3>
                             <ul class="list-unstyled links">
-                                <li><a href="#">Home</a></li>
+                                <li><a href="{{ path('app_template') }}">Home</a></li>
                                 <li><a href="#">Events</a></li>
                                 <li><a href="#">Products</a></li>
                                 <li><a href="#">Equipments</a></li>
@@ -243,6 +264,7 @@
 <script src="{{ asset ('front/js/jquery.sticky.js')}}"></script>
 <script src="{{ asset ('front/js/jquery.mb.YTPlayer.min.js')}}"></script>
 <script src="{{ asset ('front/js/main.js')}}"></script>
+<script src="{{ asset('bundles/vichuploader/js/vichuploader.js') }}"></script>
 {% endblock %}
 </body>
 

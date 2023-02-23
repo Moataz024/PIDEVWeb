@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Terrain index{% endblock %}
+{% block title %}My Proprieties{% endblock %}
 {% block header %}
 {{ parent() }}
 {% endblock %}
@@ -20,8 +20,9 @@
                 <th>SportType</th>
                 <th>RentPrice</th>
                 <th>Disponibility</th>
-                <th>PostalCode</th>
-                <th>RoadNumber</th>
+                <th>Postal-Code</th>
+                <th>Road-Name</th>
+                <th>Road-Number</th>
                 <th>City</th>
                 <th>Country</th>
                 <th>actions</th>
@@ -37,12 +38,13 @@
                 <td>{{ terrain.rentPrice }}</td>
                 <td>{{ terrain.disponibility ? 'Yes' : 'No' }}</td>
                 <td>{{ terrain.postalCode }}</td>
+                <td>{{ terrain.roadName }}</td>
                 <td>{{ terrain.roadNumber }}</td>
                 <td>{{ terrain.city }}</td>
                 <td>{{ terrain.country }}</td>
                 <td>
-                    <a href="{{ path('app_terrain_show', {'id': terrain.id}) }}">show</a>
-                    <a href="{{ path('app_terrain_edit', {'id': terrain.id}) }}">edit</a>
+                    <a href="{{ path('app_terrain_show', {'id': terrain.id,'id_user': app.user.id}) }}">show</a>
+                    <a href="{{ path('app_terrain_edit', {'id': terrain.id,'id_user': app.user.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -55,7 +57,7 @@
     <br><br>
     
    <button type="button" class="btn" >
-    <a href="{{ path('app_terrain_new') }}" >Create new</a>
+    <a href="{{ path('app_terrain_new', {'id_user': app.user.id}) }}" >Create new</a>
 </button>
                     {% endblock %}
                 </div>

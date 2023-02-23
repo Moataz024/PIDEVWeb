@@ -3,8 +3,6 @@
 {% block title %}Reservation{% endblock %}
 
 {% block content %}
-    <h1>Reservation</h1>
-
     <table class="table">
         <tbody>
             <tr>
@@ -25,14 +23,18 @@
             </tr>
             <tr>
                 <th>ResStatus</th>
-                <td>{{ reservation.resStatus ? 'Yes' : 'No' }}</td>
+                <td>{{ reservation.resStatus ? 'Confirmed' : 'Not Confirmed' }}</td>
+            </tr>
+            <tr>
+                <th>nb Personnes</th>
+                <td>{{ reservation.nbPerson }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_reservation_index') }}">back to list</a>
+    <a href="{{ path('app_reservation_list',{'id_user': app.user.id}) }}">back to list</a>
 
-    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
+    <a href="{{ path('app_reservation_edit', {'id': reservation.id,'id_user': app.user.id}) }}">edit</a>
 
     {{ include('reservation/_delete_form.html.twig') }}
 {% endblock %}

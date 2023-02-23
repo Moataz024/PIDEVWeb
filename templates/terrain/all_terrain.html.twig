@@ -1,0 +1,198 @@
+{% extends 'base.html.twig' %}
+{% block title %} Stadiums {% endblock %} 
+{% block stylesheets %}
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ asset ('front/fonts/icomoon/style.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/bootstrap/bootstrap.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/jquery-ui.css')}} ">
+        <link rel="stylesheet" href="{{ asset ('front/css/owl.carousel.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/owl.theme.default.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/owl.theme.default.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/jquery.fancybox.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/bootstrap-datepicker.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/fonts/flaticon/font/flaticon.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/aos.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/style.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/main.css')}}">
+        <link rel="stylesheet" href="{{ asset('bundles/vichuploader/css/vichuploader.css') }}">
+        <link rel="shortcut icon" href="{{ asset ('front/images/icon.png') }}" />
+    <!-- custom css link  -->
+    <link rel="stylesheet" href="{{ asset ('front/css/style_2.css')}}">
+    <link rel="stylesheet" href="{{ asset ('front/css/media.css')}}">
+    <!-- custom css link  -->
+{% endblock %}
+{% block mid %}
+<section class="header">
+    <div class="hero overlay" style="background-image: url({{ asset('front/images/bg_1.jpg') }});background-color: crimson;">
+        <div class="container">
+            <div class="header-info">
+                <h1 class="header-headline">Stadiums</h1>
+                <p class="header-subtitle">
+                    we help you get your stadium for your epic match.
+                </p>
+            </div>
+        </div>
+    </div>
+    </section>
+{% endblock %}
+{% block body %}
+<!-- search box -->
+    <form method="get" action="{{ path('app_terrains_filter') }}">
+    <div class="container">
+        <div class="input">
+            <input type="text" name="location" placeholder="City or Country">
+            <img src="{{ asset ('front/images/location.svg') }}" alt="">
+        </div>
+        <div class="input">
+            <select name="sportType">
+                <option value="">Select Sport Type</option>
+                <option value="football">Football</option>
+                <option value="handball">Handball</option>
+                <option value="basketball">Basketball</option>
+                <option value="volleyball">Volleyball</option>
+                <option value="baseball">Baseball</option>
+                <option value="tennis">Tennis</option>
+                <option value="golf">Golf</option>
+
+            </select>
+            <img src="{{ asset ('front/images/sportstype.png')}}" alt="">
+        </div>
+        <div class="input">
+            <input type="text" name="rentPrice" placeholder="Price">
+            <img src="{{ asset ('front/images/money.svg')}}" alt="">
+        </div>
+        <div class="input search">
+            <input type="hidden" name="submit" value="1">
+            <input type="submit" value="Apply Filter">
+        </div>
+    </div>
+</form>
+    <!-- search box -->
+
+    <!-- product  -->
+    <section id="product">
+        <div class="product-info">
+            <h2 class="product-title">
+                Our Stadiums
+            </h2>
+        </div>
+        <div class="container">
+        {% for terrain in terrains %}
+         {% if terrain.disponibility %}
+            <div class="product-card">
+            {% if terrain.imageName %}
+            <img src="{{ vich_uploader_asset(terrain, 'imageFile') }}" alt="{{ terrain.name }}" class="product-img">
+            {% endif %}
+                <div class="card-info">
+                    <div class="card-info-content">
+                        <img src="{{ asset ('front/images/location.svg')}}" alt="">
+                        <p class="loaction-name">{{terrain.roadName~', '~terrain.city ~', '~ terrain.country}}</p>
+                    </div>
+                    <div class="card-info-content">
+                        <p class="loaction-name">{{terrain.name}}</p>
+                    </div>
+                    <div class="card-info-content">
+                        <div class="content">
+                            <img src="{{ asset ('front/images/person.png')}}" alt="">
+                            <p>{{terrain.capacity}}</p>
+                        </div>
+                        <div class="content">
+                            <img src="{{ asset ('front/images/sportstype.png')}}" alt="">
+                            <p>{{terrain.sportType}}</p>
+                        </div>
+                    </div>
+                    <div class="price">
+                        <p>{{terrain.rentPrice  ~ '.DT'}}</p>
+                        <a href="{{ path('app_reservation_new',{'id_user': app.user.id,'id_terrain': terrain.id}) }}" class="booking-btn">Book Now</a>
+                    </div>
+
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    <!-- product  -->
+
+    <!-- gsap link  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js" integrity="sha512-VEBjfxWUOyzl0bAwh4gdLEaQyDYPvLrZql3pw1ifgb6fhEvZl9iDDehwHZ+dsMzA0Jfww8Xt7COSZuJ/slxc4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- gsap link  -->
+
+    <script src="{{ asset ('front/js/app.js')}}"></script>
+       {% block footer %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>News</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="{{ path('app_template') }}">Home</a></li>
+                                <li><a href="#">Events</a></li>
+                                <li><a href="#">Products</a></li>
+                                <li><a href="#">Equipments</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                  <!--  <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>Tickets</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="#">Online Ticket</a></li>
+                                <li><a href="#">Payment and Prices</a></li>
+                                <li><a href="#">Contact &amp; Booking</a></li>
+                                <li><a href="#">Tickets</a></li>
+                                <li><a href="#">Coupon</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>Matches</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="#">Standings</a></li>
+                                <li><a href="#">World Cup</a></li>
+                                <li><a href="#">La Lega</a></li>
+                                <li><a href="#">Hyper Cup</a></li>
+                                <li><a href="#">World League</a></li>
+                            </ul>
+                        </div>
+                    </div>-->
+
+                    <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>Social</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="#">Twitter</a></li>
+                                <li><a href="#">Facebook</a></li>
+                                <li><a href="#">Instagram</a></li>
+                                <li><a href="#">Youtube</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <div class=" pt-5">
+                            <p>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>
+                                    document.write(new Date().getFullYear());
+                                </script> All rights reserved | This template is made with <i class="icon-heart"
+                                                                                              aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+{% endblock %}
+{% endblock %}

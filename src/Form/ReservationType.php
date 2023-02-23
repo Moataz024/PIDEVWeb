@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Form;
-
+use App\Entity\Equipment;
+use App\Repository\EquipmentRepository;
 use App\Entity\Terrain;
 use App\Entity\Reservation;
 use Symfony\Component\Form\AbstractType;
@@ -19,7 +20,17 @@ class ReservationType extends AbstractType
             ->add('startTime', DateTimeType::class)
             ->add('endTime', DateTimeType::class)
             ->add('resStatus')
-            ->add('terrain',EntityType::class,['class'=>Terrain::class,'choice_label'=>'name','multiple'=>false])
+            ->add('nbPerson')
+            ->add('equipments', EntityType::class, [
+                'class' => Equipment::class,
+                'multiple' => true,
+                'expanded' => true,
+                'choice_label' => 'name',
+                'query_builder' => function (EquipmentRepository $er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.name', 'ASC');
+                },
+            ])
         ;
     }
 

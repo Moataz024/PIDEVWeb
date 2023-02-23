@@ -72,5 +72,15 @@ class EventBackController extends AbstractController
     }
 
 
+    #[Route('/showParticipantBack/{id}', name: 'app_event_showPArticipantBack', methods: ['GET'])]
+    public function showParticipantBack(Event $event): Response
+    {
+        $participant = $event->getParticipants();
+        return $this->render('event_back/showParticipantBack.html.twig', [
+            'participants' => $participant,
+        ]);
+    }
+
+
 
 }

@@ -18,11 +18,11 @@ class Event
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message : 'Ce champ est obligatoire')]
+    #[Assert\NotBlank(message : 'Le nom est obligatoire')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message : 'Ce champ est obligatoire')]
+    #[Assert\NotBlank(message : 'La categorie est obligatoire')]
     private ?string $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'ownedEvents')]
@@ -35,6 +35,14 @@ class Event
 
     #[ORM\ManyToMany(targetEntity: SponsorE::class, mappedBy: 'sponsoredEvents')]
     private Collection $sponsors;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message : 'Le lieu est obligatoire')]
+    private ?string $lieu = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message : 'La description est obligatoire')]
+    private ?string $description = null;
 
     public function __construct()
     {
@@ -137,4 +145,41 @@ class Event
     {
         return $this->nom; // or any other string representation of the object
     }
+
+    public function getLieu(): ?string
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(string $lieu): self
+    {
+        $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /*public function addParticipant(User $participant): self
+    {
+        $this->participants[] = $participant;
+
+        return $this;
+    }*/
+
+
+
+
+
+
 }

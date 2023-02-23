@@ -63,7 +63,9 @@
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
+                <th>Lieu</th>
                 <th>Category</th>
+                <th>Description</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -72,14 +74,26 @@
             <tr>
                 <td>{{ event.id }}</td>
                 <td>{{ event.nom }}</td>
+                <td>{{ event.lieu }}</td>
                 <td>{{ event.category }}</td>
+                <td>{{ event.description }}</td>
                 <td>
-                    <a href="{{ path('app_event_show', {'id': event.id}) }}">show</a>
+                    <a href="{{ path('app_event_show', {'id': event.id}) }}"><button class="btn btn-outline-primary">Show</button></a>
                     {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
                         {% if app.user.id == event.organisateur.id %}
-                    <a href="{{ path('app_event_edit', {'id': event.id}) }}">edit</a>
+                    <a href="{{ path('app_event_edit', {'id': event.id}) }}"><button class="btn btn-outline-primary">Edit</button></a>
                             {% endif %}
                     {% endif  %}
+                    {% if is_granted('ROLE_CLIENT') %}
+                    <a href="{{ path('add_participant', { 'id': event.id}) }}" class="btn btn-primary">Participer</a>
+                    {% endif  %}
+                    {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
+                        {% if app.user.id == event.organisateur.id %}
+                            <a href="{{ path('app_event_showPArticipant', {'id': event.id}) }}"><button class="btn btn-outline-primary">Show participants</button></a>
+                        {% endif %}
+                    {% endif  %}
+
+
                 </td>
             </tr>
         {% else %}
@@ -90,6 +104,6 @@
         </tbody>
     </table>
     {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('app_event_new') }}">Create new</a>
+    <a href="{{ path('app_event_new') }}"><button class="btn btn-outline-primary">Creat new</button></a>
     {% endif %}
 {% endblock %}

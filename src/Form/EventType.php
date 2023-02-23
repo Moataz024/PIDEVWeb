@@ -18,6 +18,8 @@ class EventType extends AbstractType
             ->add('category')
             ->add('organisateur')
             ->add('sponsors')
+            ->add('lieu')
+            ->add('description')
             //->add('sponsors',EntityType::class,['class'=>SponsorE::class,'choice_label'=>'name','multiple'=>false])
         ;
     }

@@ -5,11 +5,14 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use App\Repository\SponsorERepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\User;
 
 #[Route('/event')]
 class EventController extends AbstractController
@@ -20,7 +23,7 @@ class EventController extends AbstractController
         $this->security = $security;
     }
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $eventRepository,SponsorERepository $sponsorERepository): Response
     {
         /*test*/
         return $this->render('event/index.html.twig', [
@@ -28,6 +31,17 @@ class EventController extends AbstractController
         ]);
     }
 
+    #[Route('/showParticipant/{id}', name: 'app_event_showPArticipant', methods: ['GET'])]
+    public function showParticipant(Event $event): Response
+    {
+        $participants = $event->getParticipants();
+        $sponsors = $event->getSponsors();
+        return $this->render('event/showParticipant.html.twig', [
+            'event' => $event,
+            'participants' => $participants,
+            'sponsors' => $sponsors,
+        ]);
+    }
 
 
     #[Route('/new', name: 'app_event_new', methods: ['GET', 'POST'])]
@@ -52,12 +66,6 @@ class EventController extends AbstractController
         ]);
     }
 
-
-
-
-
-
-
     #[Route('/{id}', name: 'app_event_show', methods: ['GET'])]
     public function show(Event $event): Response
     {
@@ -66,17 +74,16 @@ class EventController extends AbstractController
         ]);
     }
 
-
-
-
-
     #[Route('/{id}/edit', name: 'app_event_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
     {
+        $user = $this->security->getUser();
+        $event->setOrganisateur($user);
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $event->setOrganisateur($user);
             $eventRepository->save($event, true);
 
             return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
@@ -102,4 +109,20 @@ class EventController extends AbstractController
 
         return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    #[Route('/add_participant/{id}', name: 'add_participant', methods: ['GET','POST'])]
+    public function addParticipantToEvent(Event $event,EventRepository $eventRepository, UserRepository $userRepository): Response
+    {
+        $participant = $this->security->getUser();
+        $event->addParticipant($participant);
+        $participant->addInscription($event);
+        $eventRepository->save($event,true);
+        $userRepository->save($participant,true);
+
+        return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
 }

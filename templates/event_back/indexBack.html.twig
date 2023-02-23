@@ -8,7 +8,9 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
+            <th>Lieu</th>
             <th>Category</th>
+            <th>Description</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -17,10 +19,13 @@
             <tr>
                 <td>{{ academy.id }}</td>
                 <td>{{ academy.nom }}</td>
+                <td>{{ academy.nom }}</td>
                 <td>{{ academy.category }}</td>
+                <td>{{ academy.nom }}</td>
                 <td>
-                    <a href="{{ path('app_event_showBack', {'id': academy.id}) }}">show</a>
-                    <a href="{{ path('app_event_editBack', {'id': academy.id}) }}">edit</a>
+                    <a href="{{ path('app_event_showBack', {'id': academy.id}) }}"><button class="btn btn-outline-primary">Show</button></a>
+                    <a href="{{ path('app_event_editBack', {'id': academy.id}) }}"><button class="btn btn-outline-primary">Edit</button></a>
+                    <a href="{{ path('app_event_showPArticipantBack', {'id': academy.id}) }}"><button class="btn btn-outline-primary">Show_participants</button></a>
 
                 </td>
             </tr>
@@ -32,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_event_newBack') }}">Create new</a>
+    <a href="{{ path('app_event_newBack') }}"><button class="btn btn-outline-primary">Creat new</button></a>
 {% endblock %}

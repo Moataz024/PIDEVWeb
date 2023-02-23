@@ -15,7 +15,7 @@ class SponsorEType extends AbstractType
             ->add('nomSponsor')
             ->add('emailSponsor')
             ->add('telSponsor')
-            ->add('sponsoredEvents')
+            //->add('sponsoredEvents')
         ;
     }
 

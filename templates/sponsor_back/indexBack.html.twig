@@ -21,8 +21,8 @@
                 <td>{{ sponsor_e.emailSponsor }}</td>
                 <td>{{ sponsor_e.telSponsor }}</td>
                 <td>
-                    <a href="{{ path('app_sponsor_showBack', {'id': sponsor_e.id}) }}">show</a>
-                    <a href="{{ path('app_sponsorBack_edit', {'id': sponsor_e.id}) }}">edit</a>
+                    <a href="{{ path('app_sponsor_showBack', {'id': sponsor_e.id}) }}"><button class="btn btn-outline-primary">Show</button></a>
+                    <a href="{{ path('app_sponsorBack_edit', {'id': sponsor_e.id}) }}"><button class="btn btn-outline-primary">Edit</button></a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_sponsor_newBack') }}">Create new</a>
+    <a href="{{ path('app_sponsor_newBack') }}"><button class="btn btn-outline-primary">Creat new</button></a>
 {% endblock %}

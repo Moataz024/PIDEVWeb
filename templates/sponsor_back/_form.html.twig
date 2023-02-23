@@ -5,7 +5,7 @@
             {{ form_label(form.nomSponsor,"Nom sponsor : ") }}
         </td>
         <td>
-            {{ form_widget(form.nomSponsor) }}
+            {{ form_widget(form.nomSponsor,{'attr' : { 'class' : 'form-control' }}) }}
         </td>
         <td>
             {{ form_errors(form.nomSponsor) }}
@@ -16,7 +16,7 @@
             {{ form_label(form.emailSponsor,"Email sponsor : ") }}
         </td>
         <td>
-            {{ form_widget(form.emailSponsor) }}
+            {{ form_widget(form.emailSponsor,{'attr' : { 'class' : 'form-control' }}) }}
         </td>
         <td>
             {{ form_errors(form.emailSponsor) }}
@@ -28,7 +28,7 @@
             {{ form_label(form.telSponsor,"Telephone : ") }}
         </td>
         <td>
-            {{ form_widget(form.telSponsor) }}
+            {{ form_widget(form.telSponsor,{'attr' : { 'class' : 'form-control' }}) }}
         </td>
         <td>
             {{ form_errors(form.telSponsor) }}
@@ -38,7 +38,7 @@
     {{ form_end(form) }}
 </table>
 
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-outline-primary">{{ button_label|default('Save') }}</button>
 <br/>
 
 {#{% if errors|length > 0 %}

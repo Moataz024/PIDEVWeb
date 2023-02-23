@@ -5,7 +5,7 @@
             {{ form_label(form.nom,"Nom sponsor : ") }}
         </td>
         <td>
-            {{ form_widget(form.nom) }}
+            {{ form_widget(form.nom,{'attr' : { 'class' : 'form-control' }}) }}
         </td>
         <td>
             {{ form_errors(form.nom) }}
@@ -13,10 +13,32 @@
     </tr>
     <tr>
         <td>
+            {{ form_label(form.lieu,"lieu evennnement : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.lieu,{'attr' : { 'class' : 'form-control' }}) }}
+        </td>
+        <td>
+            {{ form_errors(form.lieu) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.description,"Description evennnement : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.description,{'attr' : { 'class' : 'form-control' }}) }}
+        </td>
+        <td>
+            {{ form_errors(form.description) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
             {{ form_label(form.category,"Catégorie : ") }}
         </td>
         <td>
-            {{ form_widget(form.category) }}
+            {{ form_widget(form.category,{'attr' : { 'class' : 'form-control' }}) }}
         </td>
         <td>
             {{ form_errors(form.category) }}
@@ -28,7 +50,7 @@
             {{ form_label(form.organisateur,"Organisateur : ") }}
         </td>
         <td>
-            {{ form_widget(form.organisateur) }}
+            {{ form_widget(form.organisateur,{'attr' : { 'class' : 'form-control' }}) }}
         </td>
         <td>
             {{ form_errors(form.organisateur) }}
@@ -39,7 +61,7 @@
             {{ form_label(form.sponsors,"Sponsor  : ") }}
         </td>
         <td>
-            {{ form_widget(form.sponsors) }}
+            {{ form_widget(form.sponsors,{'attr' : { 'class' : 'form-control' }}) }}
         </td>
         <td>
             {{ form_errors(form.sponsors) }}
@@ -48,7 +70,7 @@
     {{ form_end(form) }}
 </table>
 
-<button class="btn">{{ button_label|default('Save') }}</button>
+<button class="btn btn-outline-primary">{{ button_label|default('Save') }}</button>
 <br/>
 {#{% if errors|length > 0 %}
     <ul>

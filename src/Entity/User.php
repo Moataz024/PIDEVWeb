@@ -54,11 +54,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
+    #[ORM\Column]
+    private ?bool $status = null;
+
 
     public function __construct()
     {
         $this->ownedEvents = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
+        $this->status = false;
     }
 
     public function getId(): ?int
@@ -77,6 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 
     /**
      * A visual identifier that represents this user.
@@ -270,6 +275,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

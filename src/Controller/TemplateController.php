@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Form\ProfileType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
 
 class TemplateController extends AbstractController
@@ -27,6 +28,21 @@ class TemplateController extends AbstractController
         return $this->render('template/index.html.twig', [
             'controller_name' => 'TemplateController',
         ]);
+    }
+    #[Route('/denied', name: 'app_access_denied')]
+    public function showErrorPage(): Response
+    {
+        return $this->render('error_pages/403.html.twig');
+    }
+
+    #[Route('/suspended', name: 'app_suspended')]
+    public function showSuspendedPage(TokenStorageInterface $tokenStorage): Response
+    {
+        $tokenStorage->setToken(null);
+
+        // Invalidate the session
+        $this->get('session')->invalidate();
+        return $this->render('error_pages/account_blocked.html.twig');
     }
 
     #[Route('/{id}/profile', name: 'app_profile', methods : ['GET','POST'])]
@@ -59,4 +75,5 @@ class TemplateController extends AbstractController
             'form' => $form,
         ]);
     }
+
 }

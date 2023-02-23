@@ -35,7 +35,7 @@
     {% endblock %}
 
     {% block content %}
-        <div class="align-items-right">
+        <div class="align-items-center" style="padding-left: 200px">
             <div>
             {{ form_start(registrationForm,{'attr' : {'novalidate' : 'novalidate'}}) }}
             <table>
@@ -114,9 +114,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-
-                    </td>
                     <td colspan="4">
                         {{ form_row(registrationForm.plainPassword, {
                             label: 'Password'
@@ -130,18 +127,21 @@
                 </tr>
                 <tr>
                     <td>
-                        <button type="submit" class="btn">Register</button>
+
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Register</button>
                     </td>
                 </tr>
-
-
             </table>
+                <br/>
+                <hr style="background-color: white"/>
             {{ form_end(registrationForm) }}
-                <div class="d-flex align-items-center justify-content-center pb-4">
-                    <p class="mb-0 me-2">Already have an account ?</p><pre>  </pre>
-                    <a href="{{ path('app_login') }}"><button type="button" class="btn btn-outline-danger"> Sign in</button> </a>
-                </div>
             </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-center pb-4">
+            <p class="mb-0 me-2">Already have an account ?</p><pre>  </pre>
+            <a href="{{ path('app_login') }}"><button type="button" class="btn btn-outline-danger"> Sign in</button> </a>
         </div>
 {#        <h1>Register</h1>
         {{ form_start(registrationForm,{'attr' : {'novalidate' : 'novalidate'}}) }}

@@ -43,6 +43,10 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             ]
         );
     }
+    public function logout(): void
+    {
+        new RedirectResponse($this->urlGenerator->generate('app_logout'));
+    }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
@@ -50,12 +54,15 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
         if($this->security->isGranted('ROLE_ADMIN')) {
             return new RedirectResponse($this->urlGenerator->generate('app_academy_index'));
         }else{
+            if(!$this->security->getUser()->isStatus())
             return new RedirectResponse($this->urlGenerator->generate('app_template'));
+        else {
+            return new RedirectResponse($this->urlGenerator->generate('app_suspended'));
         }
+    }
     }
 
     protected function getLoginUrl(Request $request): string

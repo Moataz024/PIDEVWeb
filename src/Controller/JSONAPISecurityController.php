@@ -10,7 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use App\Entity\User;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Exception\ValidatorException;
+
 
 #[Route('/api')]
 class JSONAPISecurityController extends AbstractController
@@ -24,7 +29,7 @@ class JSONAPISecurityController extends AbstractController
     }
 
     #[Route('/login', name: 'api_login',methods : ['POST'])]
-    public function login(Request $request, TokenStorageInterface $tokenStorage,NormalizerInterface $normalizer): JsonResponse
+    public function login(Request $request, TokenStorageInterface $tokenStorage,NormalizerInterface $normalizer,ValidatorInterface $validator): JsonResponse
     {
         $email = $request->request->get('email');
         $password = $request->request->get('password');
@@ -32,9 +37,19 @@ class JSONAPISecurityController extends AbstractController
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $user = $userRepository->findOneBy(['email' => $email]);
 
-        if (!$user) {
-            return new JsonResponse(['success' => false, 'message' => 'Invalid email or password']);
+        if(!$email || !$password){
+            throw new BadCredentialsException('Invalid email or password');
         }
+        $errors = $validator->validate($email, [
+            new Email([
+                'message' => 'The email "{{ value }}" is not a valid email address.'
+            ])
+        ]);
+
+        if (count($errors) > 0) {
+            throw new ValidatorException($errors);
+        }
+
       /*$userRoles = $this->getUser()->getRoles();*/
         $user = $userRepository->findOneBy(['email' => $email]);
         $token = new UsernamePasswordToken($user, $password, 'main', ['ROLE_USER']);

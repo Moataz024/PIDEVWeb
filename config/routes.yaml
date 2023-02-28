@@ -1,3 +1,9 @@
 index:
     path: app_login
     controller: App\Controller\SecurityController::index
+register_api:
+    path: /api/register
+    methods: [POST]
+    controller: App\Controller\RegisterApiController::register
+    defaults:
+        _format: json

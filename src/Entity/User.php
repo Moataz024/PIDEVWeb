@@ -57,6 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $status = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Card $card = null;
+
 
     public function __construct()
     {
@@ -287,6 +290,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCard(): ?Card
+    {
+        return $this->card;
+    }
+
+    public function setCard(?Card $card): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($card === null && $this->card !== null) {
+            $this->card->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($card !== null && $card->getUser() !== $this) {
+            $card->setUser($this);
+        }
+
+        $this->card = $card;
 
         return $this;
     }

@@ -1,0 +1,56 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Card{% endblock %}
+
+{% block content %}
+
+<h1>Cart for User {{ cart.user.username }}</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% set total = 0 %} 
+        {% for item in cart.cardItems %}
+            <tr>
+                <td>{{ item.produit.libelle}}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.produit.prix * item.quantity }}</td>
+                 <td>
+                        <form method="post" action="{{ path('cart_item_delete1', { itemId: item.id }) }}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit">Delete</button>
+                        </form>
+                     </td>
+
+            </tr>
+             {% set total = total + (item.produit.prix * item.quantity) %}
+        {% endfor %}
+
+    </tbody>
+</table>
+<p>Total: {{ total }}</p>
+ <a href="{{ path('app_produit_index') }}">back to list</a>
+{# <a href="{{ path('cart_checkout') }}">Commander</a> #}
+{% endblock %}
+{% block score %}
+{% endblock %}
+{% block latest %}
+{% endblock %}
+{% block nextmatch %}
+{% endblock %}
+{% block sitesection %}
+{% endblock %}
+{% block blog %}
+{% endblock %}
+{% block footer %}
+{{ parent() }}
+{% endblock %}

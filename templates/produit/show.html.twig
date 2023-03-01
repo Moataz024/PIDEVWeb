@@ -1,0 +1,136 @@
+
+
+{% extends 'template/index.html.twig' %}
+
+{% block title %}Bienvenue dans notre magasin{% endblock %}
+
+    {% block header %}
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <header class="site-navbar py-4" role="banner">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <div class="logo">
+                    <a href="{{ path('app_template') }}">
+                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo" width="140" height="80" >
+                    </a>
+                </div>
+                <div class="ml-auto">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+                        <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                            <li ><a href="{{ asset ('front/index.html') }}" class="nav-link">Home</a></li>
+                            <li><a href="{{ path('app_event_index') }}" class="nav-link">Events</a></li>
+                            <li class="active" ><a href="{{ path('app_produit_index') }}" class="nav-link">Products</a></li>
+                            <li><a href="{{ asset ('front/blog.html') }}" class="nav-link">Equipments</a></li>
+                            <li><a href="{{ asset ('front/contact.html') }}" class="nav-link">Contact</a></li>
+                            {% if app.user %}
+                                {# Generate a URL for the current user's cart #}
+                                <a href="{{ path('security_cart_by_user', { userId: app.user.id }) }}">My Cart</a>
+                             {% endif %}
+                            {# <li><a href="{{ path('cart_by_user') }}" class="nav-link">My Cart</a></li> #}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {# <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.firstname }} </b> #}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">My profile</a>
+                                    <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
+                                class="icon-menu h3 text-white"></span></a>
+                </div>
+            </div>
+        </div>
+
+
+    </header>
+    {% endblock %}
+    {# {% block content %}
+    <div class="container" style="overflow-x : auto;padding : 200px">
+  <h1 class="text-center">Nos produits</h1>
+  <hr>
+  <div class="row" >
+  {% for produit in produits %}
+      <div class="col">
+        <div class="card">
+        
+         <img src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.libelle }}" class="product-img" width="150" height="150">
+          <div class="card-body">
+            <h5 class="card-title" style="color: red;">Product Name:{{ produit.libelle }}</h5>
+            
+            <p class="card-text" style="color: red;">Stock: {{ produit.stock }}</p>
+            <p class="card-text" style="color: red;">Price: {{ produit.prix }} €</p>
+            <a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn btn-primary">Voir détails</a>
+            <form method="POST" action="{{ path('app_cart_add', {'id': produit.id}) }}">
+               
+              <button type="submit" class="btn btn-success mt-2">Ajouter au panier</button>
+            </form>
+          </div>
+        </div>
+        
+      </div>
+    {% endfor %}
+  </div>
+  
+</div>
+    {% endblock %} #}
+    {% block content %}
+  <div class="container" style="overflow-x: auto; padding: 200px">
+    <h1 class="text-center">Nos produits</h1>
+    <hr>
+    <div class="row">
+      {% for produit in pagination %}
+        <div class="col">
+          <div class="card">
+            <img src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.libelle }}" class="product-img" width="150" height="150">
+            <div class="card-body">
+              <h5 class="card-title" style="color: red;">Product Name:{{ produit.libelle }}</h5>
+              {# <p class="card-text">{{ produit.description }}</p> #}
+              <p class="card-text" style="color: red;">Stock: {{ produit.stock }}</p>
+              <p class="card-text" style="color: red;">Price: {{ produit.prix }} €</p>
+              <a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn btn-primary">Voir détails</a>
+              <form method="POST" action="{{ path('app_cart_add', {'id': produit.id}) }}">
+                {# {{ csrf_token('add_to_cart_' ~ produit.id) }}  #}
+                <button type="submit" class="btn btn-success mt-2">Ajouter au panier</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {# {{ knp_pagination_render(pagination) }} #}
+    <div class="d-flex justify-content-center my-4">
+    {{ knp_pagination_render(pagination) }}
+</div>
+  </div>
+{% endblock %}
+
+{% block score %}
+{% endblock %}
+{% block latest %}
+{% endblock %}
+{% block nextmatch %}
+{% endblock %}
+{% block sitesection %}
+{% endblock %}
+{% block blog %}
+{% endblock %}
+{% block footer %}
+{{ parent() }}
+{% endblock %}
+{% block js %}
+{{parent()}}
+{% endblock %}

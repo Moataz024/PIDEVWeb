@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Repository\UserRepository;
 use App\Entity\User;
+use App\Repository\CardRepository;
 
 class SecurityController extends AbstractController
 {
@@ -155,5 +156,18 @@ class SecurityController extends AbstractController
         }else{
             return $this->redirectToRoute('app_access_denied', [], Response::HTTP_SEE_OTHER);
         }
+    }
+    #[Route('/cart/user/{userId}', name: 'security_cart_by_user')]
+    public function showUserCart($userId, CardRepository $cartRepository)
+    {
+        $cart = $cartRepository->findCartByUser($userId);
+
+        if (!$cart) {
+            throw $this->createNotFoundException('Cart not found.');
+        }
+
+        return $this->render('card/showcard.html.twig', [
+            'cart' => $cart,
+        ]);
     }
 }

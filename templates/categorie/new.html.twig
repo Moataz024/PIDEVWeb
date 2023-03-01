@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Categorie{% endblock %}
+
+{% block content %}
+    <h1>Create new Categorie</h1>
+
+    {{ include('categorie/_form.html.twig') }}
+
+    <a href="{{ path('app_categorie_index') }}">back to list</a>
+{% endblock %}
+{% block score %}
+{% endblock %}
+{% block latest %}
+{% endblock %}
+{% block nextmatch %}
+{% endblock %}
+{% block sitesection %}
+{% endblock %}
+{% block blog %}
+{% endblock %}
+{% block footer %}
+{{ parent() }}
+{% endblock %}

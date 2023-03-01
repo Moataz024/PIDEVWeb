@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230219180741 extends AbstractMigration
+final class Version20230301005243 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,16 @@ final class Version20230219180741 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE coach RENAME INDEX idx_3f596dccaadf2142 TO IDX_3F596DCC6D55ACAB');
+        $this->addSql('ALTER TABLE card ADD user_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE card ADD CONSTRAINT FK_161498D3A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_161498D3A76ED395 ON card (user_id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE coach RENAME INDEX idx_3f596dcc6d55acab TO IDX_3F596DCCAADF2142');
+        $this->addSql('ALTER TABLE card DROP FOREIGN KEY FK_161498D3A76ED395');
+        $this->addSql('DROP INDEX UNIQ_161498D3A76ED395 ON card');
+        $this->addSql('ALTER TABLE card DROP user_id');
     }
 }

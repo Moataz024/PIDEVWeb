@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    
+    <h1><center>{{ produit.libelle }}</center></h1>
+    <hr><hr>
+
+    <div class="row product-container">
+            <div class="col-md-4">
+                <div class="product-item text-center">
+                <img src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.libelle }}" class="product-img" width="150" height="150">
+                    
+                    {#<h5 style="color: red;">{{ produit.id }}</h5>#}
+                    <h5 style="color: red;">poduct id: {{ produit.id}}</h5>
+                    <h5 style="color: red;">product name: {{ produit.libelle }}</h5>
+                    
+                    
+                     <h5 style="color: red;">Rest in stock: {{ produit.stock }}</h5>
+                     <h5 style="color: red;">price: {{ (produit.prix) }} €</h5>
+                    <h5 style="color: red;">categorie: {{ (produit.categorie.nomCat) }} €</h5>
+                    <form method="POST" action="{{ path('app_cart_add', {'id': produit.id}) }}">
+               {# {{ csrf_token('add_to_cart_' ~ produit.id) }}  #}
+              <button type="submit" class="btn btn-success mt-2">Ajouter au panier</button>
+                    
+                </div>
+            </div>
+{% endblock %}
+{% block score %}
+{% endblock %}
+{% block latest %}
+{% endblock %}
+{% block nextmatch %}
+{% endblock %}
+{% block sitesection %}
+{% endblock %}
+{% block blog %}
+{% endblock %}
+{% block footer %}
+{{ parent() }}
+{% endblock %}

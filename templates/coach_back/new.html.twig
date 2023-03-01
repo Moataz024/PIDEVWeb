@@ -1,0 +1,9 @@
+{% extends "back/base.html.twig" %}
+
+{% block body %}
+    <h1>Add new Coach</h1>
+
+    {{ include('coach_back/_form.html.twig') }}
+
+    <a href="{{ path('app_coach_back_index') }}">back to list</a>
+{% endblock %}

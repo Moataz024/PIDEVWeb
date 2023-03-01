@@ -90,5 +90,4 @@ class Academy
     public function __toString() {
         return $this->name;
     }
-
 }

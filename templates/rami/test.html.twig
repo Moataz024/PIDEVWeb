@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RAmi{% endblock %}
+
+{% block header %}
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <header class="site-navbar py-4" role="banner">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <div class="logo">
+                    <a href="{{ path('app_template') }}">
+                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo" width="140" height="80">
+                    </a>
+                </div>
+                <div class="ml-auto">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+                        <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                            <li><a href="{{ path('app_template') }}" class="nav-link">Home</a></li>
+                            <li class="active"><a href="{{ path('app_event_index') }}" class="nav-link">Events</a></li>
+                            <li><a href="#" class="nav-link">Products</a></li>
+                            <li><a href="#" class="nav-link">Equipments</a></li>
+                            <li><a href="#" class="nav-link">Contact</a></li>
+                            {#
+                            <li><a href="{{ path('app_produit_index') }}" class="nav-link">Product</a></li>
+                            #}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.nomutilisateur }} </b>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="{{ path('app_profile',{'id': app.user.id}) }}">My profile</a>
+                                    <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
+                                class="icon-menu h3 text-white"></span></a>
+                </div>
+            </div>
+        </div>
+
+
+    </header>
+    {% endblock %}
+
+{% block content %}
+    <h1>Event index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Lieu</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.id }}</td>
+                <td>{{ event.nom }}</td>
+                <td>{{ event.lieu }}</td>
+                <td>{{ event.category }}</td>
+                <td>{{ event.description }}</td>
+                <td>
+                    <a href="{{ path('app_event_show', {'id': event.id}) }}"><button class="btn btn-outline-primary">Show</button></a>
+                    {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
+                        {% if app.user.id == event.organisateur.id %}
+                    <a href="{{ path('app_event_edit', {'id': event.id}) }}"><button class="btn btn-outline-primary">Edit</button></a>
+                            {% endif %}
+                    {% endif  %}
+                    {% if is_granted('ROLE_CLIENT') %}
+                    <a href="{{ path('add_participant', { 'id': event.id}) }}" class="btn btn-primary">Participer</a>
+                    {% endif  %}
+                    {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
+                        {% if app.user.id == event.organisateur.id %}
+                            <a href="{{ path('app_event_showPArticipant', {'id': event.id}) }}"><button class="btn btn-outline-primary">Show participants</button></a>
+                        {% endif %}
+                    {% endif  %}
+
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_event_new') }}"><button class="btn btn-outline-primary">Creat new</button></a>
+    {% endif %}
+{% endblock %}

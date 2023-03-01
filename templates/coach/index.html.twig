@@ -1,28 +1,120 @@
-{% extends "back/base.html.twig" %}
+{% extends "front/base.html.twig" %}
+
+{% block title %}Coach{% endblock %}
+{% block header %}
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <header class="site-navbar py-4" role="banner">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <div class="logo">
+                    <a href="{{ path('app_template') }}">
+                        <img src="{{ asset ('front/images/sportify.png') }}" alt="Logo" width="140" height="30">
+                    </a>
+                </div>
+                <div class="ml-auto">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+                        <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                            <li><a href="{{ path('app_template') }}" class="nav-link">Home</a></li>
+                            <li><a href="{{ path('app_academy_index') }}" class="nav-link">Academy</a></li>
+                            <li class="active"><a href="{{ path('app_coach_index') }}" class="nav-link">Coach</a></li>
+                            <li><a href="{{ asset ('front/players.html') }}" class="nav-link">Products</a></li>
+                            <li><a href="{{ asset ('front/blog.html') }}" class="nav-link">Equipments</a></li>
+                            <li><a href="{{ asset ('front/contact.html') }}" class="nav-link">Contact</a></li>
+                        </ul>
+                    </nav>
+
+                    <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
+                                class="icon-menu h3 text-white"></span></a>
+                </div>
+            </div>
+        </div>
+
+
+    </header>
+{% endblock %}
 
 {% block body %}
-    <h1>Coach index</h1>
 
-    <table class="table">
+    <div class="hero overlay" style="background-image: url({{ asset('front/images/coach.jpg') }});background-color: crimson;;">{#background-size: 400px 200px;#}
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-9 mx-auto text-center">
+            <h1 class="text-white">Coach</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+            <div class="row align-items-center" >
+                {# <div class="col-lg-12 ml-auto" style="background-color: rgba(39, 49, 59, 0.7);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: -50px;"> #}
+
+    <h1>Coaches list</h1>
+    <html>
+    <head>
+    <style>
+    .table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 1em;
+        font-family: sans-serif;
+        min-width: 400px;
+        /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        border: none; */
+        border: 2px groove transparent; 
+        /* border-radius: 10px */
+    }
+    .table thead tr {
+    background-color: #3CB371;
+    color: #ffffff;
+    text-align: left;
+    }
+    .table th,
+    .table td {
+        border: none;
+        text-align: left;
+        padding: 1px 2px;
+    }
+    
+
+    </style>
+    </head>
+    <body>
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
+                {# <th>Id</th> #}
                 <th>Name</th>
                 <th>Email</th>
                 <th>Telephone</th>
-                <th>actions</th>
+                <th>Academy</th>
+                {# <th>actions</th> #}
             </tr>
         </thead>
         <tbody>
         {% for coach in coaches %}
             <tr>
-                <td>{{ coach.id }}</td>
+                {# <td>{{ coach.id }}</td> #}
                 <td>{{ coach.name }}</td>
                 <td>{{ coach.email }}</td>
                 <td>{{ coach.telephone }}</td>
+                <td>{{ coach.academy }}</td>
                 <td>
-                    <a href="{{ path('app_coach_show', {'id': coach.id}) }}">show</a>
-                    <a href="{{ path('app_coach_edit', {'id': coach.id}) }}">edit</a>
+                    <a href="{{ path('app_coach_show', {'id': coach.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a>
+                    <a href="{{ path('app_coach_edit', {'id': coach.id}) }}"><img src="{{ asset ('icons/edit.png') }}" alt="Edit" width="25" height="25"></a>
                     {{ include('coach/_delete_form.html.twig') }}
                 </td>
             </tr>

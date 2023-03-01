@@ -1,0 +1,11 @@
+{% extends "back/base.html.twig" %}
+
+{% block body %}
+    <h1>Edit Coach</h1>
+
+    {{ include('coach_back/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_coach_back_index') }}">back to list</a>
+
+    {{ include('coach_back/_delete_form.html.twig') }}
+{% endblock %}

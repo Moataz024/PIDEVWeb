@@ -1,0 +1,36 @@
+{% extends "back/base.html.twig" %}
+
+{% block body %}
+    <h1>Coach</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ coach_back.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ coach_back.name }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ coach_back.email }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ coach_back.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Academy</th>
+                <td>{{ coach_back.academy }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_coach_back_index') }}">back to list</a>
+
+    <a href="{{ path('app_coach_back_edit', {'id': coach_back.id}) }}">edit</a>
+
+    {{ include('coach_back/_delete_form.html.twig') }}
+{% endblock %}

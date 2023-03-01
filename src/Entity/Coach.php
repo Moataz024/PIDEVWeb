@@ -24,7 +24,10 @@ class Coach
 
     #[ORM\JoinColumn(onDelete:"SET NULL")]
     #[ORM\ManyToOne(inversedBy: 'coaches')]
-    private ?Academy $academy = null;
+    private ?Academy $academyId = null;
+
+    // #[ORM\Column(length: 255)]
+    // private ?string $sport = null;
 
     public function getId(): ?int
     {
@@ -69,13 +72,28 @@ class Coach
 
     public function getAcademy(): ?Academy
     {
-        return $this->academy;
+        return $this->academyId;
     }
 
     public function setAcademy(?Academy $Academy): self
     {
-        $this->academy = $Academy;
+        $this->academyId = $Academy;
 
         return $this;
     }
+    // public function __toString() {
+    //     return $this->name;
+    // }
+
+    // public function getSport(): ?string
+    // {
+    //     return $this->sport;
+    // }
+
+    // public function setSport(string $sport): self
+    // {
+    //     $this->sport = $sport;
+
+    //     return $this;
+    // }
 }

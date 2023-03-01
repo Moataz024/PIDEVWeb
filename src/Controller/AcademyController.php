@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Academy;
 use App\Form\AcademyType;
 use App\Repository\AcademyRepository;
+use App\Repository\CoachRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,13 @@ class AcademyController extends AbstractController
     public function index(AcademyRepository $academyRepository): Response
     {
         return $this->render('academy/index.html.twig', [
+            'academies' => $academyRepository->findAll(),
+        ]);
+    }
+    #[Route('/client', name: 'app_academy_client', methods: ['GET'])]
+    public function client(AcademyRepository $academyRepository): Response
+    {
+        return $this->render('academy/client.html.twig', [
             'academies' => $academyRepository->findAll(),
         ]);
     }
@@ -41,10 +49,21 @@ class AcademyController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_academy_show', methods: ['GET'])]
-    public function show(Academy $academy): Response
+    public function show(Academy $academy,CoachRepository $CoachRepository): Response
     {
+        $coaches = $CoachRepository->findBy(['academyId' => $academy]);
         return $this->render('academy/show.html.twig', [
             'academy' => $academy,
+            'coaches' => $coaches,
+        ]);
+    }
+    #[Route('/{id}/client', name: 'app_academy_show_client', methods: ['GET'])]
+    public function show_client(Academy $academy,CoachRepository $CoachRepository): Response
+    {
+            $coaches = $CoachRepository->findBy(['academyId' => $academy]);
+        return $this->render('academy/show_client.html.twig', [
+            'academy' => $academy,
+            'coaches' => $coaches,
         ]);
     }
 

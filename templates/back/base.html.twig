@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
+    <title>Rami Admin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset ('assets/back/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset ('assets/back/vendors/css/vendor.bundle.base.css') }}">
@@ -27,20 +27,20 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="index.html"><img src="{{ asset ('assets/back/images/logo.svg') }}" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="{{ asset ('assets/back/images/logo-mini.svg') }}" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo" href="index.html"><img src="{{ asset ('back/images/sportify.png') }}" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="{{ asset ('back/images/logo.png') }}" alt="logo"  /></a>
         </div>
         <ul class="nav">
           <li class="nav-item profile">
             <div class="profile-desc">
               <div class="profile-pic">
                 <div class="count-indicator">
-                  <img class="img-xs rounded-circle " src="{{ asset ('assets/back/images/faces/face15.jpg') }}" alt="">
+                  <img class="img-xs rounded-circle " src="{{ asset ('back/images/faces/rami.jpg') }}" alt="">
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
-                  <h5 class="mb-0 font-weight-normal">{{  app.user.nomutilisateur  }}</h5>
-                  <span>Gold Member</span>
+                  <h5 class="mb-0 font-weight-normal">Rami Brick</h5>
+                  <span>Admin</span>
                 </div>
               </div>
               <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
@@ -84,7 +84,15 @@
             <span class="nav-link">Navigation</span>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="{{ path('app_academy_index') }}">
+            <a class="nav-link" href="{{ path('app_test') }}">
+              <span class="menu-icon">
+                <i class="mdi mdi-speedometer"></i>
+              </span>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ path('app_academy_back_index') }}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
@@ -92,22 +100,14 @@
             </a>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="{{ path('app_coach_index') }}">
+            <a class="nav-link" href="{{ path('app_coach_back_index') }}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
               <span class="menu-title">Coach</span>
             </a>
           </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="{{ path('app_academy_index') }}">
-              <span class="menu-icon">
-                <i class="mdi mdi-account-multiple"></i>
-              </span>
-              <span class="menu-title">Users</span>
-            </a>
-          </li>
-          <li class="nav-item menu-items">
+          {# <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <span class="menu-icon">
                 <i class="mdi mdi-laptop"></i>
@@ -180,7 +180,7 @@
               </span>
               <span class="menu-title">Documentation</span>
             </a>
-          </li>
+          </li> #}
         </ul>
       </nav>
       <!-- partial -->
@@ -203,7 +203,7 @@
             </ul>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown d-none d-lg-block">
-                <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Project</a>
+                {# <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Project</a> #}
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
                   <h6 class="p-3 mb-0">Projects</h6>
                   <div class="dropdown-divider"></div>
@@ -339,26 +339,26 @@
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="{{ asset ('assets/back/images/faces/face15.jpg') }}" alt="">
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">{{  app.user.nomutilisateur  }}</p>
+                    <img class="img-xs rounded-circle" src="{{ asset ('back/images/faces/rami.jpg') }}" alt="">
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Rami Brick</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
                   <h6 class="p-3 mb-0">Profile</h6>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item" href="{{ path('app_profile_back',{ 'id' : app.user.id}) }}">
+                  <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
                       <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-account-convert text-success"></i>
+                        <i class="mdi mdi-settings text-success"></i>
                       </div>
                     </div>
                     <div class="preview-item-content">
-                      <p class="preview-subject mb-1">My profile</p>
+                      <p class="preview-subject mb-1">Settings</p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item" href="{{ path('app_logout')}}">
+                  <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
                       <div class="preview-icon bg-dark rounded-circle">
                         <i class="mdi mdi-logout text-danger"></i>
@@ -384,7 +384,7 @@
         <!-- partial -->
         <div class="main-panel">
 
-            {# block body #}
+            
 
 {% block body %}
     
@@ -395,12 +395,12 @@
 
 
           <!-- partial:partials/_footer.html -->
-          <footer class="footer">
+          {# <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
               <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
               <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com</span>
             </div>
-          </footer>
+          </footer> #}
           <!-- partial -->
         </div>
 

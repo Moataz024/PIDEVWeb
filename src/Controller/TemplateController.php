@@ -36,6 +36,12 @@ class TemplateController extends AbstractController
         return $this->render('error_pages/403.html.twig');
     }
 
+    #[Route('/wakanda', name: 'app_dont_do_that_here')]
+    public function weDontDoThatHere(): Response
+    {
+        return $this->render('error_pages/meme.html.twig');
+    }
+
     #[Route('/suspended', name: 'app_suspended')]
     public function showSuspendedPage(TokenStorageInterface $tokenStorage): Response
     {

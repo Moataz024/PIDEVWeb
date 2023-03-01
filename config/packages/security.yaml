@@ -41,7 +41,8 @@ security:
          - { path: ^/user, roles: [ROLE_USER] }
          - { path: ^/pc, roles: [ROLE_OWNER,ROLE_CLIENT] }
          - { path: /prop, roles: [ROLE_OWNER] }
-    access_denied_url: app_access_denied
+    access_denied_url: app_dont_do_that_here # app_access_denied
+
 
 when@test:
     security:

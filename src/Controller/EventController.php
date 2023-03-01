@@ -9,22 +9,28 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Event;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/event')]
 class EventController extends AbstractController
 {
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $eventRepository,Security $security): Response
     {
-        /*test*/
+        if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('event/index.html.twig', [
             'events' => $eventRepository->findAll(),
         ]);
     }
 
     #[Route('/prop/new', name: 'app_event_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EventRepository $eventRepository): Response
+    public function new(Request $request, EventRepository $eventRepository,Security $security): Response
     {
+        if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        }
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
@@ -42,16 +48,22 @@ class EventController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_event_show', methods: ['GET'])]
-    public function show(Event $event): Response
+    public function show(Event $event,Security $security): Response
     {
+        if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('event/show.html.twig', [
             'event' => $event,
         ]);
     }
 
     #[Route('/{id}/prop/edit', name: 'app_event_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
+    public function edit(Request $request, Event $event, EventRepository $eventRepository,Security $security): Response
     {
+        if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        }
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
@@ -67,9 +79,12 @@ class EventController extends AbstractController
         ]);
     }
 
-    #[Route('/prop/{id}', name: 'app_event_delete', methods: ['POST'])]
-    public function delete(Request $request, Event $event, EventRepository $eventRepository): Response
+    #[Route('/{id}/delete', name: 'app_event_delete', methods: ['POST'])]
+    public function delete(Request $request, Event $event, EventRepository $eventRepository,Security $security): Response
     {
+        if (!$security->isGranted('ROLE_ADMIN') && !$security->isGranted('ROLE_OWNER')) {
+            return $this->redirectToRoute('app_dont_do_that_here');
+        }
         if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
             $eventRepository->remove($event, true);
         }

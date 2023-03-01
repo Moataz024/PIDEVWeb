@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Card;
+use App\Entity\Categorie;
 use App\Entity\CardItem;
 use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
+use App\Repository\CategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,20 +28,52 @@ class ProduitController extends AbstractController
     //         'produits' => $produitRepository->findAll(),
     //     ]);
     // }
+    //pagination :
+//     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
+// public function index(Request $request, PaginatorInterface $paginator, ProduitRepository $produitRepository): Response
+// {
+//     $queryBuilder = $produitRepository->createQueryBuilder('p');
+//     $pagination = $paginator->paginate(
+//         $queryBuilder,
+//         $request->query->getInt('page', 1),
+//         1 // number of items per page
+//     );
+
+//     return $this->render('produit/show.html.twig', [
+//         'pagination' => $pagination,
+//     ]);
+// }
+
+    //pagination and filtre : 
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
-public function index(Request $request, PaginatorInterface $paginator, ProduitRepository $produitRepository): Response
+public function index(Request $request, PaginatorInterface $paginator, ProduitRepository $produitRepository, CategorieRepository $categorieRepository): Response
 {
-    $queryBuilder = $produitRepository->createQueryBuilder('p');
+    $queryBuilder = $produitRepository->createQueryBuilder('p')
+        ->leftJoin('p.categorie', 'c')
+        ->addSelect('c');
+        
+    $categorieId = $request->query->get('categorie');
+    if ($categorieId) {
+        $queryBuilder->andWhere('c.id = :categorieId')
+            ->setParameter('categorieId', $categorieId);
+    }
+    
     $pagination = $paginator->paginate(
         $queryBuilder,
         $request->query->getInt('page', 1),
-        1 // number of items per page
+        3 // number of items per page
     );
-
+    
+    $categories = $categorieRepository->findAll();
+    
     return $this->render('produit/show.html.twig', [
         'pagination' => $pagination,
+        'categories' => $categories,
+        'selectedCategoryId' => $categorieId,
     ]);
 }
+
+
 
     #[Route('/myproducts', name: 'app_produit', methods: ['GET'])]
     public function indexown(ProduitRepository $produitRepository): Response

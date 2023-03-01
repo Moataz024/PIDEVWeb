@@ -39,6 +39,15 @@ class ProduitRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByCategorie(Categorie $categorie): array
+{
+    return $this->createQueryBuilder('p')
+        ->andWhere('p.categorie = :categorie')
+        ->setParameter('categorie', $categorie)
+        ->getQuery()
+        ->getResult();
+}  
+
 //    /**
 //     * @return Produit[] Returns an array of Produit objects
 //     */

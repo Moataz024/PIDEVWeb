@@ -87,7 +87,9 @@
   
 </div>
     {% endblock %} #}
-    {% block content %}
+
+    {#code inculde pagination :#}
+    {# {% block content %}
   <div class="container" style="overflow-x: auto; padding: 200px">
     <h1 class="text-center">Nos produits</h1>
     <hr>
@@ -98,12 +100,12 @@
             <img src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.libelle }}" class="product-img" width="150" height="150">
             <div class="card-body">
               <h5 class="card-title" style="color: red;">Product Name:{{ produit.libelle }}</h5>
-              {# <p class="card-text">{{ produit.description }}</p> #}
+              
               <p class="card-text" style="color: red;">Stock: {{ produit.stock }}</p>
               <p class="card-text" style="color: red;">Price: {{ produit.prix }} €</p>
               <a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn btn-primary">Voir détails</a>
               <form method="POST" action="{{ path('app_cart_add', {'id': produit.id}) }}">
-                {# {{ csrf_token('add_to_cart_' ~ produit.id) }}  #}
+                
                 <button type="submit" class="btn btn-success mt-2">Ajouter au panier</button>
               </form>
             </div>
@@ -111,12 +113,110 @@
         </div>
       {% endfor %}
     </div>
-    {# {{ knp_pagination_render(pagination) }} #}
+    
     <div class="d-flex justify-content-center my-4">
     {{ knp_pagination_render(pagination) }}
 </div>
   </div>
+{% endblock %} #}
+
+{# {% block content %}
+  <div class="container" style="overflow-x: auto; padding: 200px">
+    <h1 class="text-center">Nos produits</h1>
+    <hr>
+    <div class="row">
+      <div class="col-12 mb-4">
+        <form action="{{ path('app_produit_index') }}" method="GET">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <select name="category" id="category" class="form-control">
+                  <option value="">All Categories</option>
+                  {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == app.request.query.get('category') %}selected{% endif %}>{{ category.nomCat }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      {% for produit in pagination %}
+        <div class="col">
+          <div class="card">
+            <img src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.libelle }}" class="product-img" width="150" height="150">
+            <div class="card-body">
+              <h5 class="card-title" style="color: red;">Product Name:{{ produit.libelle }}</h5>
+              
+              <p class="card-text" style="color: red;">Stock: {{ produit.stock }}</p>
+              <p class="card-text" style="color: red;">Price: {{ produit.prix }} €</p>
+              <a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn btn-primary">Voir détails</a>
+              <form method="POST" action="{{ path('app_cart_add', {'id': produit.id}) }}">
+                
+                <button type="submit" class="btn btn-success mt-2">Ajouter au panier</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="d-flex justify-content-center my-4">
+      {{ knp_pagination_render(pagination) }}
+    </div>
+  </div>
+{% endblock %} #}
+
+{% block content %}
+  <div class="container" style="overflow-x: auto; padding: 200px">
+    <h1 class="text-center">Nos produits</h1>
+    <hr>
+    <div class="row">
+      <div class="col-12 mb-4">
+        <form action="{{ path('app_produit_index') }}" method="GET">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <select name="categorie" id="categorie" class="form-control">
+                  <option value="">Toutes les catégories</option>
+                  {% for categorie in categories %}
+                    <option value="{{ categorie.id }}" {% if categorie.id == selectedCategoryId %}selected{% endif %}>{{ categorie.nomCat }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button type="submit" class="btn btn-primary">Filtrer</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      {% for produit in pagination %}
+        <div class="col">
+          <div class="card">
+            <img src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.libelle }}" class="product-img" width="150" height="150">
+            <div class="card-body">
+              <h5 class="card-title" style="color: red;">Nom du produit:{{ produit.libelle }}</h5>
+              <p class="card-text" style="color: red;">Stock: {{ produit.stock }}</p>
+              <p class="card-text" style="color: red;">Prix: {{ produit.prix }} €</p>
+              <a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn btn-primary">Voir détails</a>
+              <form method="POST" action="{{ path('app_cart_add', {'id': produit.id}) }}">
+                <button type="submit" class="btn btn-success mt-2">Ajouter au panier</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="d-flex justify-content-center my-4">
+      {{ knp_pagination_render(pagination) }}
+    </div>
+  </div>
 {% endblock %}
+
+
 
 {% block score %}
 {% endblock %}

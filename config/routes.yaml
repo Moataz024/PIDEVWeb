@@ -7,3 +7,8 @@ register_api:
     controller: App\Controller\RegisterApiController::register
     defaults:
         _format: json
+not_found:
+    path: /{wildcard}
+    controller: App\Controller\TemplateController::notFound
+    requirements:
+        wildcard: '.*'

@@ -186,9 +186,9 @@
                   {% endfor %}
                 </select> #}
                 <select name="categorie" id="categorie" class="form-control" onchange="this.form.submit()">
-    <option value="">All categories</option>
+    <option value="" style="color: green;">All categories</option>
     {% for categorie in categories %}
-        <option value="{{ categorie.id }}" {% if selectedCategory is not null and categorie.id == selectedCategory.id %}selected{% endif %} >{{ categorie.nomCat }}</option>
+        <option value="{{ categorie.id }}" style="color: green;" {% if selectedCategory is not null and categorie.id == selectedCategory.id %}selected{% endif %} >{{ categorie.nomCat }}</option>
     {% endfor %}
 </select>
               </div>

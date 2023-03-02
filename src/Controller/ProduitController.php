@@ -96,7 +96,7 @@ public function index(Request $request, PaginatorInterface $paginator, ProduitRe
     $pagination = $paginator->paginate(
         $produits,
         $request->query->getInt('page', 1),
-        10 // number of items per page
+        1 // number of items per page
     );
     
     $categories = $categorieRepository->findAll();

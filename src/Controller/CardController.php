@@ -12,6 +12,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\User;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
+
 
 #[Route('/card')]
 class CardController extends AbstractController
@@ -96,22 +103,42 @@ class CardController extends AbstractController
         return $this->redirectToRoute('app_card_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/item/{itemId}/delete', name: 'cart_item_delete1', methods: ['DELETE'])]
-    public function deleteCartItem(int $itemId, EntityManagerInterface $entityManager): Response
+    // #[Route('/item/{itemId}/delete', name: 'cart_item_delete1', methods: ['POST'])]
+    // public function deleteCartItem(int $itemId, EntityManagerInterface $entityManager): Response
+    // {
+    //     $item = $entityManager->getRepository(CardItem::class)->find($itemId);
+
+    //     if (!$item) {
+    //         throw $this->createNotFoundException('Item not found.');
+    //     }
+
+    //     $entityManager->remove($item);
+    //     $entityManager->flush();
+
+    //     $this->addFlash('success', 'Item deleted successfully.');
+
+    //     return $this->redirectToRoute('cart_by_user', ['userId' => $userId]);
+    // }
+
+    #[Route('/item/{itemId}/delete', name: 'cart_item_delete1', methods: ['POST'])]
+    public function deleteCartItem(int $itemId, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $item = $entityManager->getRepository(CardItem::class)->find($Id);
+        $item = $entityManager->getRepository(CardItem::class)->find($itemId);
 
         if (!$item) {
             throw $this->createNotFoundException('Item not found.');
         }
 
-        $entityManager->remove($item);
+        $cart = $item->getCard();
+        $cart->removeCardItem($item);
+        $entityManager->persist($cart);
         $entityManager->flush();
-
         $this->addFlash('success', 'Item deleted successfully.');
 
-        return $this->redirectToRoute('cart_by_user');
+        $userId = $request->request->get('userId');
+        return $this->redirectToRoute('app_produit_index');
     }
+
 
 //     #[Route('/checkout', name: 'cart_checkout')]
 //         public function checkout(Request $request , CommandeRepository $commanderepository ,EntityManagerInterface $entityManager ): Response

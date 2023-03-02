@@ -17,7 +17,7 @@ class CardItem
     #[ORM\Column]
     private ?int $quantity = null;
 
-    #[ORM\OneToOne(mappedBy: 'carditem', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'carditem')]
     private ?Produit $produit = null;
 
     #[ORM\ManyToOne(inversedBy: 'cardItems')]
@@ -74,4 +74,14 @@ class CardItem
 
         return $this;
     }
+
+    public function removeCarditem(CardItem $carditem): self
+{
+    if ($this->cardItems->contains($carditem)) {
+        $carditem->setCard(null);
+        $this->cardItems->removeElement($carditem);
+    }
+
+    return $this;
+}
 }

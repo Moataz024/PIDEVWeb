@@ -17,7 +17,7 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $libelle = null;
+    public ?string $libelle = null;
 
     #[ORM\Column]
     private ?float $prix = null;
@@ -32,7 +32,8 @@ class Produit
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
-    #[ORM\OneToOne(inversedBy: 'produit', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'produit')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?CardItem $carditem = null;
 
     #[Vich\UploadableField(mapping: 'produit_directory', fileNameProperty: 'imageName')]

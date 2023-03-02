@@ -66,17 +66,26 @@ class Card
         return $this;
     }
 
-    public function removeCardItem(CardItem $cardItem): self
-    {
-        if ($this->cardItems->removeElement($cardItem)) {
-            // set the owning side to null (unless already changed)
-            if ($cardItem->getCard() === $this) {
-                $cardItem->setCard(null);
-            }
-        }
+    // public function removeCardItem(CardItem $cardItem): self
+    // {
+    //     if ($this->cardItems->removeElement($cardItem)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($cardItem->getCard() === $this) {
+    //             $cardItem->setCard(null);
+    //         }
+    //     }
 
-        return $this;
+    //     return $this;
+    // }
+    public function removeCardItem(CardItem $carditem): self
+{
+    if ($this->cardItems->contains($carditem)) {
+        $carditem->setCard(null);
+        $this->cardItems->removeElement($carditem);
     }
+
+    return $this;
+}
 
     public function getUser(): ?User
     {

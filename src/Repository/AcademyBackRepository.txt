@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\AcademyBack;
+use App\Entity\Academy;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,10 +18,10 @@ class AcademyBackRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, AcademyBack::class);
+        parent::__construct($registry, Academy::class);
     }
 
-    public function save(AcademyBack $entity, bool $flush = false): void
+    public function save(Academy $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class AcademyBackRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(AcademyBack $entity, bool $flush = false): void
+    public function remove(Academy $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class AcademyBackRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return AcademyBack[] Returns an array of AcademyBack objects
+//     * @return Academy[] Returns an array of Academy objects
 //     */
 //    public function findByExampleField($value): array
 //    {

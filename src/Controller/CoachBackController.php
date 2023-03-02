@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\CoachBack;
-use App\Form\CoachBack1Type;
-use App\Repository\CoachBackRepository;
+use App\Entity\Academy;
+use App\Entity\Coach;
+use App\Form\CoachType;
 use App\Repository\CoachRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,19 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class CoachBackController extends AbstractController
 {
     #[Route('/', name: 'app_coach_back_index', methods: ['GET'])]
-    public function index(CoachBackRepository $coachBackRepository,CoachRepository $coachrepo): Response
+    public function index(CoachRepository $coachrepo): Response
     {
         return $this->render('coach_back/index.html.twig', [
-            'coach_backs' => $coachBackRepository->findAll(),
-            'coach_fronts' => $coachrepo->findAll(),
+            'coach_backs' => $coachrepo->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_coach_back_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CoachBackRepository $coachBackRepository): Response
+    public function new(Request $request, CoachRepository $coachBackRepository): Response
     {
-        $coachBack = new CoachBack();
-        $form = $this->createForm(CoachBack1Type::class, $coachBack);
+        $coachBack = new Coach();
+        $form = $this->createForm(CoachType::class, $coachBack);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,8 +41,8 @@ class CoachBackController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_coach_back_show', methods: ['GET'])]
-    public function show(CoachBack $coachBack): Response
+    #[Route('/{id}/show', name: 'app_coach_back_show', methods: ['GET','POST'])]
+    public function show(Coach $coachBack): Response
     {
         return $this->render('coach_back/show.html.twig', [
             'coach_back' => $coachBack,
@@ -51,9 +50,9 @@ class CoachBackController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_coach_back_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, CoachBack $coachBack, CoachBackRepository $coachBackRepository): Response
+    public function edit(Request $request, Coach $coachBack, CoachRepository $coachBackRepository): Response
     {
-        $form = $this->createForm(CoachBack1Type::class, $coachBack);
+        $form = $this->createForm(CoachType::class, $coachBack);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -69,7 +68,7 @@ class CoachBackController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_coach_back_delete', methods: ['POST'])]
-    public function delete(Request $request, CoachBack $coachBack, CoachBackRepository $coachBackRepository): Response
+    public function delete(Request $request, Coach $coachBack, CoachRepository $coachBackRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$coachBack->getId(), $request->request->get('_token'))) {
             $coachBackRepository->remove($coachBack, true);

@@ -27,10 +27,8 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('app_coach_back_index') }}">back to list</a>
-
-    <a href="{{ path('app_coach_back_edit', {'id': coach_back.id}) }}">edit</a>
-
+   
+    {{ include('coach_back/btnedit.html.twig') }}
     {{ include('coach_back/_delete_form.html.twig') }}
+    <a href="{{ path('app_coach_back_index') }}"><img src="{{ asset ('icons/back.png') }}" alt="Edit" width="25" height="25">back</a>
 {% endblock %}

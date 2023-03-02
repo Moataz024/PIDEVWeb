@@ -67,7 +67,7 @@
     <style>
     .table {
         border-collapse: collapse;
-        margin: 25px 0;
+        margin: 25px auto;
         font-size: 1em;
         font-family: sans-serif;
         min-width: 400px;
@@ -120,7 +120,7 @@
                 {# <th>Id</th> #}
                 <th>Name</th>
                 <th>Category</th>
-                {# <th>actions</th> #}
+                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -130,9 +130,18 @@
                 <td>{{ academy.name }}</td>
                 <td>{{ academy.category }}</td>
                 <td>
-                    <a href="{{ path('app_academy_show', {'id': academy.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a>
-                    <a href="{{ path('app_academy_edit', {'id': academy.id}) }}"><img src="{{ asset ('icons/edit.png') }}" alt="Edit" width="25" height="25"></a>
-                    {{ include('academy/_delete_form.html.twig') }}
+                    <table>
+                        <tr>
+                            <td>{{ include('academy/btnshow.html.twig') }}</td>
+                            <td>{{ include('academy/btnedit.html.twig') }}</td>
+                            
+                        </tr>
+                    </table>
+                    {# <a href="{{ path('app_academy_show', {'id': academy.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a>
+                    <a href="{{ path('app_academy_edit', {'id': academy.id}) }}"><img src="{{ asset ('icons/edit.png') }}" alt="Edit" width="25" height="25"></a> #}
+                    {# {{ include('academy/btnshow.html.twig') }}
+                    {{ include('academy/btnedit.html.twig') }} #}
+                    {# {{ include('academy/_delete_form.html.twig') }} #}
                 </td>
             </tr>
         {% else %}
@@ -145,5 +154,5 @@
     </body>
     </html> 
 
-    <a href="{{ path('app_academy_new') }}">Create new</a>
+    <a href="{{ path('app_academy_new') }}">Add<img src="{{ asset ('icons/add.png') }}" width="20" height="20"></a>
 {% endblock %}

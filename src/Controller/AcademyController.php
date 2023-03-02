@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Academy;
 use App\Form\AcademyType;
+use App\Form\ApplyType;
 use App\Repository\AcademyRepository;
 use App\Repository\CoachRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,14 +20,18 @@ class AcademyController extends AbstractController
     public function index(AcademyRepository $academyRepository): Response
     {
         return $this->render('academy/index.html.twig', [
-            'academies' => $academyRepository->findAll(),
+            'academies'=> $academyRepository->findBy([
+                'createdBy' => 'front',
+            ])
         ]);
     }
     #[Route('/client', name: 'app_academy_client', methods: ['GET'])]
     public function client(AcademyRepository $academyRepository): Response
     {
         return $this->render('academy/client.html.twig', [
-            'academies' => $academyRepository->findAll(),
+            'academies' => $academyRepository->findBy([
+                'createdBy' => 'front',
+            ])
         ]);
     }
 
@@ -37,6 +43,7 @@ class AcademyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $academy->setCreatedBy('front');
             $academyRepository->save($academy, true);
 
             return $this->redirectToRoute('app_academy_index', [], Response::HTTP_SEE_OTHER);
@@ -48,7 +55,7 @@ class AcademyController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_academy_show', methods: ['GET'])]
+    #[Route('/{id}/show', name: 'app_academy_show', methods: ['GET','POST'])]
     public function show(Academy $academy,CoachRepository $CoachRepository): Response
     {
         $coaches = $CoachRepository->findBy(['academyId' => $academy]);
@@ -57,7 +64,7 @@ class AcademyController extends AbstractController
             'coaches' => $coaches,
         ]);
     }
-    #[Route('/{id}/client', name: 'app_academy_show_client', methods: ['GET'])]
+    #[Route('/{id}/client', name: 'app_academy_show_client', methods: ['GET','POST'])]
     public function show_client(Academy $academy,CoachRepository $CoachRepository): Response
     {
             $coaches = $CoachRepository->findBy(['academyId' => $academy]);
@@ -94,4 +101,21 @@ class AcademyController extends AbstractController
 
         return $this->redirectToRoute('app_academy_index', [], Response::HTTP_SEE_OTHER);
     }
+    
+    #[Route('/{id}/apply', name: 'app_academy_apply', methods: ['GET','POST'])]
+    public function Apply(Request $request, Academy $academy, AcademyRepository $academyRepository): Response
+    {
+        $form = $this->createForm(ApplyType::class, $academy);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $academyRepository->save($academy, true);
+            
+            return $this->redirectToRoute('app_academy_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('academy/apply.html.twig', [
+            'academy' => $academy,
+            'form' => $form,
+        ]);
+    }   
 }

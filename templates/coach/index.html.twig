@@ -101,7 +101,7 @@
                 <th>Email</th>
                 <th>Telephone</th>
                 <th>Academy</th>
-                {# <th>actions</th> #}
+                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -113,9 +113,8 @@
                 <td>{{ coach.telephone }}</td>
                 <td>{{ coach.academy }}</td>
                 <td>
-                    <a href="{{ path('app_coach_show', {'id': coach.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a>
-                    <a href="{{ path('app_coach_edit', {'id': coach.id}) }}"><img src="{{ asset ('icons/edit.png') }}" alt="Edit" width="25" height="25"></a>
-                    {{ include('coach/_delete_form.html.twig') }}
+                    {{ include('coach/btnshow.html.twig') }}
+                    {{ include('coach/btnedit.html.twig') }}
                 </td>
             </tr>
         {% else %}
@@ -126,5 +125,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_coach_new') }}">Create new</a>
+    <a href="{{ path('app_coach_new') }}">Add<img src="{{ asset ('icons/add.png') }}" width="20" height="20"></a>
 {% endblock %}

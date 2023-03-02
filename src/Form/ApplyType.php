@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Coach;
 use App\Entity\Academy;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -19,7 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Validator\Constraints\Length;
 
 
-class CoachType extends AbstractType
+class ApplyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -29,23 +30,15 @@ class CoachType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Regex([
-                        'pattern'=>'/^[a-zA-Z\s]+$/',
+                        'pattern'=>'/^[a-zA-Z]+$/',
                         'message'=>'le nom doit contenir que des alphabets'
                     
                 ]),
 
                 ]
                 ])
-            ->add('email',EmailType::class, [
-                'attr'=>[
-                    'class'=>'form-control'  
-                ],
-                'constraints' => [
-                    new NotBlank(),
-                    new Email(),
-
-                ]
-                ])
+            ->add('age', IntegerType::class)    
+            
             ->add('telephone',TelType::class,[
                 'attr'=>[
                     'class'=>'form-control'  
@@ -62,22 +55,18 @@ class CoachType extends AbstractType
                     ]),
                     new Regex([
                         'pattern'=>'/^[0-9]+$/',
-                        'message'=>'This is not a valid phone number'
+                        'message'=>'Your phone should be at least 8 characters'
                     
                 ]),
-            ]])
-            ->add('academy', EntityType::class, [
-                'class' => Academy::class,
-                'choice_label'=>'name',
-                'multiple'=>false
-            ]);            
+            ]]);
+                   
           ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Coach::class,
+            'data_class' => Academy::class,
         ]);
     }
 }

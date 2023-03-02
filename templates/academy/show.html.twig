@@ -107,9 +107,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_academy_index') }}"><img src="{{ asset ('icons/back.png') }}" alt="Edit" width="25" height="25"></a>
+    {{ include('academy/btnedit.html.twig') }}
+    <a href="{{ path('app_academy_index') }}"><img src="{{ asset ('icons/back.png') }}" alt="Edit" width="25" height="25"> Back</a>
 
-    <a href="{{ path('app_academy_edit', {'id': academy.id}) }}"><img src="{{ asset ('icons/edit.png') }}" alt="Edit" width="25" height="25"></a>
+     
 
-    {{ include('academy/_delete_form.html.twig') }}
+    {# {{ include('academy/_delete_form.html.twig') }} #}
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends "back/base.html.twig" %}
 
 {% block body %}
-    <h1>Coaches list</h1>
+    <h1 style="font-size: 36px; font-weight: bold; color: rgb(130,255,100); ">Coaches list</h1>
 
     <table class="table">
         <thead>
@@ -23,9 +23,13 @@
                 <td>{{ coach_back.telephone }}</td>
                 <td>{{ coach_back.academy }}</td>
                 <td>
-                    <a href="{{ path('app_coach_back_show', {'id': coach_back.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a>
-                    <a href="{{ path('app_coach_back_edit', {'id': coach_back.id}) }}"><img src="{{ asset ('icons/edit.png') }}" alt="Edit" width="25" height="25"></a>
+                    {{ include('coach_back/btnshow.html.twig') }}
+                    {{ include('coach_back/btnedit.html.twig') }}
                     {{ include('coach_back/_delete_form.html.twig') }}
+                    {# <a href="{{ path('app_coach_back_show', {'id': coach_back.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a>
+                    <a href="{{ path('app_coach_back_edit', {'id': coach_back.id}) }}"><img src="{{ asset ('icons/edit.png') }}" alt="Edit" width="25" height="25"></a>
+                    <a href="{{ path('app_academy_back_delete', {'id': coach_back.id}) }}"><img src="{{ asset ('icons/trashbg.png') }}" alt="Edit" width="25" height="25"></a> #}
+                    
                 </td>
             </tr>
         {% else %}
@@ -33,7 +37,12 @@
                 <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
-        {% for coach_front in coach_fronts %}
+        <tr>
+            <td>
+            <a href="{{ path('app_coach_back_new') }}"><img src="{{ asset ('icons/new.png') }}" width="25" height="25"> New</a>
+            </td>
+        </tr>
+        {# {% for coach_front in coach_fronts %}
             <tr>
                 <td>{{ coach_front.id }}</td>
                 <td>{{ coach_front.name }}</td>
@@ -44,16 +53,14 @@
                     <a href="{{ path('app_coach_show', {'id': coach_front.id}) }}">show</a>
                     <a href="{{ path('app_coach_edit', {'id': coach_front.id}) }}">edit</a>
                     <a href="{{ path('app_coach_delete', {'id': coach_front.id}) }}">delete</a>
-                    {# {{ include('coach_back/_delete_form.html.twig') }}                     #}
+                    {{ include('coach_back/_delete_form.html.twig') }}                    
                 </td>
             </tr>
         {% else %}
             <tr>
                 <td colspan="5">no records found</td>
             </tr>
-        {% endfor %}
+        {% endfor %} #}
         </tbody>
     </table>
-
-    <a href="{{ path('app_coach_back_new') }}">Create new</a>
-{% endblock %}
+    {% endblock %}

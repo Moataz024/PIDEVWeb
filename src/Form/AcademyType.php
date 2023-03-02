@@ -36,7 +36,7 @@ class AcademyType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Regex([
-                        'pattern'=>'/^[a-zA-Z]+$/',
+                        'pattern'=>'/^[a-zA-Z\s]+$/',
                         'message'=>'le nom doit contenir que des alphabets'                    
                 ]),
 

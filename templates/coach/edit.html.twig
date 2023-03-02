@@ -58,8 +58,9 @@
 
     {{ include('coach/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_coach_index') }}">back to list</a>
+    {{ include('coach/_delete_form.html.twig') }}
+    <a href="{{ path('app_coach_index') }}"><img src="{{ asset ('icons/back.png') }}" alt="back" width="25" height="25"> Back</a>
     {# <a href="{{ path('app_coach_delete', {'id': coach.id}) }}">Delete</a> #}
 
-    {{ include('coach/_delete_form.html.twig') }}
+    
 {% endblock %}

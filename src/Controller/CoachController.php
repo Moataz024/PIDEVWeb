@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Academy;
 use App\Entity\Coach;
 use App\Form\CoachType;
 use App\Repository\CoachRepository;
@@ -17,8 +18,9 @@ class CoachController extends AbstractController
     public function index(CoachRepository $coachRepository): Response
     {
         return $this->render('coach/index.html.twig', [
-            'coaches' => $coachRepository->findAll(),
-            
+            'coaches' => $coachRepository->findBy([
+                'createdBy' => 'front',
+            ])
         ]);
     }
 
@@ -30,6 +32,7 @@ class CoachController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $coach->setCreatedBy('front');
             $coachRepository->save($coach, true);
 
             return $this->redirectToRoute('app_coach_index', [], Response::HTTP_SEE_OTHER);
@@ -41,7 +44,7 @@ class CoachController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_coach_show', methods: ['GET'])]
+    #[Route('/{id}/show', name: 'app_coach_show', methods: ['GET','POST'])]
     public function show(Coach $coach): Response
     {
         return $this->render('coach/show.html.twig', [

@@ -1,0 +1,40 @@
+private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    #[Route('/{id}/apply', name: 'app_academy_apply', methods: ['POST','POST'])]
+    public function applyToAcademy(Request $request, $id): Response
+    {
+        // Get the academy with the specified ID from the database
+        // $academy = $this->getDoctrine()->getRepository(Academy::class)->find($id);
+        $academy = $this->entityManager->getRepository(Academy::class)->find($id);
+        
+        // Create a new application object and set its academy to the selected academy
+        $application = new Academy();
+        $application->setAcademy($academy);
+
+        // Create the application form using the ApplicationType form class
+        $form = $this->createForm(ApplyType::class, $application);
+
+        // Handle the form submission
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // If the form is valid, save the application to the database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($application);
+            $entityManager->flush();
+
+            // Redirect the user to the academy details page
+            return $this->redirectToRoute('academy_details', ['id' => $academy->getId()]);
+        }
+
+        // If the form is not valid or has not been submitted, render the application form template
+        return $this->render('academy/apply.html.twig', [
+            'academy' => $academy,
+            'form' => $form->createView(),
+        ]);
+    }

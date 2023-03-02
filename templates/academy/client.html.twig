@@ -3,6 +3,7 @@
 
 {% block title %}Academy{% endblock %}
 {% block header %}
+
 <div class="site-wrap">
 
     <div class="site-mobile-menu site-navbar-target">
@@ -108,7 +109,31 @@
                 <td>{{ academy.name }}</td>
                 <td>{{ academy.category }}</td>
                 <td>
-                    <a href="{{ path('app_academy_show_client', {'id': academy.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a>
+                    <form method="post" action="{{ path('app_academy_show_client', {'id': academy.id}) }}">   
+                        <button class="sh" ><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"><span> Show</span></button>
+                        <style>
+                            .sh {
+                            background-color: #FFFFFF; /* Green */
+                            border: none;
+                            color: black;
+                            padding: 2px 6px;
+                            text-align: center;
+                            text-decoration: none;
+                            display: inline-block;
+                            font-size: 16px;
+                            margin: 4px 2px;
+                            cursor: pointer;
+                            border-radius: 10px;
+                            box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+                            }
+
+                            .sh:hover {
+                            background-color: #32CD32; /* Darker green */
+                            }
+
+                            </style>
+                        </form>
+                    {# <a href="{{ path('app_academy_show_client', {'id': academy.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a> #}
                     {# <a href="{{ path('app_academy_edit', {'id': academy.id}) }}">edit</a> #}
                     {# {{ include('academy/_delete_form.html.twig') }} #}
                 </td>

@@ -17,12 +17,21 @@ class Academy
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
+        
+    #[ORM\Column(nullable : true)]
+    private ?string $createdBy = null;
 
     #[ORM\Column(length: 255)]
     private ?string $category = null;
 
     #[ORM\OneToMany(mappedBy: 'academy_id', targetEntity: Coach::class)]
     private Collection $coaches;
+
+    #[ORM\Column(nullable : true)]
+    private ?int $age = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $telephone = null;
 
     public function __construct()
     {
@@ -87,7 +96,45 @@ class Academy
 
         return $this;
     }
+   
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): self
+    {
+        $this->age = $age;
+
+        return $this;
+    }
     public function __toString() {
         return $this->name;
     }
+
+    public function getTelephone(): ?int
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?int $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?string
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(string $createdBy): self
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+    
 }

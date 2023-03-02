@@ -2,7 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\CoachBack;
+
+use App\Entity\Coach;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,10 +19,10 @@ class CoachBackRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, CoachBack::class);
+        parent::__construct($registry, Coach::class);
     }
 
-    public function save(CoachBack $entity, bool $flush = false): void
+    public function save(Coach $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +31,7 @@ class CoachBackRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(CoachBack $entity, bool $flush = false): void
+    public function remove(Coach $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +41,7 @@ class CoachBackRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return CoachBack[] Returns an array of CoachBack objects
+//     * @return Coach[] Returns an array of CoachBack objects
 //     */
 //    public function findByExampleField($value): array
 //    {

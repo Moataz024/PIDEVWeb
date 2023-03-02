@@ -16,6 +16,9 @@ class Coach
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(nullable : true)]
+    private ?string $createdBy = null;
+
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
@@ -78,6 +81,17 @@ class Coach
     public function setAcademy(?Academy $Academy): self
     {
         $this->academyId = $Academy;
+
+        return $this;
+    }
+    public function getCreatedBy(): ?string
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(string $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }

@@ -1,7 +1,8 @@
 {% extends "back/base.html.twig" %}
 
+
 {% block body %}
-    <h1>Academies list</h1>
+    <h1 style="font-size: 36px; font-weight: bold; color: rgb(130,255,100); ">Academies List</h1>
 
     <table class="table">
         <thead>
@@ -10,7 +11,7 @@
                 <th>Name</th>
                 <th>Category</th>
                 {# <th>Coach</th> #}
-                <th>actions</th>
+                {# <th>actions</th> #}
             </tr>
         </thead>
         <tbody>
@@ -21,36 +22,45 @@
                 <td>{{ academy_back.category }}</td>
                 {# <td>{{ academy_back.Coach }}</td> #}
                 <td>
-                    <a href="{{ path('app_academy_back_show', {'id': academy_back.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a>
-                    <a href="{{ path('app_academy_back_edit', {'id': academy_back.id}) }}"><img src="{{ asset ('icons/edit.png') }}" alt="Edit" width="25" height="25"></a>
-                    {{ include('academy_back/_delete_form.html.twig') }}
+                    {# <table>
+                        <tr>
+                            <td>{{ include('academy_back/btnshow.html.twig') }}</td>
+                            <td>{{ include('academy_back/btnedit.html.twig') }}</td>
+                            <td>{{ include('academy_back/_delete_form.html.twig') }}</td>
+                        </tr>
+                    </table> #}
+                    {{ include('academy_back/btnshow.html.twig') }}
+                    {{ include('academy_back/btnedit.html.twig') }}
+                    {{ include('academy_back/_delete_form.html.twig') }} 
+                   
+                </td>                    
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>
+                <a href="{{ path('app_academy_back_new') }}"><img src="{{ asset ('icons/new.png') }}" width="25" height="25"> New</a>
                 </td>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        {% for academy_front in academy_fronts %}
+        {# {% for academy_front in academy_fronts %}
             <tr>
                 <td>{{ academy_front.id }}</td>
                 <td>{{ academy_front.name }}</td>
                 <td>{{ academy_front.category }}</td>
-                {# <td>{{ academy_front.Coach }}</td> #}
+                <td>{{ academy_front.Coach }}</td>
                 <td>
-                    <a href="{{ path('app_academy_show', {'id': academy_front.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a>
-                    <a href="{{ path('app_academy_edit', {'id': academy_front.id}) }}"><img src="{{ asset ('icons/edit.png') }}" alt="Edit" width="25" height="25"></a>
-                    <a href="{{ path('app_academy_delete', {'id': academy_front.id}) }}">delete</a>
-                    {# {{ include('academy_back/_delete_form.html.twig') }} #}
+                    <a href="{{ path('app_academy_back_show', {'id': academy_front.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a>
+                    <a href="{{ path('app_academy_back_edit', {'id': academy_front.id}) }}"><img src="{{ asset ('icons/edit.png') }}" alt="Edit" width="25" height="25"></a>
+                    <a href="{{ path('app_academy_back_delete', {'id': academy_front.id}) }}"><img src="{{ asset ('icons/trashbg.png') }}" alt="Delete" width="25" height="25"></a>
+                    {{ include('academy/_delete_form.html.twig') }}
                 </td>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
+        {% endfor %} #}
         </tbody>
     </table>
 
-    <a href="{{ path('app_academy_back_new') }}">Create new</a>
+    
 {% endblock %}

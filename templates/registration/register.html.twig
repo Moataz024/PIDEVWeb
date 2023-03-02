@@ -3,39 +3,11 @@
 {% block title %}Log in!{% endblock %}
 
 {% block header %}
-<div class="site-wrap">
 
-    <div class="site-mobile-menu site-navbar-target">
-        <div class="site-mobile-menu-header">
-            <div class="site-mobile-menu-close">
-                <span class="icon-close2 js-menu-toggle"></span>
-            </div>
-        </div>
-        <div class="site-mobile-menu-body"></div>
-    </div>
-
-    <header class="site-navbar py-4" role="banner">
-
-        <div class="container">
-            <div class="d-flex align-items-center">
-                <div class="logo">
-                    <a href="{{ asset ('app_template') }}">
-                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo" width="140" height="80">
-                    </a>
-                </div>
-                <div class="ml-auto">
-
-                    <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
-                                class="icon-menu h3 text-white"></span></a>
-                </div>
-            </div>
-        </div>
-
-    </header>
     {% endblock %}
 
     {% block content %}
-        <div class="align-items-center" style="padding-left: 200px">
+        <div class="align-items-center">
             <div>
             {{ form_start(registrationForm,{'attr' : {'novalidate' : 'novalidate'}}) }}
             <table>
@@ -121,14 +93,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <br/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
 
-                    </td>
+                        {{ form_row(registrationForm.avatarFile)}}
+
                     <td>
                         <button type="submit" class="btn btn-primary">Register</button>
                     </td>

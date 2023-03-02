@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,6 +25,10 @@ class RegistrationFormType extends AbstractType
                     'Propriétaire' => 'ROLE_OWNER',
                 ],
                 'multiple' => true,
+            ])
+            ->add('avatarFile', FileType::class, [
+                'required' => false,
+                'label' => 'Profile Image',
             ])
             ->add('phone')
             ->add('firstname')

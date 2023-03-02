@@ -3,6 +3,8 @@
 {% block title %}{{ app.user.firstname ~ ' ' ~ app.user.lastname }}{% endblock %}
 
 {% block stylesheets %}
+<link rel="stylesheet" href="{{ asset ('other_css/imageStyle.scss') }}">
+<script src="{{ asset ('other_js/imageJS.js') }}"></script>
     {{ parent() }}
 {% endblock %}
 
@@ -67,6 +69,20 @@
 <br/>
                 {{ form_start(form,{'attr' : {'novalidate' : 'novalidate'}}) }}
                 <table>
+                <tr>
+                <td>
+
+</td>
+<td>
+
+</td>
+<td>
+</td>
+<td rowspan="6" style="padding-left: 50px">
+<img src="{{ vich_uploader_asset(user, 'avatarFile') }}" alt="{{ user.username }}'s Profile Image" height="300" width="300">
+
+</td>
+</tr>
                     <tr>
                         <td>
                             {{ form_label(form.nomutilisateur,"Username : ") }}
@@ -75,7 +91,7 @@
                             {{ form_widget(form.nomutilisateur,{'attr' : {'class' : 'form-control'}} ) }}
                         </td>
                         <td>
-                            {{ form_errors(form.nomutilisateur) }}
+                            {{ form_errors(form.nomutilisateur,{'attr' : {'class' : 'text-danger'}}) }}
                         </td>
                     </tr>
                     <tr>
@@ -112,12 +128,24 @@
                             {{ form_errors(form.lastname) }}
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            {{ form_widget(form.avatarFile,{'attr' : {'class' : 'form-control'}}) }}
+                        </td>
+                        <td>
+                            {{ form_errors(form.avatarFile) }}
+                        </td>
+                    </tr>
 
 {#
                     ->add('nomutilisateur')
                     ->add('phone')
                     ->add('firstname')
-                    ->add('lastname')#}
+                    ->add('lastname')
+                    #}
                 <tr>
                 <td>
                 </td>

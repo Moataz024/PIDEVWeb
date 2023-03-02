@@ -7,23 +7,31 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\Types\Nullable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("users")]
     private ?int $id = null;
 
     #[Assert\NotBlank]
     #[Assert\Email]
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups("users")]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -43,18 +51,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $inscriptions;
 
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $nomutilisateur = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $phone = null;
 
+
+    #[ORM\Column(length : 255, nullable : true)]
+    private $avatarName;
+
+
+    #[Vich\UploadableField(mapping : "user_avatar",fileNameProperty : "avatarname")]
+    private $avatarFile;
+
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $lastname = null;
 
     #[ORM\Column]
+    #[Groups("users")]
     private ?bool $status = null;
 
 
@@ -63,6 +84,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->ownedEvents = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
         $this->status = false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatarName()
+    {
+        return $this->avatarName;
+    }
+
+    /**
+     * @param mixed $avatarName
+     */
+    public function setAvatarName($avatarName): void
+    {
+        $this->avatarName = $avatarName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatarFile()
+    {
+        return $this->avatarFile;
+    }
+
+    /**
+     * @param mixed $avatarFile
+     */
+    public function setAvatarFile($avatarFile): void
+    {
+        $this->avatarFile = $avatarFile;
     }
 
     public function getId(): ?int
@@ -290,6 +343,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    public function __sleep()
+    {
+        return ['id', 'email', 'roles', 'password', 'avatarName', 'nomutilisateur', 'phone' , 'firstname' , 'lastname' , 'status'];
+    }
+
+    public function __wakeup()
+    {
+        if ($this->avatarName) {
+            $this->avatarFile = new File($this->getAvatarPath());
+        }
+    }
+    private function getAvatarPath(): string
+    {
+        return sprintf('%s/%s', $this->getUploadDir(), $this->avatarName);
+    }
+
+    private function getUploadDir(): string
+    {
+        return 'images/users';
+    }
+
 
 
 }

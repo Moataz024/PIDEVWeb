@@ -1,3 +1,14 @@
 index:
     path: app_login
     controller: App\Controller\SecurityController::index
+register_api:
+    path: /api/register
+    methods: [POST]
+    controller: App\Controller\RegisterApiController::register
+    defaults:
+        _format: json
+not_found:
+    path: /{wildcard}
+    controller: App\Controller\TemplateController::notFound
+    requirements:
+        wildcard: '.*'

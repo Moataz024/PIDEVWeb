@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TerrainRepository::class)]
 #[Vich\Uploadable]
@@ -18,6 +19,7 @@ class Terrain
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("Terrains")]
     private ?int $id = null;
 
     
@@ -25,11 +27,13 @@ class Terrain
     #[Assert\NotBlank(message:'Le Nom du Terrain est obligatoir')]
     #[Assert\Length(max:60,maxMessage:'Votre Nom du Terrain ne depasse pas 60 caractères.')]
     #[Assert\Length(min:3,minMessage:'Votre Nom du Terrain doit depasser 3 caractères.')]
+    #[Groups("Terrains")]
     private ?string $name = null;
 
     
     #[ORM\Column]
     #[Assert\NotBlank(message:'La Capacity du Terrain est obligatoir')]
+    #[Groups("Terrains")]
     private ?int $capacity = null;
 
     
@@ -37,6 +41,7 @@ class Terrain
     #[Assert\NotBlank(message:'Sport Type du Terrain est obligatoir')]
     #[Assert\Length(max:50,maxMessage:'Votre Sport Type du Terrain ne depasse pas 50 caractères.')]
     #[Assert\Length(min:3,minMessage:'Votre Sport Type du Terrain doit depasser 3 caractères.')]
+    #[Groups("Terrains")]
     private ?string $sportType = null;
 
    
@@ -44,32 +49,38 @@ class Terrain
     #[Assert\NotNull(message:'Le Prix de Reservation du Terrain est obligatoir')]
     #[Assert\Positive(message:'Le Prix de Reservation doit etre Positif')]
     #[Assert\Range(min:0, max:7000, notInRangeMessage:'The rent price must be between {{ min }} and {{ max }} Dt.')]
+    #[Groups("Terrains")]
     private ?float $rentPrice = null;
     
     #[ORM\Column(nullable: true)]
+    #[Groups("Terrains")]
     private ?bool $disponibility = null;
 
   
     #[ORM\Column]
     #[Assert\NotNull(message:'Le Code Postale de la region est obligatoir')]
     #[Assert\Positive(message:'Le Code Postale doit etre Positif')]
+    #[Groups("Terrains")]
     private ?int $postalCode = null;
     
     #[ORM\Column(length: 60)]
     #[Assert\NotBlank(message:'la rue du Terrain est obligatoir')]
     #[Assert\Length(max:60,maxMessage:'Votre rue du Terrain ne depasse pas 60 caractères.')]
     #[Assert\Length(min:3,minMessage:'Votre rue du Terrain doit depasser 3 caractères.')]
+    #[Groups("Terrains")]
     private ?string $roadName = null;
 
     #[ORM\Column]
     #[Assert\NotNull(message:'le numero de la rue du Terrain est obligatoir')]
     #[Assert\Positive(message:'le numero de la rue doit etre Positif')]
+    #[Groups("Terrains")]
     private ?int $roadNumber = null;
    
     #[ORM\Column(length: 70)]
     #[Assert\NotBlank(message:'La Ville du Terrain est obligatoir')]
     #[Assert\Length(max:70,maxMessage:'La Ville du Terrain ne depasse pas 70 caractères.')]
     #[Assert\Length(min:3,minMessage:'La Ville du Terrain doit depasser 3 caractères.')]
+    #[Groups("Terrains")]
     private ?string $city = null;
 
     
@@ -77,6 +88,7 @@ class Terrain
     #[Assert\NotBlank(message:'Le Pays du Terrain est obligatoir')]
     #[Assert\Length(max:50,maxMessage:'Le Pays du Terrain ne depasse pas  50 caractères.')]
     #[Assert\Length(min:3,minMessage:'Le Pays du Terrain doit depasser 3 caractères.')]
+    #[Groups("Terrains")]
     private ?string $country = null;
 
     #[ORM\OneToMany(mappedBy: 'terrain', targetEntity: Reservation::class)]
@@ -87,13 +99,16 @@ class Terrain
      private ?File $imageFile = null;
  
      #[ORM\Column(nullable: true)]
+     #[Groups("Terrains")]
      private ?string $imageName = null;
  
      #[ORM\Column(nullable: true)]
+     #[Groups("Terrains")]
      private ?\DateTimeImmutable $updatedAt = null;
 
      #[ORM\ManyToOne(inversedBy: 'terrains')]
      #[ORM\JoinColumn(nullable: false)]
+     #[Groups("Terrains")]
      private ?User $owner = null;
 
    
@@ -308,5 +323,10 @@ class Terrain
 
          return $this;
      }
+     public function getupdatedAt(): ?\DateTimeImmutable
+     {
+         return $this->updatedAt;
+     }
+
  
 }

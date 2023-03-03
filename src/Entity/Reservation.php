@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -16,31 +17,32 @@ class Reservation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("Reservations")]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-   // #[Assert\DateTime()]
+   
     #[Assert\NotNull(message:'The date reservation cannot be null.')]
     #[Assert\GreaterThanOrEqual('now', message:'The date reservation cannot be in the past.')]
+    #[Groups("Reservations")]
     private ?\DateTimeInterface $dateReservation = null;
 
     
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    //#[Assert\DateTime()]
     #[Assert\NotNull(message:'The start time cannot be null.')]
     #[Assert\GreaterThanOrEqual('now', message:'The date cannot be in the past.')]
-    //#[Assert\Time()]
+    #[Groups("Reservations")]
     private ?\DateTimeInterface $startTime = null;
 
    
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    //#[Assert\DateTime()]
     #[Assert\NotNull(message:'The End time cannot be null.')]
     #[Assert\GreaterThanOrEqual('now', message:'The date cannot be in the past.')]
-    //#[Assert\Time()]
+    #[Groups("Reservations")]
     private ?\DateTimeInterface $endTime = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups("Reservations")]
     private ?bool $resStatus = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]

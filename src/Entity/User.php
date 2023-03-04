@@ -52,10 +52,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Groups("users")]
+    #[Assert\NotBlank]
     private ?string $nomutilisateur = null;
 
     #[ORM\Column(length: 255)]
     #[Groups("users")]
+    #[Assert\NotBlank]
     private ?string $phone = null;
 
 
@@ -67,10 +69,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $avatarFile;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     #[Groups("users")]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     #[Groups("users")]
     private ?string $lastname = null;
 
@@ -78,12 +82,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups("users")]
     private ?bool $status = null;
 
+    #[ORM\Column]
+    private ?bool $isVerified = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $verifToken = null;
+
 
     public function __construct()
     {
         $this->ownedEvents = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
         $this->status = false;
+        $this->isVerified = false;
     }
 
     /**
@@ -362,6 +373,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private function getUploadDir(): string
     {
         return 'images/users';
+    }
+
+    public function isIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getVerifToken(): ?string
+    {
+        return $this->verifToken;
+    }
+
+    public function setVerifToken(?string $verifToken): self
+    {
+        $this->verifToken = $verifToken;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
     }
 
 

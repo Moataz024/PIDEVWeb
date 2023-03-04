@@ -27,15 +27,15 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="index.html"><img src="{{ asset ('assets/back/images/logo.svg') }}" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="{{ asset ('assets/back/images/logo-mini.svg') }}" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo" ><img src="{{ asset ('assets/back/images/logo.svg') }}" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo-mini" ><img src="{{ asset ('assets/back/images/logo-mini.svg') }}" alt="logo" /></a>
         </div>
         <ul class="nav">
           <li class="nav-item profile">
             <div class="profile-desc">
               <div class="profile-pic">
                 <div class="count-indicator">
-                  <img class="img-xs rounded-circle " src="{{ asset ('assets/back/images/faces/face15.jpg') }}" alt="">
+                  <img class="img-xs rounded-circle " src="{{ vich_uploader_asset(app.user, 'avatarFile')}}" alt="">
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
@@ -188,7 +188,7 @@
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar p-0 fixed-top d-flex flex-row">
           <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{ asset ('assets/back/images/logo-mini.svg') }}" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini"><img src="{{ asset ('assets/back/images/logo-mini.svg') }}" alt="logo" /></a>
           </div>
           <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
             <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -197,7 +197,9 @@
             <ul class="navbar-nav w-100">
               <li class="nav-item w-100">
                 <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
-                  <input type="text" class="form-control" placeholder="Search products">
+                  <label>
+                    <input type="text" class="form-control" placeholder="Search products">
+                  </label>
                 </form>
               </li>
             </ul>
@@ -339,7 +341,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="{{ asset ('assets/back/images/faces/face15.jpg') }}" alt="">
+                    <img class="img-xs rounded-circle" src="{{ vich_uploader_asset(app.user, 'avatarFile')}}" alt="">
                     <p class="mb-0 d-none d-sm-block navbar-profile-name">{{  app.user.nomutilisateur  }}</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>

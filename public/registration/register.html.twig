@@ -1,21 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
-{% block header %}
+{% block title %}Log in!{% endblock %}
 
-{% endblock %}
-{% block content %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+{% block header %}
     {% for flash in app.flashes('success') %}
         <div class="alert alert-success">{{ flash }}</div>
     {% endfor %}
+    {% endblock %}
 
-    <h1>Register</h1>
-
+    {% block content %}
     <div>
-        <div>
+            <div>
             {{ form_start(registrationForm,{'attr' : {'novalidate' : 'novalidate','class' : 'form-group'}}) }}
             <table>
                 <tr>
@@ -76,7 +71,7 @@
                     </td>
                 </tr>
                 <tr>
-                    {#                    <li class="nav-item dropdown">
+{#                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.nomutilisateur }} </b>
                         </a>
@@ -112,20 +107,57 @@
                 </tr>
                 <tr>
 
-                    {{ form_row(registrationForm.avatarFile,{ 'attr' : { 'class' : 'form-control' } })}}
+                        {{ form_row(registrationForm.avatarFile,{ 'attr' : { 'class' : 'form-control' } })}}
 
                     <td>
                         <button type="submit" class="btn btn-primary">Register</button>
                     </td>
                 </tr>
             </table>
-            <br/>
-            <hr style="background-color: white"/>
+                <br/>
+                <hr style="background-color: white"/>
             {{ form_end(registrationForm) }}
+            </div>
         </div>
-    </div>
-    <div class="d-flex align-items-center justify-content-center pb-4">
-        <p class="mb-0 me-2">Already have an account ?</p><pre>  </pre>
-        <a href="{{ path('app_login') }}"><button type="button" class="btn btn-outline-danger"> Sign in</button> </a>
-    </div>
-{% endblock %}
+        <div class="d-flex align-items-center justify-content-center pb-4">
+            <p class="mb-0 me-2">Already have an account ?</p><pre>  </pre>
+            <a href="{{ path('app_login') }}"><button type="button" class="btn btn-outline-danger"> Sign in</button> </a>
+        </div>
+{#        <h1>Register</h1>
+        {{ form_start(registrationForm,{'attr' : {'novalidate' : 'novalidate'}}) }}
+        {{ form_row(registrationForm.email,{label : 'Email'}) }}
+        {{ form_row(registrationForm.username,{label : 'Username'}) }}
+        {{ form_row(registrationForm.phone,{label : 'Phone number'}) }}
+        {{ form_row(registrationForm.firstname,{label : 'First name'}) }}
+        {{ form_row(registrationForm.lastname,{label : 'Last name'}) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}#}
+{#
+        <button type="submit" class="btn">Register</button>
+        {{ form_end(registrationForm) }}#}
+
+
+
+    {% endblock %}
+
+    {% block score %}
+    {% endblock %}
+    {% block latest %}
+    {% endblock %}
+    {% block nextmatch %}
+    {% endblock %}
+    {% block sitesection %}
+    {% endblock %}
+    {% block blog %}
+    {% endblock %}
+    {% block footer %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('templates/script.js') }}"></script>
+        <script src="{{ asset('build/js/bootstrap.min.js') }}"></script>
+    {% endblock %}

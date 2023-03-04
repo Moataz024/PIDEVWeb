@@ -24,8 +24,11 @@ class TemplateController extends AbstractController
         $this->security = $security;
     }
     #[Route('/template', name: 'app_template')]
-    public function index(): Response
+    public function index(Security $security): Response
     {
+        if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('template/index.html.twig', [
             'controller_name' => 'TemplateController',
         ]);
@@ -59,8 +62,11 @@ class TemplateController extends AbstractController
     }
 
     #[Route('/{id}/profile', name: 'app_profile', methods : ['GET','POST'])]
-    public function profile(Request $request, UserRepository $userRepository, UploadHandler $handler): Response
+    public function profile(Request $request, UserRepository $userRepository, UploadHandler $handler,Security $security): Response
     {
+        if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        }
         $user = $this->security->getUser();
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
@@ -75,12 +81,16 @@ class TemplateController extends AbstractController
         ]);
     }
     #[Route('/admin/{id}/profile', name: 'app_profile_back', methods : ['GET','POST'])]
-    public function profile_back(Request $request, UserRepository $userRepository): Response
+    public function profile_back(Request $request, UserRepository $userRepository,UploadHandler $handler, Security $security): Response
     {
+        if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        }
         $user = $this->security->getUser();
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $handler->upload($user, 'avatarFile');
             $userRepository->save($user, true);
             return $this->redirectToRoute('app_academy_index', [], Response::HTTP_SEE_OTHER);
         }

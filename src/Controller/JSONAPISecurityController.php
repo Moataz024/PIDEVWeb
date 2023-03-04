@@ -50,7 +50,7 @@ class JSONAPISecurityController extends AbstractController
             throw new ValidatorException($errors);
         }
 
-      /*$userRoles = $this->getUser()->getRoles();*/
+        /*$userRoles = $this->getUser()->getRoles();*/
         $user = $userRepository->findOneBy(['email' => $email]);
         $token = new UsernamePasswordToken($user, $password, 'main', ['ROLE_USER']);
         $tokenStorage->setToken($token);

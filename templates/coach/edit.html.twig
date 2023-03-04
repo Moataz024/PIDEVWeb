@@ -1,4 +1,4 @@
-{% extends "front/base.html.twig" %}
+{% extends "academy/base.html.twig" %}
 
 {% block title %}Coach{% endblock %}
 {% block header %}
@@ -24,12 +24,23 @@
                 <div class="ml-auto">
                     <nav class="site-navigation position-relative text-right" role="navigation">
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                           <li><a href="{{ path('app_template') }}" class="nav-link">Home</a></li>
+                            <li><a href="{{ path('app_template') }}" class="nav-link">Home</a></li>
+                            <li><a href="{{ path('app_event_index') }}" class="nav-link">Events</a></li>
+                            <li><a href="#" class="nav-link">Products</a></li>
+                            <li><a href="#" class="nav-link">Equipments</a></li>
                             <li><a href="{{ path('app_academy_index') }}" class="nav-link">Academy</a></li>
                             <li class="active"><a href="{{ path('app_coach_index') }}" class="nav-link">Coach</a></li>
-                            <li><a href="{{ asset ('front/players.html') }}" class="nav-link">Products</a></li>
-                            <li><a href="{{ asset ('front/blog.html') }}" class="nav-link">Equipments</a></li>
-                            <li><a href="{{ asset ('front/contact.html') }}" class="nav-link">Contact</a></li>
+                            
+                       <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.nomutilisateur }} </b>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="{{ path('app_profile',{'id': app.user.id}) }}">My profile</a>
+                                    <a class="dropdown-item" href="{{ path('change_password_front') }}">Change password</a>
+                                    <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
+                                </div>
+                            </li>
                         </ul>
                     </nav>
 
@@ -42,6 +53,7 @@
 
     </header>
 {% endblock %}
+
 
 {% block body %}
 

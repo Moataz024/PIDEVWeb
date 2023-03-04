@@ -1,5 +1,4 @@
-{% extends "front/base.html.twig" %}
-
+{% extends "academy/base.html.twig" %}
 
 {% block title %}Academy{% endblock %}
 {% block header %}
@@ -27,11 +26,23 @@
                     <nav class="site-navigation position-relative text-right" role="navigation">
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                             <li><a href="{{ path('app_template') }}" class="nav-link">Home</a></li>
+                            {# <li class="active"><a href="{{ path('app_academy_index') }}" class="nav-link">Academy</a></li> #}
+                            {# <li><a href="{{ path('app_coach_index') }}" class="nav-link">Coach</a></li> #}
+                            <li><a href="{{ path('app_event_index') }}" class="nav-link">Events</a></li>
+                            <li><a href="#" class="nav-link">Products</a></li>
+                            <li><a href="#" class="nav-link">Equipments</a></li>
                             <li class="active"><a href="{{ path('app_academy_index') }}" class="nav-link">Academy</a></li>
-                            <li><a href="{{ path('app_coach_index') }}" class="nav-link">Coach</a></li>
-                            <li><a href="{{ asset ('front/players.html') }}" class="nav-link">Products</a></li>
-                            <li><a href="{{ asset ('front/blog.html') }}" class="nav-link">Equipments</a></li>
-                            <li><a href="{{ asset ('front/contact.html') }}" class="nav-link">Contact</a></li>
+                            {# <li><a href="{{ asset ('front/contact.html') }}" class="nav-link">Contact</a></li> #}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.nomutilisateur }} </b>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="{{ path('app_profile',{'id': app.user.id}) }}">My profile</a>
+                                    <a class="dropdown-item" href="{{ path('change_password_front') }}">Change password</a>
+                                    <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
+                                </div>
+                            </li>
                         </ul>
                     </nav>
 
@@ -47,7 +58,7 @@
 
 {% block body %}
 
-    <div class="hero overlay" style="background-image: url({{ asset('front/images/2-4.png') }});background-color: crimson;;">{#background-size: 400px 200px;#}
+    <div class="hero overlay" style="background-image: url({{ asset('front/images/2-3.png') }});background-color: crimson;;">{#background-size: 400px 200px;#}
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-9 mx-auto text-center">
@@ -109,7 +120,7 @@
                 <td>{{ academy.name }}</td>
                 <td>{{ academy.category }}</td>
                 <td>
-                    <form method="post" action="{{ path('app_academy_show_client', {'id': academy.id}) }}">   
+                    <form method="post" action="{{ path('app_academy_show', {'id': academy.id}) }}">   
                         <button class="sh" ><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"><span> Show</span></button>
                         <style>
                             .sh {

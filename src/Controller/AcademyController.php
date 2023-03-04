@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Security\Core\Security;
 use App\Entity\Academy;
 use App\Form\AcademyType;
 use App\Form\ApplyType;
@@ -17,23 +18,35 @@ use Symfony\Component\Routing\Annotation\Route;
 class AcademyController extends AbstractController
 {
     #[Route('/', name: 'app_academy_index', methods: ['GET'])]
-    public function index(AcademyRepository $academyRepository): Response
+    public function index(AcademyRepository $academyRepository,Security $security): Response
     {
-        return $this->render('academy/index.html.twig', [
-            'academies'=> $academyRepository->findBy([
-                'createdBy' => 'front',
-            ])
-        ]);
+        // if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
+        //     return $this->redirectToRoute('app_login');
+        // }
+        if ($this->isGranted('ROLE_OWNER')){
+            return $this->render('academy/index.html.twig', [
+                'academies'=> $academyRepository->findBy([
+                    'createdBy' => 'front',
+                ])
+            ]);
+        }else{
+            return $this->render('academy/client.html.twig', [
+                'academies' => $academyRepository->findBy([
+                    'createdBy' => 'front',
+                ])
+            ]);
+        }
     }
-    #[Route('/client', name: 'app_academy_client', methods: ['GET'])]
-    public function client(AcademyRepository $academyRepository): Response
-    {
-        return $this->render('academy/client.html.twig', [
-            'academies' => $academyRepository->findBy([
-                'createdBy' => 'front',
-            ])
-        ]);
-    }
+    
+    // #[Route('/client', name: 'app_academy_client', methods: ['GET'])]
+    // public function client(AcademyRepository $academyRepository): Response
+    // {
+    //     return $this->render('academy/client.html.twig', [
+    //         'academies' => $academyRepository->findBy([
+    //             'createdBy' => 'front',
+    //         ])
+    //     ]);
+    // }
 
     #[Route('/new', name: 'app_academy_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AcademyRepository $academyRepository): Response
@@ -59,20 +72,28 @@ class AcademyController extends AbstractController
     public function show(Academy $academy,CoachRepository $CoachRepository): Response
     {
         $coaches = $CoachRepository->findBy(['academyId' => $academy]);
-        return $this->render('academy/show.html.twig', [
-            'academy' => $academy,
-            'coaches' => $coaches,
-        ]);
+        if ($this->isGranted('ROLE_OWNER')){
+            return $this->render('academy/show.html.twig', [
+                'academy' => $academy,
+                'coaches' => $coaches,
+            ]);
+        }else{
+            return $this->render('academy/show_client.html.twig', [
+                'academy' => $academy,
+                'coaches' => $coaches,
+            ]);
+        }
+        
     }
-    #[Route('/{id}/client', name: 'app_academy_show_client', methods: ['GET','POST'])]
-    public function show_client(Academy $academy,CoachRepository $CoachRepository): Response
-    {
-            $coaches = $CoachRepository->findBy(['academyId' => $academy]);
-        return $this->render('academy/show_client.html.twig', [
-            'academy' => $academy,
-            'coaches' => $coaches,
-        ]);
-    }
+    // #[Route('/{id}/client', name: 'app_academy_show_client', methods: ['GET','POST'])]
+    // public function show_client(Academy $academy,CoachRepository $CoachRepository): Response
+    // {
+    //         $coaches = $CoachRepository->findBy(['academyId' => $academy]);
+    //     return $this->render('academy/show_client.html.twig', [
+    //         'academy' => $academy,
+    //         'coaches' => $coaches,
+    //     ]);
+    // }
 
     #[Route('/{id}/edit', name: 'app_academy_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Academy $academy, AcademyRepository $academyRepository): Response

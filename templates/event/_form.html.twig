@@ -1,0 +1,63 @@
+{{ form_start(form,{'attr' : {'novalidate' : 'novalidate'}}) }}
+<table>
+    <tr>
+        <td>
+            {{ form_label(form.nom,"Nom sponsor : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.nom) }}
+        </td>
+        <td>
+            {{ form_errors(form.nom) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.category,"Catégorie : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.category) }}
+        </td>
+        <td>
+            {{ form_errors(form.category) }}
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.organisateur,"Organisateur : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.organisateur) }}
+        </td>
+        <td>
+            {{ form_errors(form.organisateur) }}
+        </td>
+    </tr>
+</table>
+{{ form_row(form._token) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+<br/>
+{{ form_end(form) }}
+{#{% if errors|length > 0 %}
+    <ul>
+
+
+     ->add('nom')
+            ->add('category')
+            ->add('organisateur')
+            ->add('participants')
+
+
+        {% for error in errors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{{ form_end(form) }}#}
+
+{#
+->add('nomSponsor')
+->add('emailSponsor')
+->add('telSponsor')
+->add('sponsoredEvents')#}

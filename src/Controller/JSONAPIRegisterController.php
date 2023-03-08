@@ -33,7 +33,7 @@ class JSONAPIRegisterController extends AbstractController
         $lastname = $request->request->get('firstname');
         $firstname = $request->request->get('lastname');
 
-
+        
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $existingUser = $userRepository->findOneBy(['email' => $email]);
         if ($existingUser) {

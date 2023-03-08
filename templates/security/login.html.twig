@@ -45,15 +45,18 @@
 
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputEmail">Email</label>
-    <label>
+
         <input type="email" value="{{ last_username }}" name="email" class="form-control" autocomplete="email" autofocus>
-    </label>
     <label for="inputPassword">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" >
     <br/>
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}">
-
+    <label style="padding: 10px"  class="form-control">
+        <input type="checkbox" name="_remember_me" checked/>
+        Keep me logged in
+    </label>
+    <br/>
     <button class="btn btn-lg btn-primary align-items-center justify-content-center" type="submit">
         Sign in
     </button>

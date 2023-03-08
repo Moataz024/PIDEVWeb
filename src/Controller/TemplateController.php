@@ -5,6 +5,9 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -12,6 +15,7 @@ use App\Form\ProfileType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
 use Vich\UploaderBundle\Handler\UploadHandler;
+use function MongoDB\BSON\toJSON;
 
 class TemplateController extends AbstractController
 {
@@ -98,6 +102,25 @@ class TemplateController extends AbstractController
             'user' => $user,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/emailTest', name: 'app_test_email')]
+    public function sendEmail(MailerInterface $mailer): Response
+    {
+        $email = (new Email())
+            ->from('moataz.foudhaili@esprit.tn')
+            ->to('prexzcod@gmail.com')
+            ->subject('Test email')
+            ->text('This is a test email sent using Symfony Mailer.');
+        try{
+            $mailer->send($email);
+            return new Response('Sent!');
+        }catch (\Exception $ex) {
+            return new Response($ex->getMessage());
+        } catch (TransportExceptionInterface $e) {
+            return new Response($e->getMessage());
+        }
+
     }
 
 }

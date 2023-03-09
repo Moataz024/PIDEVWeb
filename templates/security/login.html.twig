@@ -3,6 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block header %}
+
 <div class="site-wrap">
     <div class="site-mobile-menu site-navbar-target">
         <div class="site-mobile-menu-header">
@@ -14,14 +15,11 @@
     </div>
 
     <header class="site-navbar py-4" role="banner" >
-
+        {% for flash in app.flashes('success') %}
+            <div class="alert alert-success">{{ flash }}</div>
+        {% endfor %}
         <div class="container">
             <div class="d-flex align-items-center">
-                <div class="logo" >
-                    <a href="{{ path('app_login') }}">
-                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo" width="140" height="80">
-                    </a>
-                </div>
                 <div class="ml-auto">
 
                     <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
@@ -47,13 +45,18 @@
 
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+
+        <input type="email" value="{{ last_username }}" name="email" class="form-control" autocomplete="email" autofocus>
     <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" >
     <br/>
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}">
-
+    <label style="padding: 10px"  class="form-control">
+        <input type="checkbox" name="_remember_me"/>
+        Keep me logged in
+    </label>
+    <br/>
     <button class="btn btn-lg btn-primary align-items-center justify-content-center" type="submit">
         Sign in
     </button>
@@ -63,6 +66,12 @@
     <div class="d-flex align-items-center justify-content-center">
         <p class="mb-0 me-2">Don't have an account?</p><pre>  </pre>
         <a href="{{ path('app_register') }}"><button type="button" class="btn btn-outline-danger"> Sign up</button> </a>
+    </div>
+    <hr style="background-color: white"/>
+    <div class="d-flex align-items-center justify-content-center">
+        <p class="mb-0 me-2">Forgot password ?</p><pre>  </pre>
+        <a href="{{ path('app_email_getter') }}"><button type="button" class="btn btn-outline-danger"> Reset it</button> </a>
+        <pre>  </pre><p class="mb-0 me-2">with your email</p>
     </div>
 
 {% endblock %}

@@ -21,13 +21,13 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-         if ($this->getUser()) {
-             if ($this->isGranted('ROLE_ADMIN')){
-                 return $this->redirectToRoute('app_academy_index');
-             }else{
-                 return $this->redirectToRoute('app_template');
-             }
-         }
+        if ($this->getUser()) {
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('app_academy_index');
+            } else {
+                return $this->redirectToRoute('app_template');
+            }
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -42,6 +42,7 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
     #[Route('/users', name: 'app_users', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {

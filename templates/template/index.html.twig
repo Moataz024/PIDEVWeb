@@ -10,9 +10,14 @@
 
 {% block header %}
     {{parent()}}
+
 {% endblock %}
 {% block content %}
+    {% for flash in app.flashes('warning') %}
+        <div class="alert alert-success">{{ flash }}</div>
+    {% endfor %}
     {{parent()}}
+
 {% endblock %}
 {% block score %}
     {{parent()}}

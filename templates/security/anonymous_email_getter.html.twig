@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% block title %}Change password{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('templates/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/bootstrap.min.css') }}">
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+    {% for flash_error in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    {% for flash in app.flashes('success') %}
+        <div class="alert alert-success">{{ flash }}</div>
+    {% endfor %}
+
+    <h1>Enter your email</h1>
+    <div>
+        <div>
+            {{ form_start(form,{'attr' : {'novalidate' : 'novalidate','class' : 'form-group'}}) }}
+            <table>
+                <tr>
+                    <td>
+                        {{ form_label(form.email,"Email : ") }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.email,{ 'attr' : { 'class' : 'form-control' } }) }}
+                    </td>
+                    <td>
+                        {{ form_errors(form.email) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form_widget(form.submit,{'attr': {'class': 'btn btn-primary  '}}) }}
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <hr style="background-color: white"/>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+{% block score %}
+{% endblock %}
+{% block latest %}
+{% endblock %}
+{% block nextmatch %}
+{% endblock %}
+{% block sitesection %}
+{% endblock %}
+{% block blog %}
+{% endblock %}
+{% block footer %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('templates/script.js') }}"></script>
+    <script src="{{ asset('build/js/bootstrap.min.js') }}"></script>
+{% endblock %}

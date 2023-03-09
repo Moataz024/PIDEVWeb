@@ -19,6 +19,12 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: true
+            remember_me:
+                always_remember_me: false
+                secret: '%kernel.secret%' # required
+                lifetime: 5 # 1 week in seconds
+                token_provider:
+                    doctrine: true
         main:
             lazy: true
             provider: app_user_provider
@@ -27,6 +33,13 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 target: app_login
+            remember_me:
+                secret: '%kernel.secret%' # required
+                lifetime: 3600
+                always_remember_me: false
+                token_provider:
+                    doctrine: true
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -41,7 +54,7 @@ security:
          - { path: ^/user, roles: [ROLE_USER] }
          - { path: ^/pc, roles: [ROLE_OWNER,ROLE_CLIENT] }
          - { path: /prop, roles: [ROLE_OWNER] }
-    access_denied_url: app_dont_do_that_here # app_access_denied
+    access_denied_url: app_access_denied # app_access_denied
 
 
 when@test:

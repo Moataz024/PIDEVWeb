@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block header %}
+    {% for flash in app.flashes('success') %}
+        <div class="alert alert-success">{{ flash }}</div>
+    {% endfor %}
+    {% endblock %}
+
+    {% block content %}
+    <div>
+            <div>
+            {{ form_start(registrationForm,{'attr' : {'novalidate' : 'novalidate','class' : 'form-group'}}) }}
+            <table>
+                <tr>
+                    <td>
+                        {{ form_label(registrationForm.email,"Email : ") }}
+                    </td>
+                    <td>
+                        {{ form_widget(registrationForm.email,{ 'attr' : { 'class' : 'form-control' } }) }}
+                    </td>
+                    <td>
+                        {{ form_errors(registrationForm.email) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form_label(registrationForm.nomutilisateur,"Username : ") }}
+                    </td>
+                    <td>
+                        {{ form_widget(registrationForm.nomutilisateur,{ 'attr' : { 'class' : 'form-control' } }) }}
+                    </td>
+                    <td>
+                        {{ form_errors(registrationForm.nomutilisateur) }}
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        {{ form_label(registrationForm.phone,"Phone number : ") }}
+                    </td>
+                    <td>
+                        {{ form_widget(registrationForm.phone,{ 'attr' : { 'class' : 'form-control' } }) }}
+                    </td>
+                    <td>
+                        {{ form_errors(registrationForm.phone) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form_label(registrationForm.firstname,"First name : ") }}
+                    </td>
+                    <td>
+                        {{ form_widget(registrationForm.firstname,{ 'attr' : { 'class' : 'form-control' } }) }}
+                    </td>
+                    <td>
+                        {{ form_errors(registrationForm.firstname) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form_label(registrationForm.lastname,"Last name : ") }}
+                    </td>
+                    <td>
+                        {{ form_widget(registrationForm.lastname,{ 'attr' : { 'class' : 'form-control' } }) }}
+                    </td>
+
+                    <td>
+                        {{ form_errors(registrationForm.lastname) }}
+                    </td>
+                </tr>
+                <tr>
+{#                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.nomutilisateur }} </b>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{{ path('app_profile',{'id': app.user.id}) }}">My profile</a>
+                            <a class="dropdown-item" href="{{ path('change_password_front')}}">Change password</a>
+                            <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
+                        </div>
+                    </li>#}
+                    <td>
+                        {{ form_label(registrationForm.roles,"Sign up as : ") }}
+                    </td>
+                    <td>
+                        {{ form_widget(registrationForm.roles,{ 'attr' : { 'class' : 'form-control' } }) }}
+                    </td>
+
+                    <td>
+                        {{ form_errors(registrationForm.roles) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        {{ form_row(registrationForm.plainPassword, {
+                            label: 'Password',
+                            'attr' : { 'class' : 'form-control'}
+                        }) }}
+                    </td>
+                </tr>
+                <tr>
+
+                        {{ form_row(registrationForm.avatarFile,{ 'attr' : { 'class' : 'form-control' } })}}
+
+                    <td>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </td>
+                </tr>
+            </table>
+                <br/>
+                <hr style="background-color: white"/>
+            {{ form_end(registrationForm) }}
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-center pb-4">
+            <p class="mb-0 me-2">Already have an account ?</p><pre>  </pre>
+            <a href="{{ path('app_login') }}"><button type="button" class="btn btn-outline-danger"> Sign in</button> </a>
+        </div>
+{#        <h1>Register</h1>
+        {{ form_start(registrationForm,{'attr' : {'novalidate' : 'novalidate'}}) }}
+        {{ form_row(registrationForm.email,{label : 'Email'}) }}
+        {{ form_row(registrationForm.username,{label : 'Username'}) }}
+        {{ form_row(registrationForm.phone,{label : 'Phone number'}) }}
+        {{ form_row(registrationForm.firstname,{label : 'First name'}) }}
+        {{ form_row(registrationForm.lastname,{label : 'Last name'}) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}#}
+{#
+        <button type="submit" class="btn">Register</button>
+        {{ form_end(registrationForm) }}#}
+
+
+
+    {% endblock %}
+
+    {% block score %}
+    {% endblock %}
+    {% block latest %}
+    {% endblock %}
+    {% block nextmatch %}
+    {% endblock %}
+    {% block sitesection %}
+    {% endblock %}
+    {% block blog %}
+    {% endblock %}
+    {% block footer %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('templates/script.js') }}"></script>
+        <script src="{{ asset('build/js/bootstrap.min.js') }}"></script>
+    {% endblock %}

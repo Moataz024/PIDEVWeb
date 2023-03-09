@@ -1,0 +1,61 @@
+{% extends "back/base.html.twig" %}
+
+{% block body %}
+    <h1>Suppliers index</h1>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Basic Table</h4>
+            <p class="card-description"> Add class <code>.table</code>
+            </p>
+            <div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Adress</th>
+                <th>Notes</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for supplier in suppliers %}
+            <tr>
+                <td>{{ supplier.id }}</td>
+                <td>{{ supplier.name }}</td>
+                <td>{{ supplier.phone }}</td>
+                <td>{{ supplier.email }}</td>
+                <td>{{ supplier.adress}}</td>
+                <td>{{ supplier.notes }}</td>
+                <td>
+                    <a href="{{ path('app_suppliers_show', {'id': supplier.id}) }}">show <span class="material-icons">
+                        visibility
+                        </span></a>
+                    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+                
+                    <a href="{{ path('app_suppliers_edit', {'id': supplier.id}) }}">edit <span class="material-icons">
+                        edit
+                        </span></a> 
+                       
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+</div>
+    <a href="{{ path('app_suppliers_new') }}"> <span class="material-icons">
+        create_new_folder
+        </span> Create new</a> 
+{% endblock %}

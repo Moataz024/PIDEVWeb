@@ -1,5 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+  <style>
+
+    .button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 16px 30.5px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 0.5px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+    }
+    
+    .button1 {
+      background-color:black; 
+      color: black; 
+      width:25%;
+      border: 0.5px solid #4CAF50;
+    }
+    
+    .button1:hover {
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    .button2 {
+      background-color: white; 
+      color: black; 
+      width:25%;
+      border: 0.5px solid #008CBA;
+    }
+    
+    .button2:hover {
+      background-color: #008CBA;
+      color: white;
+    }
+    
+    .button3 {
+      background-color: black; 
+      color: white; 
+      width:25%;
+      border: 0.5px solid #f44336;
+    }
+    
+    .button3:hover {
+      background-color: #f44336;
+      color: white;
+    }
+    </style>
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -39,7 +91,15 @@
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
+<<<<<<< HEAD
                   <h5 class="mb-0 font-weight-normal">{{  app.user.firstname  }}</h5>
+=======
+<<<<<<< HEAD
+                  <h5 class="mb-0 font-weight-normal">Henry Klein</h5>
+=======
+                  <h5 class="mb-0 font-weight-normal">{{  app.user.nomutilisateur  }}</h5>
+>>>>>>> 1d766731bfa68b9032b960ab6cb51b623417dc21
+>>>>>>> gestion_terrain
                   <span>Gold Member</span>
                 </div>
               </div>
@@ -84,18 +144,21 @@
             <span class="nav-link">Navigation</span>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="{{ path('app_academy_index') }}">
+            <a class="nav-link" href="{{ path('app_equipment_index') }}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
-              <span class="menu-title">Academy</span>
+              <span class="menu-title">Equipment</span>
             </a>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="{{ path('app_coach_index') }}">
+            <a class="nav-link" href="{{ path('app_suppliers_index') }}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
+<<<<<<< HEAD
+              <span class="menu-title">Supplier</span>
+=======
               <span class="menu-title">Coach</span>
             </a>
           </li>
@@ -105,6 +168,7 @@
                 <i class="mdi mdi-account-multiple"></i>
               </span>
               <span class="menu-title">Users</span>
+>>>>>>> 1d766731bfa68b9032b960ab6cb51b623417dc21
             </a>
           </li>
           <li class="nav-item menu-items">
@@ -338,7 +402,15 @@
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
                     <img class="img-xs rounded-circle" src="{{ asset ('assets/back/images/faces/face15.jpg') }}" alt="">
+<<<<<<< HEAD
                     <p class="mb-0 d-none d-sm-block navbar-profile-name">{{  app.user.firstname  }}</p>
+=======
+<<<<<<< HEAD
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Henry Klein</p>
+=======
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name">{{  app.user.nomutilisateur  }}</p>
+>>>>>>> 1d766731bfa68b9032b960ab6cb51b623417dc21
+>>>>>>> gestion_terrain
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
                 </a>
@@ -348,15 +420,15 @@
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
                       <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-account-convert text-success"></i>
+                        <i class="mdi mdi-settings text-success"></i>
                       </div>
                     </div>
                     <div class="preview-item-content">
-                      <p class="preview-subject mb-1">My profile</p>
+                      <p class="preview-subject mb-1">Settings</p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item" href="{{ path('app_logout')}}">
+                  <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
                       <div class="preview-icon bg-dark rounded-circle">
                         <i class="mdi mdi-logout text-danger"></i>

@@ -6,4 +6,8 @@ knp_snappy:
     image:
         enabled:    true
         binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\""
+<<<<<<< HEAD
         options:    []
+=======
+        options:    []
+>>>>>>> gestion_terrain

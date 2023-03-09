@@ -1,9 +1,9 @@
-assets/<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>{% block title %}Soccer &mdash; Website by Colorlib{% endblock %}</title>
-    {% block stylesheets %}
+    <title>{% block title %}Sportify &mdash; Website by Colorlib{% endblock %}</title>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -24,14 +24,12 @@ assets/<!DOCTYPE html>
 
         <link rel="stylesheet" href="{{ asset ('assets/front/css/aos.css')}}">
 
-        <link rel="stylesheet" href="{{ asset ('assets/front/css/style.css')}}">
-
-    {% endblock %}
+        <link rel="stylesheet" href="{{ asset ('assets/front/css/style.css')}}">  
 
 </head>
 
 <body>
-{% block header %}
+
 <div class="site-wrap">
 
     <div class="site-mobile-menu site-navbar-target">
@@ -48,19 +46,21 @@ assets/<!DOCTYPE html>
         <div class="container">
             <div class="d-flex align-items-center">
                 <div class="site-logo">
-                    <a href="{{ asset ('front/index.html') }}">
-                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo">
+                    <a href="{{ asset ('assets/front/index.html') }}">
+                        <img src="{{ asset ('assets/front/images/Sportify.png') }}" alt="Sportify" height="110" width="150">
                     </a>
                 </div>
                 <div class="ml-auto">
                     <nav class="site-navigation position-relative text-right" role="navigation">
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                            <li class="active"><a href="{{ asset ('front/index.html') }}" class="nav-link">Home</a></li>
-                            <li><a href="{{ asset ('assets/front/matches.html') }}" class="nav-link">Matches</a></li>
-                            <li><a href="{{ asset ('assets/front/players.html') }}" class="nav-link">Players</a></li>
-                            <li><a href="{{ asset ('assets/front/blog.html') }}" class="nav-link">Blog</a></li>
-                            <li><a href="{{ asset ('assets/front/contact.html') }}" class="nav-link">Contact</a></li>
-                            {# <li><a href="{{ path('app_produit_index') }}" class="nav-link">Product</a></li> #}
+                            <li class="active"><a href="{{ asset ('assets/front/index.html') }}" class="nav-link">Home</a></li>
+                            <li><a href="{{ asset ('assets/front/matches.html') }}" class="nav-link">Products</a></li>
+                            <li><a href="{{ asset ('assets/front/players.html') }}" class="nav-link">Equipments</a></li>
+                            <li><a href="{{ asset ('assets/front/blog.html') }}" class="nav-link">Reservation</a></li>
+                            <li><a href="{{ asset ('assets/front/contact.html') }}" class="nav-link">Academy</a></li>
+                            <li><a href="{{ asset ('assets/front/blog.html') }}" class="nav-link">Evenements</a></li>
+                            
+                           
                         </ul>
                     </nav>
 
@@ -71,10 +71,15 @@ assets/<!DOCTYPE html>
         </div>
 
     </header>
-    {% block body %}
 
-    {% endblock %}
+
+{% block body %}
     
+{% endblock %}
+
+
+
+
 
 
         <footer class="footer-section">
@@ -150,7 +155,7 @@ assets/<!DOCTYPE html>
             </div>
 
         </footer>
-    {% endblock %}
+
 
 
 </div>

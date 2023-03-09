@@ -281,8 +281,7 @@ h1, h2, h3, h4, h5,
   background-color: white;
   opacity: 0.5;
 }
-  .site-logo a {
- }
+
 
 .site-navbar {
   margin-bottom: 0px;
@@ -1121,3 +1120,4 @@ h1, h2, h3, h4, h5,
   .post-meta a {
     color: #fff;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
+    

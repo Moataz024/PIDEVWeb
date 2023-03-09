@@ -1,5 +1,6 @@
 vich_uploader:
     db_driver: orm
+<<<<<<< HEAD
 
     mappings:
         produit_directory:
@@ -12,3 +13,23 @@ vich_uploader:
                 delete_on_remove: true
 
     
+=======
+    mappings:
+        user_avatar:
+            uri_prefix: /images/users
+            upload_destination: '%kernel.project_dir%/public/images/users'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: true
+            delete_on_update: true
+            delete_on_remove: true
+
+        terrain_directory:
+            uri_prefix: /uploads/terrain
+            upload_destination: '%kernel.project_dir%/public/uploads/terrain'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+        
+>>>>>>> gestion_terrain

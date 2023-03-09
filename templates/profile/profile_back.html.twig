@@ -92,6 +92,7 @@
                 {{ form_widget(form.lastname,{'attr': {'class': 'form-control'}}) }}
                 {{ form_errors(form.lastname) }}
             </div>
+
             <button class="btn btn-primary mr-2">{{ button_label|default('Update') }}</button>
             <a class="preview-item" href="{{ path('app_academy_index') }}"><button class="btn btn-dark">Cancel</button></a>
             {{ form_end(form) }}

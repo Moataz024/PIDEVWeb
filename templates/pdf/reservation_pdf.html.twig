@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        .header {
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .info {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .items {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 16px;
+        }
+        .items th, .items td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        .items th {
+            background-color: #eee;
+            font-weight: bold;
+        }
+        .items td {
+            vertical-align: middle;
+        }
+        .items tr:hover {
+            background-color: #f5f5f5;
+        }
+        .total {
+            text-align: right;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<header>
+  <img src="{{ app.request.schemeAndHttpHost ~ asset('front/images/logo.png') }}" alt="Company Logo" width=250 height="150">
+  <h1>Receipt :</h1>
+</header>
+<body>
+    
+    <div class="info">
+        <p><strong>Client Information:</strong></p>
+        <p><strong>Firstname:</strong> {{ reservation.getClient().getFirstname() }}</p>
+        <p><strong>Lastname:</strong> {{ reservation.getClient().getLastname() }}</p>
+        <p><strong>Email:</strong> {{ reservation.getClient().getEmail() }}</p>
+        <p><strong>Telephone:</strong> {{ reservation.getClient().getPhone() }}</p>
+    </div>
+            {% set total = 0 %}
+            {% for equipment in reservation.getEquipments() %}
+            {% set total = total + equipment.getPrice() %}
+            {% endfor %}
+            {% set total = total + reservation.getTerrain().getRentPrice() * reservation.getNbPerson() %}
+    <table class="items">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Number of people</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>{{ reservation.getDateReservation().format('Y-m-d') }}</td>
+                <td>{{ reservation.getStartTime().format('H:i') }}</td>
+                <td>{{ reservation.getEndTime().format('H:i') }}</td>
+                <td>{{ reservation.getNbPerson() }}</td>
+                <td>{{ total }}.DT</td>
+            </tr>
+            {% for equipment in reservation.getEquipments() %}
+                <tr>
+                <td colspan="3" align="right">Equipments:</td>
+                <td>{{ equipment.getName() }}</td>
+                <td>{{ equipment.getPrice() }}.DT</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3" align="right">Total:</td>
+                <td class="total">{{ total }}.DT</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br><br>
+     <div>
+                            <p>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                     All rights reserved | This template is made with by Creative Crew 
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+    </div>
+</body>
+</html>

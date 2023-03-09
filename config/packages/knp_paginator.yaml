@@ -6,5 +6,10 @@ knp_paginator:
         sort_direction_name: direction
         distinct: true
     template:
+<<<<<<< HEAD
         pagination: '@KnpPaginator/Pagination/sliding.html.twig'
         sortable: '@KnpPaginator/Pagination/sortable_link.html.twig'
+=======
+        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
+        sortable: '@KnpPaginator/Pagination/sortable_link.html.twig'
+>>>>>>> gestion_terrain

@@ -1,0 +1,59 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Terrain{% endblock %}
+
+{% block content %}
+    
+    <h1>List of Terrains : </h1>
+
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name of Owner</th>
+                <th>Name</th>
+                <th>Capacity</th>
+                <th>SportType</th>
+                <th>RentPrice</th>
+                <th>Disponibility</th>
+                <th>PostalCode</th>
+                <th>RoadName</th>
+                <th>RoadNumber</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for terrain in terrains %}
+            <tr>
+               <td>{{ terrain.getOwner().getFirstname() }} {{ terrain.getOwner().getLastname() }}</td>
+                <td>{{ terrain.name }}</td>
+                <td>{{ terrain.capacity }}</td>
+                <td>{{ terrain.sportType }}</td>
+                <td>{{ terrain.rentPrice }}</td>
+                <td>{{ terrain.disponibility ? 'Yes' : 'No' }}</td>
+                <td>{{ terrain.postalCode }}</td>
+                <td>{{ terrain.roadName }}</td>
+                <td>{{ terrain.roadNumber }}</td>
+                <td>{{ terrain.city }}</td>
+                <td>{{ terrain.country }}</td>
+                  <td>
+                  <img src="{{ vich_uploader_asset(terrain, 'imageFile') }}" alt="{{ terrain.name }}" class="product-img" style="max-width: 60px; height: 50px;">
+                </td>
+                <td>
+                    <a href="{{ path('app_terrain_show_admin', {'id': terrain.id}) }}"><i class="mdi mdi-eye" style="font-size: 20px;"></i></a>
+                    <form method="post" action="{{ path('app_terrain_delete_admin', {'id': terrain.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ terrain.id) }}">
+                    <button class="btn"><i class="mdi mdi-delete" style="font-size: 20px;"></i></button>
+                </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -19,14 +20,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("users")]
     private ?int $id = null;
 
     #[Assert\NotBlank]
     #[Assert\Email]
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups("users")]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups("users")]
     private array $roles = [];
 
     /**
@@ -43,20 +47,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $inscriptions;
 
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $nomutilisateur = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $lastname = null;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Terrain::class, orphanRemoval: true)]
+    private Collection $terrains;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Reservation::class, orphanRemoval: true)]
+    private Collection $reservations;
 
     #[ORM\Column]
     private ?bool $status = null;
 
+<<<<<<< HEAD
     #[ORM\OneToOne(mappedBy: 'user')]
     private ?Card $card = null;
 
@@ -64,12 +79,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $commandes;
 
 
+=======
+>>>>>>> gestion_terrain
     public function __construct()
     {
         $this->ownedEvents = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
+<<<<<<< HEAD
         $this->status = false;
         $this->commandes = new ArrayCollection();
+=======
+        $this->terrains = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
+>>>>>>> gestion_terrain
     }
 
     public function getId(): ?int
@@ -88,7 +110,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 
     /**
      * A visual identifier that represents this user.
@@ -286,6 +307,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return Collection<int, Terrain>
+     */
+    public function getTerrains(): Collection
+    {
+        return $this->terrains;
+    }
+
+    public function addTerrain(Terrain $terrain): self
+    {
+        if (!$this->terrains->contains($terrain)) {
+            $this->terrains->add($terrain);
+            $terrain->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTerrain(Terrain $terrain): self
+    {
+        if ($this->terrains->removeElement($terrain)) {
+            // set the owning side to null (unless already changed)
+            if ($terrain->getOwner() === $this) {
+                $terrain->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getClient() === $this) {
+                $reservation->setClient(null);
+            }
+        }
+
+        return $this;
+    }
     public function isStatus(): ?bool
     {
         return $this->status;

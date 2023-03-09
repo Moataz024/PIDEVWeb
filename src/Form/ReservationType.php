@@ -16,16 +16,26 @@ class ReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateReservation', DateTimeType::class)
-            ->add('startTime', DateTimeType::class)
-            ->add('endTime', DateTimeType::class)
-            ->add('resStatus')
+            ->add('dateReservation', DateTimeType::class,
+            [
+                'date_widget' => 'single_text'
+            ])
+            ->add('startTime', DateTimeType::class,
+            [
+                'date_widget' => 'single_text'
+            ])
+            ->add('endTime', DateTimeType::class,
+            [
+                'date_widget' => 'single_text'
+            ])
             ->add('nbPerson')
             ->add('equipments', EntityType::class, [
                 'class' => Equipment::class,
                 'multiple' => true,
                 'expanded' => true,
-                'choice_label' => 'name',
+                'choice_label' => function (Equipment $equipment) {
+                    return sprintf('%s (%.2f DT)', $equipment->getName(), $equipment->getPrice());
+                },
                 'query_builder' => function (EquipmentRepository $er) {
                     return $er->createQueryBuilder('e')
                         ->orderBy('e.name', 'ASC');

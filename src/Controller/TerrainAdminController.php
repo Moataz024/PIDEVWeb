@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TerrainAdminController extends AbstractController
 {
  /// Back-END --------------------------------------------------------------------------||
+    
    #[Route('/admin', name: 'app_terrain_index_admin', methods: ['GET'])]
     public function index_admin(TerrainRepository $terrainRepository): Response
     {
@@ -76,4 +77,6 @@ class TerrainAdminController extends AbstractController
 
         return $this->redirectToRoute('app_terrain_index_admin', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 }

@@ -1,0 +1,193 @@
+
+
+{% extends 'base.html.twig' %}
+{% block title %} Details {% endblock %} 
+{% block stylesheets %}
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ asset ('front/fonts/icomoon/style.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/bootstrap/bootstrap.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/jquery-ui.css')}} ">
+        <link rel="stylesheet" href="{{ asset ('front/css/owl.carousel.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/owl.theme.default.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/owl.theme.default.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/jquery.fancybox.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/bootstrap-datepicker.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/fonts/flaticon/font/flaticon.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/aos.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/style.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/main.css')}}">
+        <link rel="stylesheet" href="{{ asset ('bundles/vichuploader/css/vichuploader.css') }}">
+        <link rel="shortcut icon" href="{{ asset ('front/images/icon.png') }}" />
+    <!-- custom css link  -->
+    <link rel="stylesheet" href="{{ asset ('front/css/style_2.css')}}">
+    <link rel="stylesheet" href="{{ asset ('front/css/media.css')}}">
+    <!-- custom css link  -->
+{% endblock %}
+{% block mid %}
+<section class="header">
+    <div class="hero overlay" style="background-image: url({{ asset('front/images/bg_1.jpg') }});background-color: crimson;">
+        <div class="container">
+            <div class="header-info">
+                <h1 class="header-headline">Stadium "{{ terrain.name }}"</h1>
+                <p class="header-subtitle">
+                   
+                </p>
+            </div>
+        </div>
+    </div>
+    </section>
+{% endblock %}
+{% block body %}
+
+    <!-- product  -->
+    <br>
+  <section>
+  
+  <div class="container">
+    <div class="table-responsive">
+      <table class="table table-bordered  table-striped align-middle">
+         <tbody class="table-dark">
+            
+            <tr>
+                <th>Name</th>
+                <td>{{ terrain.name }}</td>
+            </tr>
+            <tr>
+                <th>Capacity</th>
+                <td>{{ terrain.capacity }}</td>
+            </tr>
+            <tr>
+                <th>SportType</th>
+                <td>{{ terrain.sportType }}</td>
+            </tr>
+            <tr>
+                <th>RentPrice</th>
+                <td>{{ terrain.rentPrice }}</td>
+            </tr>
+            <tr>
+                <th>Disponibility</th>
+                <td>{{ terrain.disponibility ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>PostalCode</th>
+                <td>{{ terrain.postalCode }}</td>
+            </tr>
+            <tr>
+                <th>RoadName</th>
+                <td>{{ terrain.roadName }}</td>
+            </tr>
+            <tr>
+                <th>RoadNumber</th>
+                <td>{{ terrain.roadNumber }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ terrain.city }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ terrain.country }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                  <td>
+                <img src="{{ vich_uploader_asset(terrain, 'imageFile') }}" alt="{{ terrain.name }}" class="product-img" style="max-width: 200px; height: auto;">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <button type="button" class="btn btn-dark" >
+     <a href="{{ path('app_reservation_new',{'id_user': app.user.id,'id_terrain': terrain.id}) }}">BOOK NOW</a>
+      </button>
+    <br><br>
+   
+    
+    </div>
+  </div>
+
+</section>
+    <!-- product  -->
+
+    <!-- gsap link  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js" integrity="sha512-VEBjfxWUOyzl0bAwh4gdLEaQyDYPvLrZql3pw1ifgb6fhEvZl9iDDehwHZ+dsMzA0Jfww8Xt7COSZuJ/slxc4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- gsap link  -->
+
+    <script src="{{ asset ('front/js/app.js')}}"></script>
+       {% block footer %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>News</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="{{ path('app_template') }}">Home</a></li>
+                                <li><a href="#">Events</a></li>
+                                <li><a href="#">Products</a></li>
+                                <li><a href="#">Equipments</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                  <!--  <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>Tickets</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="#">Online Ticket</a></li>
+                                <li><a href="#">Payment and Prices</a></li>
+                                <li><a href="#">Contact &amp; Booking</a></li>
+                                <li><a href="#">Tickets</a></li>
+                                <li><a href="#">Coupon</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>Matches</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="#">Standings</a></li>
+                                <li><a href="#">World Cup</a></li>
+                                <li><a href="#">La Lega</a></li>
+                                <li><a href="#">Hyper Cup</a></li>
+                                <li><a href="#">World League</a></li>
+                            </ul>
+                        </div>
+                    </div>-->
+
+                    <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>Social</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="#">Twitter</a></li>
+                                <li><a href="#">Facebook</a></li>
+                                <li><a href="#">Instagram</a></li>
+                                <li><a href="#">Youtube</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <div class=" pt-5">
+                            <p>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>
+                                    document.write(new Date().getFullYear());
+                                </script> All rights reserved | This template is made with <i class="icon-heart"
+                                                                                              aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+{% endblock %}
+{% endblock %}

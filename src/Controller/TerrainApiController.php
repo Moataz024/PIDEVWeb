@@ -25,7 +25,7 @@ class TerrainApiController extends AbstractController
         );
 
         $terrains = $query->getResult();
-        $data = $serializer->serialize($terrains, 'json', ['groups' => 'Terrains']);
+        $data = $serializer->serialize($terrains, 'json', ['groups' => ['Terrains','Reservations']]);
 
         // Loop through the terrains and add the image URL and owner to the serialized data
         $imageUrlPrefix = $this->getParameter('app.path.terrain_images');
@@ -36,7 +36,7 @@ class TerrainApiController extends AbstractController
 
             foreach ($terrains as $terrain) {
                 if ($terrain->getId() == $terrainData['id']) {
-                    $ownerData = $serializer->normalize($terrain->getOwner(), null, ['groups' => 'Users']);
+                    $ownerData = $serializer->normalize($terrain->getOwner(), null, ['groups' => 'users']);
                     $terrainData['owner'] = $ownerData;
                     break;
                 }
@@ -48,18 +48,47 @@ class TerrainApiController extends AbstractController
             'Content-Type' => 'application/json',
         ]);
     }
-    #[Route('/terrainApiAfficher/{id}', name: 'terrain_show_id', methods: ['GET', 'POST'])]
-    public function showId_terrain(Terrain $terrain, SerializerInterface $serializer,UserRepository $UserRepository): Response
+    #[Route('/terrainApiAfficher/{id_terrain}', name: 'terrain_show_id', methods: ['GET', 'POST'])]
+    public function showId_terrain($id_terrain,TerrainRepository $terrainRepository, SerializerInterface $serializer,UserRepository $UserRepository): Response
     { 
-        $ownerData = $serializer->normalize($terrain->getOwner(), null, ['groups' => 'Users']);
+        $terrain=$terrainRepository->find($id_terrain);
+        $ownerData = $serializer->normalize($terrain->getOwner(), null, ['groups' => 'users']);
 
-        $data = $serializer->serialize($terrain, 'json', ['groups' => 'Terrains']);
+        $data = $serializer->serialize($terrain, 'json',  ['groups' => ['Terrains','Reservations']]);
         $imageUrlPrefix = $this->getParameter('app.path.terrain_images');
         $dataArray = json_decode($data, true);
         $imageUrl = $imageUrlPrefix . '/' . $dataArray['imageName'];
         $dataArray['image_url'] = $imageUrl;
         $dataArray['owner'] = $ownerData;
 
+        $data = json_encode($dataArray);
+        return new Response($data, 200, [
+            'Content-Type' => 'application/json',
+        ]);
+    }
+
+    #[Route('/terrainApiAfficher/owner/{id_user}', name: 'terrain_show_user', methods: ['GET', 'POST'])]
+    public function showOwner_terrain($id_user, SerializerInterface $serializer,UserRepository $UserRepository): Response
+    { 
+        $user = $UserRepository->find($id_user);
+        $terrains = $user->getTerrains();
+        
+
+        $data = $serializer->serialize($terrains, 'json',  ['groups' => ['Terrains']]);
+        $imageUrlPrefix = $this->getParameter('app.path.terrain_images');
+        $dataArray = json_decode($data, true);
+        foreach ($dataArray as &$terrainData) {
+            $imageUrl = $imageUrlPrefix . '/' . $terrainData['imageName'];
+            $terrainData['image_url'] = $imageUrl;
+
+            foreach ($terrains as $terrain) {
+                if ($terrain->getId() == $terrainData['id']) {
+                    $ownerData = $serializer->normalize($terrain->getOwner(), null, ['groups' => 'users']);
+                    $terrainData['owner'] = $ownerData;
+                    break;
+                }
+            }
+        }
         $data = json_encode($dataArray);
         return new Response($data, 200, [
             'Content-Type' => 'application/json',
@@ -87,8 +116,8 @@ class TerrainApiController extends AbstractController
         $terrain->setCountry($req->get('country'));
         $terrain->setImageName($req->get('imageName'));
         $terrainRepository->save($terrain, true);
-        $ownerData = $serializer->normalize($terrain->getOwner(), null, ['groups' => 'Users']);
-        $data = $serializer->serialize($terrain, 'json', ['groups' => 'Terrains']);
+        $ownerData = $serializer->normalize($terrain->getOwner(), null, ['groups' => 'users']);
+        $data = $serializer->serialize($terrain, 'json', ['groups' => ['Terrains','Reservations']]);
         $dataArray = json_decode($data, true);
         $dataArray['owner'] = $ownerData;
         $data = json_encode($dataArray);
@@ -97,9 +126,10 @@ class TerrainApiController extends AbstractController
         ]);
     }
 
-    #[Route('/terrainApiModifier/{id}', name: 'terrain_update', methods: ['GET', 'POST'])]
-    public function modifier_terrain(Request $req,Terrain $terrain,SerializerInterface $serializer,terrainRepository $terrainRepository): Response
+    #[Route('/terrainApiModifier/{id_terrain}', name: 'terrain_update', methods: ['GET', 'POST'])]
+    public function modifier_terrain(Request $req,$id_terrain,SerializerInterface $serializer,terrainRepository $terrainRepository): Response
     {
+        $terrain=$terrainRepository->find($id_terrain);
         $terrain->setName($req->get('name'));
         $terrain->setCapacity(intval($req->get('capacity')));
         $terrain->setSportType($req->get('sportType'));
@@ -112,8 +142,8 @@ class TerrainApiController extends AbstractController
         $terrain->setCountry($req->get('country'));
         $terrain->setImageName($req->get('imageName'));
         $terrainRepository->save($terrain, true);
-        $ownerData = $serializer->normalize($terrain->getOwner(), null, ['groups' => 'Users']);
-        $data = $serializer->serialize($terrain, 'json', ['groups' => 'Terrains']);
+        $ownerData = $serializer->normalize($terrain->getOwner(), null, ['groups' => 'users']);
+        $data = $serializer->serialize($terrain, 'json', ['groups' => ['Terrains','Reservations']]);
         $dataArray = json_decode($data, true);
         $dataArray['owner'] = $ownerData;
         $data = json_encode($dataArray);
@@ -121,11 +151,12 @@ class TerrainApiController extends AbstractController
             'Content-Type' => 'application/json',
         ]); 
     }
-    #[Route('/terrainApiSupprimer/{id}', name: 'terrain_delete', methods: ['GET', 'POST'])]
-    public function supprimer_terrain(Terrain $terrain,SerializerInterface $serializer,terrainRepository $terrainRepository): Response
+    #[Route('/terrainApiSupprimer/{id_terrain}', name: 'terrain_delete', methods: ['GET','POST'])]
+    public function supprimer_terrain($id_terrain,SerializerInterface $serializer,terrainRepository $terrainRepository): Response
     {
-        $ownerData = $serializer->normalize($terrain->getOwner(), null, ['groups' => 'Users']);
-        $data = $serializer->serialize($terrain, 'json', ['groups' => 'Terrains']);
+        $terrain=$terrainRepository->find($id_terrain);
+        $ownerData = $serializer->normalize($terrain->getOwner(), null, ['groups' => 'users']);
+        $data = $serializer->serialize($terrain, 'json', ['groups' => ['Terrains','Reservations']]);
         $dataArray = json_decode($data, true);
         $dataArray['owner'] = $ownerData;
         $data = json_encode($dataArray);

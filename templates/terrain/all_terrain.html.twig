@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="{{ asset ('front/css/aos.css')}}">
         <link rel="stylesheet" href="{{ asset ('front/css/style.css')}}">
         <link rel="stylesheet" href="{{ asset ('front/css/main.css')}}">
-        <link rel="stylesheet" href="{{ asset('bundles/vichuploader/css/vichuploader.css') }}">
+        <link rel="stylesheet" href="{{ asset ('bundles/vichuploader/css/vichuploader.css') }}">
         <link rel="shortcut icon" href="{{ asset ('front/images/icon.png') }}" />
     <!-- custom css link  -->
     <link rel="stylesheet" href="{{ asset ('front/css/style_2.css')}}">
@@ -78,13 +78,63 @@
             <h2 class="product-title">
                 Our Stadiums
             </h2>
+            <div class="container">
+            <input type="text" id="search-input" placeholder="Search Terrains...">
+            <span>
+             <i class="icon-search"></i>
+            </span>
+           </div>
         </div>
-        <div class="container">
+       <div class="container product-card" id="search-results" ></div>
+       <br><br>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+    $(document).ready(function() {
+    $('#search-input').keyup(function() {
+        var searchValue = $(this).val().trim(); // Remove leading/trailing whitespace
+        if (searchValue === '') {
+            $('#search-results').html(''); // Clear the results if search value is empty
+            return; // Exit the function early
+        }
+        $.ajax({
+            url: "{{ path('search_terrain') }}",
+            method: 'GET',
+            data: { 'value': searchValue },
+            success: function(response) {
+                var terrains = JSON.parse(response);
+                if (terrains.length > 0) {
+                    var terrainList = '<ul>';
+                    for (var i = 0; i < terrains.length; i++) {
+                        var terrainUrl = '{{ path('app_display_terrain', {'id_terrain': 'TERRAIN_ID'}) }}'.replace('TERRAIN_ID', terrains[i].id);
+                        var imgname = terrains[i].imageName;
+                        var imageUrl = `{{ app.request.schemeAndHttpHost ~ asset('uploads/terrain/${imgname}') }}`;
+
+                        terrainList += '<li>' +
+                            '<a href="' + terrainUrl + '">' +
+                            '<img src="' + imageUrl + '" alt="' + terrains[i].name + '" class="product-img" style="width: 80px; height: 52px;">' +
+                            '<strong>Name: ' + terrains[i].name + '</strong>&nbsp;' +
+                            '<span>Type: ' + terrains[i].sportType + '</span>&nbsp;' +
+                            '<span>Price: ' + terrains[i].rentPrice + '.Dt</span>&nbsp;' +
+                            '<span>Capacity: ' + terrains[i].capacity + '</span>&nbsp;' +
+                            '<span>Address: ' + terrains[i].postalCode + '/' + terrains[i].city + '/' + terrains[i].country + '</span>' +
+                            '</li>'+'</a>';
+                    }
+                    terrainList += '</ul>';
+                    $('#search-results').html(terrainList);
+                } else {
+                    $('#search-results').html('<p>Terrain not found</p>');
+                }
+            }
+        });
+    });
+});
+</script>
+    <div class="container">
         {% for terrain in terrains %}
          {% if terrain.disponibility %}
             <div class="product-card">
             {% if terrain.imageName %}
-            <img src="{{ vich_uploader_asset(terrain, 'imageFile') }}" alt="{{ terrain.name }}" class="product-img">
+           <a href="{{ path('app_display_terrain',{'id_terrain': terrain.id}) }}"><img src="{{ vich_uploader_asset(terrain, 'imageFile') }}" alt="{{ terrain.name }}" class="product-img"> </a>
             {% endif %}
                 <div class="card-info">
                     <div class="card-info-content">
@@ -113,8 +163,25 @@
             </div>
             {% endif %}
             {% endfor %}
+    
         </div>
     </section>
+     <div style="position: absolute; bottom: 100; width: 100%;">
+    {{ knp_pagination_render(terrains) }}
+</div>
+    <style>
+    .pagination {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    }
+    </style>
+   
+        
     <!-- product  -->
 
     <!-- gsap link  -->

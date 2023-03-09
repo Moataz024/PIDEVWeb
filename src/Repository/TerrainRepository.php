@@ -64,6 +64,22 @@ class TerrainRepository extends ServiceEntityRepository
     
         return $qb->getQuery()->getResult();
     }
+    public function findByString(string $searchTerm): array
+    {
+        $qb = $this->createQueryBuilder('t');
+    
+        $qb->andWhere('t.name LIKE :searchTerm')
+            ->orWhere('t.sportType LIKE :searchTerm')
+            ->orWhere('t.rentPrice LIKE :searchTerm')
+            ->orWhere('t.postalCode LIKE :searchTerm')
+            ->orWhere('t.city LIKE :searchTerm')
+            ->orWhere('t.country LIKE :searchTerm')
+            ->orWhere('t.capacity LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%');
+    
+        return $qb->getQuery()->getResult();
+    }
+    
     
     /*public function findByOwner($userId)
     {

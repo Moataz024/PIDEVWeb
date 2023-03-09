@@ -3,39 +3,11 @@
 {% block title %}Log in!{% endblock %}
 
 {% block header %}
-<div class="site-wrap">
 
-    <div class="site-mobile-menu site-navbar-target">
-        <div class="site-mobile-menu-header">
-            <div class="site-mobile-menu-close">
-                <span class="icon-close2 js-menu-toggle"></span>
-            </div>
-        </div>
-        <div class="site-mobile-menu-body"></div>
-    </div>
-
-    <header class="site-navbar py-4" role="banner">
-
-        <div class="container">
-            <div class="d-flex align-items-center">
-                <div class="logo">
-                    <a href="{{ asset ('app_template') }}">
-                        <img src="{{ asset ('front/images/logo.png') }}" alt="Logo" width="140" height="80">
-                    </a>
-                </div>
-                <div class="ml-auto">
-
-                    <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
-                                class="icon-menu h3 text-white"></span></a>
-                </div>
-            </div>
-        </div>
-
-    </header>
     {% endblock %}
 
     {% block content %}
-        <div class="align-items-right">
+        <div class="align-items-center">
             <div>
             {{ form_start(registrationForm,{'attr' : {'novalidate' : 'novalidate'}}) }}
             <table>
@@ -114,9 +86,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-
-                    </td>
                     <td colspan="4">
                         {{ form_row(registrationForm.plainPassword, {
                             label: 'Password'
@@ -124,24 +93,22 @@
                     </td>
                 </tr>
                 <tr>
+
+                        {# {{ form_row(registrationForm.avatarFile)}} #}
+
                     <td>
-                        <br/>
+                        <button type="submit" class="btn btn-primary">Register</button>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <button type="submit" class="btn">Register</button>
-                    </td>
-                </tr>
-
-
             </table>
+                <br/>
+                <hr style="background-color: white"/>
             {{ form_end(registrationForm) }}
-                <div class="d-flex align-items-center justify-content-center pb-4">
-                    <p class="mb-0 me-2">Already have an account ?</p><pre>  </pre>
-                    <a href="{{ path('app_login') }}"><button type="button" class="btn btn-outline-danger"> Sign in</button> </a>
-                </div>
             </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-center pb-4">
+            <p class="mb-0 me-2">Already have an account ?</p><pre>  </pre>
+            <a href="{{ path('app_login') }}"><button type="button" class="btn btn-outline-danger"> Sign in</button> </a>
         </div>
 {#        <h1>Register</h1>
         {{ form_start(registrationForm,{'attr' : {'novalidate' : 'novalidate'}}) }}

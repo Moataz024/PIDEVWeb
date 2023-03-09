@@ -51,6 +51,12 @@
                 <th>Country</th>
                 <td>{{ terrain.country }}</td>
             </tr>
+            <tr>
+                <th>Image</th>
+                  <td>
+                  <img src="{{ vich_uploader_asset(terrain, 'imageFile') }}" alt="{{ terrain.name }}" class="product-img" style="max-width: 100%; height: auto;">
+                </td>
+            </tr>
         </tbody>
     </table>
 

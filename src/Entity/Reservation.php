@@ -50,19 +50,24 @@ class Reservation
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups("Reservations")]
     private ?User $client = null;
 
-    #[ORM\OneToMany(mappedBy: 'reservation', targetEntity: Equipment::class)]
-    private Collection $equipments;
+   
 
     #[ORM\Column]
     #[Assert\NotNull(message:'le nombre des personne a reserver est obligatoir')]
     #[Assert\Positive(message:'le nombre des personne a reserver doit etre Positif')]
+    #[Groups("Reservations")]
     private ?int $nbPerson = null;
+
+    #[ORM\ManyToMany(targetEntity: Equipment::class, inversedBy: 'reservations')]
+    private Collection $equipments;
 
     public function __construct()
     {
         $this->equipments = new ArrayCollection();
+        $this->reservationEquipments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,35 +147,7 @@ class Reservation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Equipment>
-     */
-    public function getEquipments(): Collection
-    {
-        return $this->equipments;
-    }
-
-    public function addEquipment(Equipment $equipment): self
-    {
-        if (!$this->equipments->contains($equipment)) {
-            $this->equipments->add($equipment);
-            $equipment->setReservation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEquipment(Equipment $equipment): self
-    {
-        if ($this->equipments->removeElement($equipment)) {
-            // set the owning side to null (unless already changed)
-            if ($equipment->getReservation() === $this) {
-                $equipment->setReservation(null);
-            }
-        }
-
-        return $this;
-    }
+    
 
     public function getNbPerson(): ?int
     {
@@ -183,4 +160,30 @@ class Reservation
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Equipment>
+     */
+    public function getEquipments(): Collection
+    {
+        return $this->equipments;
+    }
+
+    public function addEquipment(Equipment $equipment): self
+    {
+        if (!$this->equipments->contains($equipment)) {
+            $this->equipments->add($equipment);
+        }
+
+        return $this;
+    }
+
+    public function removeEquipment(Equipment $equipment): self
+    {
+        $this->equipments->removeElement($equipment);
+
+        return $this;
+    }
+
+   
 }

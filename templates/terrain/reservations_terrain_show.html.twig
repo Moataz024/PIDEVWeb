@@ -1,0 +1,174 @@
+
+{% extends 'base.html.twig' %}
+{% block title %} Reservations {% endblock %} 
+{% block stylesheets %}
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ asset ('front/fonts/icomoon/style.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/bootstrap/bootstrap.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/jquery-ui.css')}} ">
+        <link rel="stylesheet" href="{{ asset ('front/css/owl.carousel.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/owl.theme.default.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/owl.theme.default.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/jquery.fancybox.min.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/bootstrap-datepicker.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/fonts/flaticon/font/flaticon.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/aos.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/style.css')}}">
+        <link rel="stylesheet" href="{{ asset ('front/css/main.css')}}">
+        <link rel="stylesheet" href="{{ asset ('bundles/vichuploader/css/vichuploader.css') }}">
+        <link rel="shortcut icon" href="{{ asset ('front/images/icon.png') }}" />
+    <!-- custom css link  -->
+    <link rel="stylesheet" href="{{ asset ('front/css/style_2.css')}}">
+    <link rel="stylesheet" href="{{ asset ('front/css/media.css')}}">
+    <!-- custom css link  -->
+{% endblock %}
+{% block mid %}
+<section class="header">
+    <div class="hero overlay" style="background-image: url({{ asset('front/images/bg_1.jpg') }});background-color: crimson;">
+        <div class="container">
+            <div class="header-info">
+                <h1 class="header-headline">List of Reservations</h1>
+                <p class="header-subtitle">
+                   
+                </p>
+            </div>
+        </div>
+    </div>
+    </section>
+{% endblock %}
+{% block body %}
+
+    <!-- product  -->
+    <br>
+  <section>
+  
+  <div class="container">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle">
+       <thead class="table-dark">
+            <tr>
+              <th>Name of the Client</th>
+                <th>DateReservation</th>
+                <th>Start-Time</th>
+                <th>End-Time</th>
+                <th>Status</th>
+                <th>Number of People</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+               <td>{{ reservation.getClient().getFirstname() ~" "~ reservation.getClient().getLastname() }}</td>
+                <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ reservation.startTime ? reservation.startTime|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ reservation.endTime ? reservation.endTime|date('Y-m-d H:i:s') : '' }}</td>
+                <td> {% if reservation.resStatus %}
+                    <span class="badge bg-success">Confirmed</span>
+                {% else %}
+                    <span class="badge bg-danger">Not Confirmed</span>
+                {% endif %}
+              </td>
+                <td>{{ reservation.nbPerson }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                 <td colspan="8" class="text-center">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <br><br>
+        <button type="button" class="btn btn-dark" >
+    <a href="{{ path('app_terrain_list') }}" >Back</a>
+    </button> 
+    </div>
+  </div>
+  <br><br>
+    
+  
+</section>
+    <!-- product  -->
+
+    <!-- gsap link  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js" integrity="sha512-VEBjfxWUOyzl0bAwh4gdLEaQyDYPvLrZql3pw1ifgb6fhEvZl9iDDehwHZ+dsMzA0Jfww8Xt7COSZuJ/slxc4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- gsap link  -->
+
+    <script src="{{ asset ('front/js/app.js')}}"></script>
+       {% block footer %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>News</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="{{ path('app_template') }}">Home</a></li>
+                                <li><a href="#">Events</a></li>
+                                <li><a href="#">Products</a></li>
+                                <li><a href="#">Equipments</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                  <!--  <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>Tickets</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="#">Online Ticket</a></li>
+                                <li><a href="#">Payment and Prices</a></li>
+                                <li><a href="#">Contact &amp; Booking</a></li>
+                                <li><a href="#">Tickets</a></li>
+                                <li><a href="#">Coupon</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>Matches</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="#">Standings</a></li>
+                                <li><a href="#">World Cup</a></li>
+                                <li><a href="#">La Lega</a></li>
+                                <li><a href="#">Hyper Cup</a></li>
+                                <li><a href="#">World League</a></li>
+                            </ul>
+                        </div>
+                    </div>-->
+
+                    <div class="col-lg-3">
+                        <div class="widget mb-3">
+                            <h3>Social</h3>
+                            <ul class="list-unstyled links">
+                                <li><a href="#">Twitter</a></li>
+                                <li><a href="#">Facebook</a></li>
+                                <li><a href="#">Instagram</a></li>
+                                <li><a href="#">Youtube</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <div class=" pt-5">
+                            <p>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>
+                                    document.write(new Date().getFullYear());
+                                </script> All rights reserved | This template is made with <i class="icon-heart"
+                                                                                              aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+{% endblock %}
+{% endblock %}

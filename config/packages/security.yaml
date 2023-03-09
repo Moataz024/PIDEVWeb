@@ -1,8 +1,9 @@
 security:
     role_hierarchy:
-        ROLE_ADMIN: [ ROLE_CLIENT, ROLE_OWNER ]
-        ROLE_CLIENT: [ ]
-        ROLE_OWNER: [ ]
+        ROLE_ADMIN: [ ROLE_CLIENT, ROLE_OWNER , ROLE_USER]
+        ROLE_CLIENT: [  ]
+        ROLE_OWNER: [  ]
+        ROLE_USER: [ ]
     enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
@@ -36,10 +37,12 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
-        # - { path: ^/profile, roles: ROLE_PROPRIETAIRE }
-        # - { path: ^/profile, roles: ROLE_PROPRIETAIRE }
+         - { path: ^/admin, roles: [ROLE_ADMIN ]}
+         - { path: ^/user, roles: [ROLE_USER] }
+         - { path: ^/pc, roles: [ROLE_OWNER,ROLE_CLIENT] }
+         - { path: /prop, roles: [ROLE_OWNER] }
+    access_denied_url: app_dont_do_that_here # app_access_denied
+
 
 when@test:
     security:

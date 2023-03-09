@@ -20,17 +20,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups("Users")]
+    #[Groups("users")]
     private ?int $id = null;
 
     #[Assert\NotBlank]
     #[Assert\Email]
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups("Users")]
+    #[Groups("users")]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups("Users")]
+    #[Groups("users")]
     private array $roles = [];
 
     /**
@@ -47,19 +47,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $inscriptions;
 
     #[ORM\Column(length: 255)]
-    #[Groups("Users")]
+    #[Groups("users")]
     private ?string $nomutilisateur = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups("Users")]
+    #[Groups("users")]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups("Users")]
+    #[Groups("users")]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups("Users")]
+    #[Groups("users")]
     private ?string $lastname = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Terrain::class, orphanRemoval: true)]
@@ -68,6 +68,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Reservation::class, orphanRemoval: true)]
     private Collection $reservations;
 
+    #[ORM\Column]
+    private ?bool $status = null;
 
     public function __construct()
     {
@@ -346,6 +348,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $reservation->setClient(null);
             }
         }
+
+        return $this;
+    }
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

@@ -91,7 +91,8 @@ class Terrain
     #[Groups("Terrains")]
     private ?string $country = null;
 
-    #[ORM\OneToMany(mappedBy: 'terrain', targetEntity: Reservation::class)]
+    #[ORM\OneToMany(mappedBy: 'terrain', targetEntity: Reservation::class, cascade: ['remove'])]
+    #[Groups("Terrains")]
     private Collection $reservations;
 
      // NOTE: This is not a mapped field of entity metadata, just a simple property.

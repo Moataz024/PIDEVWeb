@@ -66,6 +66,8 @@ class SponsorJsonController extends AbstractController
     #[Route("/updateSponsor/{id}")]
     public function updateSponsor(Request $req ,$id,NormalizerInterface $normalizer,SponsorERepository $eventRepository)
     {
+
+
         $event = $eventRepository->find($id);
         //$event->setImage($req->get('image'));
         $event->setNomSponsor($req->get('nomSponsor'));

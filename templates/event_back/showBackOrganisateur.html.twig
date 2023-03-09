@@ -1,0 +1,34 @@
+{% extends 'back/base.html.twig' %}
+
+{% block body %}
+    <h1>Organisateur</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ organisateur.id }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ organisateur.firstname }}</td>
+        </tr>
+        <tr>
+            <th>Prenom</th>
+            <td>{{ organisateur.lastname }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ organisateur.email }}</td>
+        </tr>
+        <tr>
+            <th>telephone</th>
+            <td>{{ organisateur.phone }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_event_back') }}"><button class="btn btn-outline-primary">Back</button></a>
+
+
+{% endblock %}

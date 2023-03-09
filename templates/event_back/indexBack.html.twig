@@ -19,13 +19,14 @@
             <tr>
                 <td>{{ academy.id }}</td>
                 <td>{{ academy.nom }}</td>
-                <td>{{ academy.nom }}</td>
+                <td>{{ academy.lieu }}</td>
                 <td>{{ academy.category }}</td>
-                <td>{{ academy.nom }}</td>
+                <td>{{ academy.description }}</td>
                 <td>
                     <a href="{{ path('app_event_showBack', {'id': academy.id}) }}"><button class="btn btn-outline-primary">Show</button></a>
                     <a href="{{ path('app_event_editBack', {'id': academy.id}) }}"><button class="btn btn-outline-primary">Edit</button></a>
                     <a href="{{ path('app_event_showPArticipantBack', {'id': academy.id}) }}"><button class="btn btn-outline-primary">Show_participants</button></a>
+                    <a href="{{ path('show_organisateur2', {'event_id': academy.id}) }}"><button class="btn btn-outline-primary">Show_organisateur</button></a>
 
                 </td>
             </tr>

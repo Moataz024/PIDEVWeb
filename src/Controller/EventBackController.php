@@ -51,6 +51,19 @@ class EventBackController extends AbstractController
         ]);
     }
 
+    #[Route('/{event_id}/organisateur', name: 'show_organisateur2', methods: ['GET','POST'])]
+    public function showOrganisateur(EventRepository $eventrepo , $event_id)
+    {
+        $event=$eventrepo->find($event_id);
+        $organisateur = $event->getOrganisateur();
+
+        return $this->render('event_Back/showBackOrganisateur.html.twig', [
+            'event' => $event,
+            'organisateur' => $organisateur,
+        ]);
+    }
+
+
 
 
     #[Route('/editBack/{id}/edit', name: 'app_event_editBack', methods: ['GET', 'POST'])]
@@ -80,6 +93,7 @@ class EventBackController extends AbstractController
             'participants' => $participant,
         ]);
     }
+
 
 
 

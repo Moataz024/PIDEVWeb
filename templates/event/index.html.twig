@@ -29,7 +29,7 @@
                             <li class="active"><a href="{{ path('app_event_index') }}" class="nav-link">Events</a></li>
                             <li><a href="#" class="nav-link">Products</a></li>
                             <li><a href="#" class="nav-link">Equipments</a></li>
-                            <li><a href="#" class="nav-link">Contact</a></li>
+                            <li class="active"><a href="{{ path('show_historique', {'id':app.user.id}) }}" class="nav-link">Historique</a></li>
                             {#
                             <li><a href="{{ path('app_produit_index') }}" class="nav-link">Product</a></li>
                             #}
@@ -55,9 +55,49 @@
     </header>
     {% endblock %}
 
-{% block content %}
-    <h1>Event index</h1>
+     {% block content %}
+    <div class="container site-section">
+        <div class="row">
+            <div class="col-6 title-section">
+                <h2 class="heading">Latest Blog</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% for event in events %}
+            <div class="col-lg-4 mb-4">
+                <div class="custom-media d-block">
+                    <div class="img mb-4">
+                        <a href="single.html"><img src="images/img_1.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="text">
+                        <span class="meta">May 20, 2020</span>
+                        <h3 class="mb-4"><a href="#">{{ event.nom }}</a></h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
+                        <p><a href="#">Read more</a></p>
+                    </div>
+                </div>
+            </div>
 
+            {% endfor %}
+
+
+
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 text-center">
+                <div class="custom-pagination">
+                    <a href="#">1</a>
+                    <span>2</span>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#  <h1>Event index</h1>
+    <div class="table-container" style="max-height: 380px; overflow-y: auto;overflow-x: hidden;">
     <table class="table">
         <thead>
             <tr>
@@ -102,8 +142,49 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+    </table>#}
     {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('app_event_new') }}"><button class="btn btn-outline-primary">Creat new</button></a>
+    <a href="{{ path('app_event_new') }}"><button class="btn btn-outline-primary">Create new</button></a>
     {% endif %}
+    </div>
 {% endblock %}
+
+
+
+    {#{% block content %}
+        <h1><center>Nos produits</center></h1>
+        <hr><hr>
+
+        <div class="row product-container">
+            {% for event in events %}
+                <div class="col-md-4">
+                    <div class="product-item text-center">
+                            <h5 style="color: red;">nom de l'evennement : {{ event.nom }}</h5>
+
+
+                            <h5 style="color: red;">lieu: {{ event.lieu }}</h5>
+                            <h5 style="color: red;">category: {{ (event.category) }} </h5>
+                            <h5 style="color: red;">description: {{ (event.description) }} €</h5>
+                        </a>
+
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+    {% block score %}
+    {% endblock %}
+    {% block latest %}
+    {% endblock %}
+    {% block nextmatch %}
+    {% endblock %}
+    {% block sitesection %}
+    {% endblock %}
+    {% block blog %}
+    {% endblock %}
+    {% block footer %}
+    {{ parent() }}
+{% endblock %}#}
+
+

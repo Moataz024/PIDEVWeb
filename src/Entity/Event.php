@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
@@ -15,34 +17,48 @@ class Event
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("events")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message : 'Le nom est obligatoire')]
+    #[Groups("events")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message : 'La categorie est obligatoire')]
+    #[Groups("events")]
     private ?string $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'ownedEvents')]
+    #[Groups("events")]
     private ?User $organisateur = null;
 
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'inscriptions')]
+    #[Groups("events")]
     private Collection $participants;
 
 
     #[ORM\ManyToMany(targetEntity: SponsorE::class, mappedBy: 'sponsoredEvents')]
+    #[Groups("events")]
     private Collection $sponsors;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message : 'Le lieu est obligatoire')]
+    #[Groups("events")]
     private ?string $lieu = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message : 'La description est obligatoire')]
+    #[Groups("events")]
     private ?string $description = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("events")]
+    private ?string $image = null;
+
+
 
     public function __construct()
     {
@@ -176,6 +192,20 @@ class Event
 
         return $this;
     }*/
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+
 
 
 

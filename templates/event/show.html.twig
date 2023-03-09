@@ -5,7 +5,7 @@
 {% block content %}
     <h1>Event</h1>
 
-    <table class="table">
+   {#  <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -37,5 +37,42 @@
     <a href="{{ path('app_event_edit', {'id': event.id}) }}"><button class="btn btn-outline-primary">Edit</button></a>
     {{ include('event/_delete_form.html.twig') }}
         {% endif %}
+    {% endif %}#}
+
+
+
+{# <div class="hero overlay" style="background-image: url({{ asset('front/images/bg_3.jpg') }});background-color: crimson;">
+    <div class="container" style="width: 1080px;">
+        <div class="row align-items-center">
+            <div class="col-lg-12 ml-auto" style="background-color: rgba(39, 49, 59, 0.7);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: 1px;">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-12 text-center"> #}
+
+<div class="box">
+    <h2>Event Details</h2>
+    <p><strong>Id:</strong> {{ event.id }}</p>
+    <p><strong>Nom:</strong> {{ event.nom }}</p>
+    <p><strong>Lieu:</strong> {{ event.lieu }}</p>
+    <p><strong>Description:</strong> {{ event.description }}</p>
+    <p><strong>Category:</strong> {{ event.category }}</p>
+
+    <a href="{{ path('app_event_index') }}"><button class="btn btn-outline-primary">Back</button></a>
+
+    {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
+        {% if app.user.id == event.organisateur.id %}
+            <a href="{{ path('app_event_edit', {'id': event.id}) }}"><button class="btn btn-outline-primary">Edit</button></a>
+            {{ include('event/_delete_form.html.twig') }}
+        {% endif %}
     {% endif %}
+</div>
+    <style>
+
+        .box {
+            background-color: #0b0b0b;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+        }
+    </style>
 {% endblock %}

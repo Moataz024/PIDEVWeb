@@ -8,11 +8,14 @@ use App\Repository\EventRepository;
 use App\Repository\SponsorERepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/event')]
 class EventController extends AbstractController
@@ -122,6 +125,21 @@ class EventController extends AbstractController
 
         return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/historique/{id}', name: 'show_historique', methods: ['GET','POST'])]
+    public function showHistorique(User $user)
+    {
+        $inscriptions = $user->getInscriptions();
+
+        return $this->render('event/historique.html.twig', [
+            'user' => $user,
+            'inscriptions' => $inscriptions,
+        ]);
+    }
+
+
+
+
 
 
 

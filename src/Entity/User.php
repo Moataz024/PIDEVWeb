@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -19,14 +20,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("users")]
     private ?int $id = null;
 
     #[Assert\NotBlank]
     #[Assert\Email]
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups("users")]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups("users")]
     private array $roles = [];
 
     /**
@@ -37,21 +41,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Event::class)]
+
     private Collection $ownedEvents;
 
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'participants')]
+
     private Collection $inscriptions;
 
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $nomutilisateur = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("users")]
     private ?string $lastname = null;
 
 

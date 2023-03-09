@@ -34,7 +34,7 @@ class EquipmentType extends AbstractType
 
                 ]
                 ])
-                
+
                 ->add('image')
 
 
@@ -80,7 +80,7 @@ class EquipmentType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Regex([
-                        'pattern'=>'/^[0-9]+$/',
+                        'pattern'=>'/^[0-9 dt]+$/',
                         'message'=>'le type doit contenir que des alphabets'
                     
                 ]),

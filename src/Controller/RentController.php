@@ -12,7 +12,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twilio\Rest\Client;
-
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Monolog\DateTimeImmutable;
+use Symfony\Component\Serializer\Serializer;
 #[Route('/rent')]
 class RentController extends AbstractController
 {
@@ -23,13 +29,60 @@ class RentController extends AbstractController
             'rents' => $rentRepository->findAll(),
         ]);
     }
+    #[Route('/rents_mobile', name: 'app_rents_mobile', methods: ['GET'])]
+    public function rents_mobile_all(RentRepository $rentRepository , NormalizerInterface $Normalizer): Response
+    {
+        $rents = $rentRepository->findAll();
+        
+        $jsonContent = $Normalizer->normalize($rents , 'json', ['groups' => ['rents']]);
 
+        return new Response(json_encode($jsonContent));
+  
+    }
+    #[Route('/delete_rents_mobile', name: 'app_delete_rents_mobile', methods: ['GET'])]
+    public function delete_rents_mobile(Request $request,RentRepository $rentRepository , NormalizerInterface $Normalizer): Response
+    {
+        $rent = $rentRepository->find((int)$request->get("id"));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($rent);
+        $entityManager->flush();
+        $rents = $rentRepository->findAll();
+        $jsonContent = $Normalizer->normalize($rents , 'json', ['groups' => ['rents']]);
+        return new Response(json_encode($jsonContent));
+  
+    }
+    #[Route('/add_rents_mobile', name: 'app_add_rents_mobile', methods: ['GET'])]
+    public function add_rents_mobile(Request $request, RentRepository $rentRepository,EquipmentRepository $equipRepo , NormalizerInterface $Normalizer): Response
+    {
+          $rent = new Rent();
+           
+$DateTimeImmutable = new DateTimeImmutable($request->get("date"), null);
+
+    $equipment= $equipRepo->find((int)$request->get("id_e"));
+        $rent->setEquipment($equipment);
+        $rent->setRentAt($DateTimeImmutable);
+        $entityManager = $this->getDoctrine()->getManager();
+        $rentRepository->save($rent, true);
+        $entityManager->flush();
+        $sid    = "ACfdb76df743ae0e314286200a426727d0";
+$token  = "a1f004934c47f30b3aeb35bb583b1feb";
+$twilio = new Client($sid, $token);
+$call = $twilio->calls
+->create("+21658411086", // to
+         "+12765338087", // from
+         ["url" => "http://127.0.0.1:8000/rent/call"]
+);
+        $rents = $rentRepository->findAll();
+        $jsonContent = $Normalizer->normalize($rents , 'json', ['groups' => ['rents']]);
+        return new Response(json_encode($jsonContent));
+  
+    }
     #[Route('/new/{id}', name: 'app_rent_new', methods: ['GET', 'POST'])]
     public function new(Request $request, RentRepository $rentRepository,$id,EquipmentRepository $equipRepo): Response
     {
 
 $sid    = "ACfdb76df743ae0e314286200a426727d0";
-$token  = "f073db776c28685f3031d898b6ca9c0b";
+$token  = "a1f004934c47f30b3aeb35bb583b1feb";
 $twilio = new Client($sid, $token);
 
 

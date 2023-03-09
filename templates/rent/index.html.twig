@@ -1,9 +1,11 @@
-{% extends "front/base.html.twig" %}
+{% extends "back/base.html.twig" %}
+
 
 
 {% block body %}
     <h1>Rent index</h1>
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
     <table class="table">
         <thead>
             <tr>
@@ -18,8 +20,15 @@
                 <td>{{ rent.id }}</td>
                 <td>{{ rent.rentAt ? rent.rentAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_rent_show', {'id': rent.id}) }}">show</a>
-                    <a href="{{ path('app_rent_edit', {'id': rent.id}) }}">edit</a>
+                    <button class="button button1" > <a href="{{ path('app_rent_show', {'id': rent.id}) }}">show <span class="material-icons">
+                        visibility
+    
+                        </span></a>
+                    </button>
+                    <button class="button button1" > <a href="{{ path('app_rent_edit', {'id': rent.id}) }}">edit<span class="material-icons">
+                        edit
+                        </span></a>
+                    </button>  
                 </td>
             </tr>
         {% else %}

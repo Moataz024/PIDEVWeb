@@ -6,8 +6,8 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-5 mx-auto text-center">
-            <h1 class="text-white">Blog Posts</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, molestias repudiandae pariatur.</p>
+            <h1 class="text-white">Sport Category</h1>
+            <p>You can choose  from the sports your equipment.</p>
           </div>
         </div>
       </div>
@@ -18,7 +18,7 @@
     <div class="container site-section">
       <div class="row">
         <div class="col-6 title-section">
-          <h2 class="heading">Latest Blog</h2>
+          <h2 class="heading">Category</h2>
         </div>
       </div>
       <div class="row">
@@ -28,14 +28,17 @@
         <div class="col-lg-4 mb-4">
           <div class="custom-media d-block">
             <div class="img mb-4">
-              <a href="single.html"><img src="{{ asset ('assets/front/images/Tennis.png') }}" alt="Image" class="img-fluid"></a>
+            <img src="{{ asset ('assets/front/images/Tennis.png') }}" alt="Image" class="img-fluid">
             </div>
+        
             <div class="text">
               <span class="meta">{{category.nom}}</span>
               <p><a href="{{ path('app_equipment_index_category_front', {'id': category.id}) }}">view equipments</a></p>
+              
             </div>
           </div>
         </div>
+        
 
         {% endfor %}
       </div>

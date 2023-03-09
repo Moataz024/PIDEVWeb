@@ -4,16 +4,22 @@ namespace App\Entity;
 
 use App\Repository\RentRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: RentRepository::class)]
 class Rent
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /**
+     * @Groups({"rents"})
+    */
     private ?int $id = null;
 
     #[ORM\Column]
+    /**
+     * @Groups({"rents"})
+    */
     private ?\DateTimeImmutable $rentAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'rents')]

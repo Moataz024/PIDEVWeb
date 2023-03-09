@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EquipmentRepository::class)]
 class Equipment
@@ -14,38 +15,75 @@ class Equipment
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /**
+     * @Groups({"equipments"})
+    */
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Groups({"equipments"})
+    */
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Groups({"equipments"})
+    */
     private ?string $adress = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Groups({"equipments"})
+    */
     private ?string $type = null;
 
     #[ORM\Column]
+    /**
+     * @Groups({"equipments"})
+    */
     private ?int $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'equipment')]
+    /**
+     * @Groups({"suppliers"})
+    */
     private ?Suppliers $suppliers = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Groups({"equipments"})
+    */
     private ?string $Price = null;
 
     #[ORM\ManyToOne(inversedBy: 'equipment')]
+    /**
+     * @Groups({"category"})
+    */
     private ?Category $category = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    /**
+     * @Groups({"equipments"})
+    */
     private ?string $image = null;
 
     #[ORM\OneToMany(mappedBy: 'equipment', targetEntity: Rent::class)]
     private Collection $rents;
 
+    #[ORM\OneToMany(mappedBy: 'equipment', targetEntity: Comment::class)]
+    private Collection $Comment;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $Likes = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $Dislikes = null;
+
     public function __construct()
     {
         $this->rents = new ArrayCollection();
+        $this->Comment = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -175,6 +213,64 @@ class Equipment
                 $rent->setEquipment(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComment(): Collection
+    {
+        return $this->Comment;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->Comment->contains($comment)) {
+            $this->Comment->add($comment);
+            $comment->setEquipment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->Comment->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getEquipment() === $this) {
+                $comment->setEquipment(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString(){
+      return $this->name;
+
+    }
+
+    public function getLikes(): ?int
+    {
+        return $this->Likes;
+    }
+
+    public function setLikes(?int $Likes): self
+    {
+        $this->Likes = $Likes;
+
+        return $this;
+    }
+
+    public function getDislikes(): ?int
+    {
+        return $this->Dislikes;
+    }
+
+    public function setDislikes(?int $Dislikes): self
+    {
+        $this->Dislikes = $Dislikes;
 
         return $this;
     }

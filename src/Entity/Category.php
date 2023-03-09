@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -13,13 +14,22 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /**
+     * @Groups({"category"})
+    */
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Groups({"category"})
+    */
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Equipment::class)]
     private Collection $equipment;
+
+    #[ORM\Column(length: 255)]
+    private ?string $imageC = null;
 
     public function __construct()
     {
@@ -69,6 +79,18 @@ class Category
                 $equipment->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImageC(): ?string
+    {
+        return $this->imageC;
+    }
+
+    public function setImageC(string $imageC): self
+    {
+        $this->imageC = $imageC;
 
         return $this;
     }

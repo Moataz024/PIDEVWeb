@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SuppliersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SuppliersRepository::class)]
@@ -13,23 +14,37 @@ class Suppliers
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /**
+     * @Groups({"suppliers"})
+    */
     private ?int $id = null;
 
+    /**
+     * @Groups({"suppliers"})
+    */
     #[ORM\Column(length: 255)]
     private ?string $name = null;
-
+    /**
+     * @Groups({"suppliers"})
+    */
     #[ORM\Column(length: 255)]
     private ?string $phone = null;
-
+    /**
+     * @Groups({"suppliers"})
+    */
     #[ORM\Column(length: 255)]
     private ?string $email = null;
-
+    /**
+     * @Groups({"suppliers"})
+    */
     #[ORM\Column(length: 255)]
     private ?string $notes = null;
 
     #[ORM\OneToMany(mappedBy: 'suppliers', targetEntity: Equipment::class)]
     private Collection $equipment;
-
+    /**
+     * @Groups({"suppliers"})
+    */
     #[ORM\Column(length: 255)]
     private ?string $adress = null;
 

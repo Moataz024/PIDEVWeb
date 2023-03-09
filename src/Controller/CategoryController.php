@@ -9,6 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 #[Route('/category')]
 class CategoryController extends AbstractController
@@ -19,6 +24,59 @@ class CategoryController extends AbstractController
         return $this->render('category/index.html.twig', [
             'categories' => $categoryRepository->findAll(),
         ]);
+    }
+    #[Route('/categorys_mobile', name: 'app_categorys_mobile_all', methods: ['GET'])]
+    public function categorys_mobile_all(CategoryRepository $categoryRepository , NormalizerInterface $Normalizer ): Response
+    {
+        $categorys = $categoryRepository->findAll();
+        
+        $jsonContent = $Normalizer->normalize($categorys , 'json', ['groups' => 'category']);
+
+        return new Response(json_encode($jsonContent));
+      
+    }
+    #[Route('/delete_categorys_mobile', name: 'app_delete_categorys_mobile', methods: ['GET'])]
+    public function deletecategorys_mobile(Request $request,CategoryRepository $categoryRepository , NormalizerInterface $Normalizer ): Response
+    {
+        $category = $categoryRepository->find((int)$request->get("id"));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($category);
+        $entityManager->flush();
+        $categorys = $categoryRepository->findAll();
+        
+        $jsonContent = $Normalizer->normalize($categorys , 'json', ['groups' => 'category']);
+
+        return new Response(json_encode($jsonContent));
+      
+    }
+    #[Route('/add_categorys_mobile', name: 'app_add_categorys_mobile', methods: ['GET'])]
+    public function add_categorys_mobile(Request $request,CategoryRepository $categoryRepository , NormalizerInterface $Normalizer ): Response
+    {
+        $category = new Category();
+        $category->setNom($request->get("name"));
+        $category->setImageC($request->get("name"));
+        $entityManager = $this->getDoctrine()->getManager();
+        $categoryRepository->save($category, true);
+        $entityManager->flush();
+        $categorys = $categoryRepository->findAll();
+        
+        $jsonContent = $Normalizer->normalize($categorys , 'json', ['groups' => 'category']);
+
+        return new Response(json_encode($jsonContent));
+      
+    }
+    #[Route('/update_categorys_mobile', name: 'app_update_categorys_mobile', methods: ['GET'])]
+    public function update_categorys_mobile(Request $request,CategoryRepository $categoryRepository , NormalizerInterface $Normalizer ): Response
+    {
+        $category = $categoryRepository->find((int)$request->get("id"));
+        $entityManager = $this->getDoctrine()->getManager();
+        $category->setNom($request->get("name"));
+        $entityManager = $this->getDoctrine()->getManager();
+        $categoryRepository->save($category, true);
+        $categorys = $categoryRepository->findAll();
+        $jsonContent = $Normalizer->normalize($categorys , 'json', ['groups' => 'category']);
+        return new Response(json_encode($jsonContent));
+      
     }
 
     #[Route('/front', name: 'app_category_index_front', methods: ['GET'])]

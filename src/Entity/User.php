@@ -57,8 +57,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $status = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'user')]
     private ?Card $card = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commande::class)]
+    private Collection $commandes;
 
 
     public function __construct()
@@ -66,6 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->ownedEvents = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
         $this->status = false;
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -312,6 +316,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->card = $card;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
+            }
+        }
 
         return $this;
     }

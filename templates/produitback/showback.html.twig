@@ -1,6 +1,8 @@
 {% extends "back/base.html.twig" %}
 
 {% block body %}
+<script src="{{ asset ('assets/back/js/chart.min.js') }}"></script>
+
     <table class="table">
         <thead>
             <tr>
@@ -32,10 +34,44 @@
         {% endfor %}
         </tbody>
     </table>
-
     <a href="{{ path('app_produitback_new') }}">Create new</a>
+    <div class="card-body">
+    <canvas id="categories" style"height: 40px" ></canvas>
+    </div>
+    
 
+<script>
+    let categories = document.querySelector("#categories")
+    let categGraph = new Chart(categories, {
+        type: "pie",
+        data: {
+            labels: {{ catnom|raw }},
+            datasets: [{
+                label: "Répartition des catégories",
+                data: {{ nbr|raw }},
+                
+            backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0',
+                '#E7E9ED',
+                '#FF9F40',
+                '#8E5EA2',
+                '#3e95cd',
+                '#8e5ea2',
+                '#3cba9f',
+                '#e8c3b9',
+                '#c45850'
+            ]
+            }]
+            
+        }
+        
+    })
 
+   
+</script>
    
 {% endblock %}
 {% block footer %}

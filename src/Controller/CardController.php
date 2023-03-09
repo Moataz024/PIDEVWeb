@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\User;
+use App\Entity\Commande;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 
@@ -43,6 +44,7 @@ class CardController extends AbstractController
 
         return $this->render('cart/showcard.html.twig', [
             'cart' => $cart,
+
         ]);
     }
 
@@ -93,14 +95,14 @@ class CardController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_card_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_card_delete', methods: ['GET','POST'])]
     public function delete(Request $request, Card $card, CardRepository $cardRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$card->getId(), $request->request->get('_token'))) {
             $cardRepository->remove($card, true);
         }
 
-        return $this->redirectToRoute('app_card_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
     }
 
     // #[Route('/item/{itemId}/delete', name: 'cart_item_delete1', methods: ['POST'])]
@@ -139,35 +141,12 @@ class CardController extends AbstractController
         return $this->redirectToRoute('app_produit_index');
     }
 
+    #[Route('/commande/success', name: 'commande_success')]
+    public function commandeSuccess(): Response
+    {
+    return $this->render('commande/success.html.twig');
+    }
 
-//     #[Route('/checkout', name: 'cart_checkout')]
-//         public function checkout(Request $request , CommandeRepository $commanderepository ,EntityManagerInterface $entityManager ): Response
-//         {
-//              $user = $this->getUser();
-//             $card = $user->getCard();
-    
-//             $commande = new Commande();
-//             $form = $this->createForm(CommandeType::class, $commande);
-//             $form->handleRequest($request);
-    
-//             if ($form->isSubmitted() && $form->isValid()) {
-//                 $commande->setUser($user);
-//                 $commande->setItems($card->getCardItems());
-                
-//                 $entityManager = $this->getDoctrine()->getManager();
-//                 $entityManager->persist($commande);
-//                 $entityManager->flush();
-//                 // $commanderepository->save($commande,true);
-//                 // Clear the user's card
-//                 $card->clearItems();
-        
-//                 // Redirect to the command success page
-//                 return $this->redirectToRoute('commande_success');
-//             }
 
-//     return $this->render('commande/newc.html.twig', [
-//         'form' => $form->createView(),
-//     ]);
-// }
 
 }

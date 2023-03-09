@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
+use App\Repository\CategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,10 +27,16 @@ class ProduitbackController extends AbstractController
     }
 
     #[Route('/show', name: 'app_produit_back', methods: ['GET'])]
-    public function indeback(ProduitRepository $produitRepository): Response
-    {
+    public function indeback(ProduitRepository $produitRepository,CategorieRepository $c): Response
+    {   $cat = $c->findAll();
+        foreach($cat as $ca){
+            $catnom [] = $ca->getNomCat();
+            $nbr [] = $produitRepository->countProductsByCategory($ca->getId());
+        }
         return $this->render('produitback/showback.html.twig', [
             'produits' => $produitRepository->findAll(),
+            'catnom' => json_encode($catnom),
+            'nbr' => json_encode($nbr)
         ]);
     }
 

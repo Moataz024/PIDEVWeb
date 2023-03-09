@@ -47,6 +47,15 @@ class ProduitRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
 }  
+public function countProductsByCategory($categoryId)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('COUNT(p)')
+            ->where('p.categorie = :categoryId')
+            ->setParameter('categoryId', $categoryId);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 
 //    /**
 //     * @return Produit[] Returns an array of Produit objects

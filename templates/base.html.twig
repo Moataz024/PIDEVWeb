@@ -78,15 +78,18 @@
 
 
     </header>
-    <body>
+    <body style="overflow-x : auto;">
     {% endblock %}
     
 
-    <div class="hero overlay" style="background-image: url({{ asset('front/images/bg_3.jpg') }});background-color: crimson;padding : 100px;overflow-x : auto;">
+    <div class="hero overlay" style="background-image: url({{ asset('front/images/bg_3.jpg') }});background-color: crimson;padding : 100px; overflow-x : auto;">
+       
         <div class="container" >
+        
             <div class="row align-items-center" >
+            {% block content %}
                 <div class="col-lg-12 " style="background-color: rgba(54, 69, 79, 0.8);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);">
-                {% block content %}
+                
                     <h1 class="text-white">World Cup Event</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, molestias repudiandae pariatur.</p>
                     <div id="date-countdown"></div>
@@ -94,13 +97,15 @@
                         <a href="#" class="btn btn-primary py-3 px-4 mr-3">Book Ticket</a>
                         <a href="#" class="more light">Learn More</a>
                     </p>
-                {% endblock %}
-                </div>
                 
+                </div>
+               {% endblock %} 
             </div>
+            
         </div>
-
+ 
     </div>
+   
 
     
 
@@ -126,71 +131,19 @@
 
     {% block footer %}
     <div>
-        <footer class="footer-section" >
+        <footer>
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="widget mb-3">
-                            <h3>News</h3>
-                            <ul class="list-unstyled links">
-                                <li><a href="#">All</a></li>
-                                <li><a href="#">Club News</a></li>
-                                <li><a href="#">Media Center</a></li>
-                                <li><a href="#">Video</a></li>
-                                <li><a href="#">RSS</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="widget mb-3">
-                            <h3>Tickets</h3>
-                            <ul class="list-unstyled links">
-                                <li><a href="#">Online Ticket</a></li>
-                                <li><a href="#">Payment and Prices</a></li>
-                                <li><a href="#">Contact &amp; Booking</a></li>
-                                <li><a href="#">Tickets</a></li>
-                                <li><a href="#">Coupon</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="widget mb-3">
-                            <h3>Matches</h3>
-                            <ul class="list-unstyled links">
-                                <li><a href="#">Standings</a></li>
-                                <li><a href="#">World Cup</a></li>
-                                <li><a href="#">La Lega</a></li>
-                                <li><a href="#">Hyper Cup</a></li>
-                                <li><a href="#">World League</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3">
-                        <div class="widget mb-3">
-                            <h3>Social</h3>
-                            <ul class="list-unstyled links">
-                                <li><a href="#">Twitter</a></li>
-                                <li><a href="#">Facebook</a></li>
-                                <li><a href="#">Instagram</a></li>
-                                <li><a href="#">Youtube</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
 
                 <div class="row text-center">
-                    <div class="col-md-12">
-                        <div class=" pt-5">
+                    <div class="col-md">
+                        <div class=" pt">
                             <p>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                 Copyright &copy;
                                 <script>
                                     document.write(new Date().getFullYear());
                                 </script> All rights reserved | This template is made with <i class="icon-heart"
-                                                                                              aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                                                                              aria-hidden="true"></i> 
                             </p>
                         </div>
                     </div>

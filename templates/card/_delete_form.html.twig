@@ -1,11 +1,4 @@
-{# <form method="post" action="{{ path('app_card_delete', {'id': card.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ card.id) }}">
+<form method="post" action="{{ path('app_card_delete', {'id': cart.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cart.id) }}">
     <button class="btn">Delete</button>
-</form> #}
-
-<form method="POST" action="{{ path('cart_item_delete1', {'itemId': item.id}) }}">
-    <input type="hidden" name="_method" value="DELETE">
-    <button type="submit" class="btn btn-danger btn-sm">
-        <i class="fas fa-trash"></i> Delete
-    </button>
 </form>

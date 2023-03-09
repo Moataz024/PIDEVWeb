@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Your order was successful!</h1>
+    <p>Thank you for your purchase. Your order has been successfully processed and we will be in touch shortly with your order details.</p>
+                        <button> <a href="{{ path('app_commande_pdf', {'id': commande.id}) }}" title="generate Pdf">Export Reçu <i class="icon-picture_as_pdf" style="font-size: 26px;"></i></a></button>
+{% endblock %}

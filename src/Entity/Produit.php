@@ -6,6 +6,9 @@ use App\Repository\ProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 #[Vich\Uploadable]
@@ -14,32 +17,47 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("produits")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("produits")]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     public ?string $libelle = null;
 
     #[ORM\Column]
+    #[Groups("produits")]
+    #[Assert\NotNull]
+    #[Assert\PositiveOrZero]
     private ?float $prix = null;
 
     #[ORM\Column]
+    #[Groups("produits")]
+    #[Assert\NotNull]
+    #[Assert\PositiveOrZero]
     private ?int $stock = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("produits")]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     private ?string $ref = null;
 
     #[ORM\ManyToOne(inversedBy: 'produits')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups("produits")]
+    #[Assert\NotNull]
     private ?Categorie $categorie = null;
 
-    #[ORM\OneToOne(inversedBy: 'produit')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?CardItem $carditem = null;
 
     #[Vich\UploadableField(mapping: 'produit_directory', fileNameProperty: 'imageName')]
+    #[Groups("produits")]
+    #[Assert\Image(maxSize: "2M")]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups("produits")]
     private ?string $imageName = null;
 
     #[ORM\Column(nullable: true)]
@@ -110,17 +128,6 @@ class Produit
         return $this;
     }
 
-    public function getCarditem(): ?CardItem
-    {
-        return $this->carditem;
-    }
-
-    public function setCarditem(?CardItem $carditem): self
-    {
-        $this->carditem = $carditem;
-
-        return $this;
-    }
 
        /**
       * If manually uploading a file (i.e. not using Symfony Form) ensure an instance

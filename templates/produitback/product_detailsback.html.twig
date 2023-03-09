@@ -9,7 +9,7 @@
     <div class="row product-container">
             <div class="col-md-4">
                 <div class="product-item text-center">
-                <img src="{{ asset('uploads/') ~ produit.ref  }}" alt="{{ produit.id }}" class="img-fluid">
+        <img src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.libelle }}" class="card-img-top">
                     
                     {#<h5 style="color: red;">{{ produit.id }}</h5>#}
                     <h5 style="color: red;">poduct id: {{ produit.id}}</h5>

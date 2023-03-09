@@ -186,7 +186,8 @@ h1, h2, h3, h4, h5,
   background-repeat: no-repeat;
   background-attachment: fixed; }
   .bg-image.overlay {
-    position: relative; }
+    position: relative;
+  }
     .bg-image.overlay:after {
       position: absolute;
       content: "";

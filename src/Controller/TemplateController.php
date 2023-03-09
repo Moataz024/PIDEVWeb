@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\Security;
 use Vich\UploaderBundle\Handler\UploadHandler;
 use function MongoDB\BSON\toJSON;
 
+
 class TemplateController extends AbstractController
 {
     private $security;
@@ -28,10 +29,13 @@ class TemplateController extends AbstractController
         $this->security = $security;
     }
     #[Route('/template', name: 'app_template')]
-    public function index(Security $security): Response
+    public function index(Security $security, UserRepository $userRepository): Response
     {
         if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('app_login');
+        }
+        if(!$this->getUser()->isIsVerified()){
+            $this->addFlash('warning', 'A mail has been sent to confirm your email, please reach out to your inbox.');
         }
         return $this->render('template/index.html.twig', [
             'controller_name' => 'TemplateController',

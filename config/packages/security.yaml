@@ -19,6 +19,12 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: true
+            remember_me:
+                always_remember_me: false
+                secret: '%kernel.secret%' # required
+                lifetime: 5 # 1 week in seconds
+                token_provider:
+                    doctrine: true
         main:
             lazy: true
             provider: app_user_provider
@@ -29,10 +35,11 @@ security:
                 target: app_login
             remember_me:
                 secret: '%kernel.secret%' # required
-                lifetime: 604800 # 1 week in seconds
-                #always_remember_me: true
+                lifetime: 3600
+                always_remember_me: false
                 token_provider:
                     doctrine: true
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

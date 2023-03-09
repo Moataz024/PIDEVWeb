@@ -2,65 +2,120 @@
 
 {% block body %}
     <h1 style="font-size: 36px; font-weight: bold; color: rgb(130,255,100); ">Coaches list</h1>
+    <html>
+        <head>
+            <style>
+                .table-container {
+                    text-align: center;
+                }
+                
+                .table {
+                    width: 990px;
+                    font-weight: bold;
+                    color: #ffffff;                                        
+                    border-collapse: collapse;
+                    margin: 0 auto;
+                    font-size: 1em;
+                    font-family: sans-serif;
+                    /* min-width: 400px; */
+                    border: 2px solid #ccc;
+                    border-radius: 10px; /* adds rounded corners to the table */
+                    overflow: hidden; 
+                    /* clips any content that goes beyond the rounded corners */
+                }
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Telephone</th>
-                <th>Academy</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for coach_back in coach_backs %}
-            <tr>
-                <td>{{ coach_back.id }}</td>
-                <td>{{ coach_back.name }}</td>
-                <td>{{ coach_back.email }}</td>
-                <td>{{ coach_back.telephone }}</td>
-                <td>{{ coach_back.academy }}</td>
-                <td>
-                    {{ include('coach_back/btnshow.html.twig') }}
-                    {{ include('coach_back/btnedit.html.twig') }}
-                    {{ include('coach_back/_delete_form.html.twig') }}
-                    {# <a href="{{ path('app_coach_back_show', {'id': coach_back.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a>
-                    <a href="{{ path('app_coach_back_edit', {'id': coach_back.id}) }}"><img src="{{ asset ('icons/edit.png') }}" alt="Edit" width="25" height="25"></a>
-                    <a href="{{ path('app_academy_back_delete', {'id': coach_back.id}) }}"><img src="{{ asset ('icons/trashbg.png') }}" alt="Edit" width="25" height="25"></a> #}
+                .table thead tr {
+                    background-color: #FF69B4;
+                    color:	black;
+                    text-align: left;
+                    font-size: 1.2em;
+                }
+
+                .table th,
+                .table td {
+                    border: none;
+                    text-align: left;
+                    padding: 2px;
+                }
+                .table tbody tr {
                     
-                </td>
-            </tr>
-        {% else %}
+                    border: 0.1px solid black;
+                }
+                /* .table tbody tr:nth-child(even) {
+                    color: #ffffff;
+                    font-weight: bold;
+                } */
+
+
+            </style>
+        </head>
+        <body>
+        <form action="{{ path('app_coach_back_index') }}" method="get">
+                                <input type="text" name="q" value="{{ searchQuery }}" placeholder="Search...">
+                                <button class="sr"><img src="{{ asset ('icons/search.png') }}" width="20" height="20"></button>
+                                    <style>
+                                        .sr {
+                                        background-color: #FFFFFF; /* Green */
+                                        border: none;
+                                        color: black;
+                                        padding: 2px 6px;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        display: inline-block;
+                                        font-size: 16px;
+                                        margin: 4px 2px;
+                                        cursor: pointer;
+                                        border-radius: 10px;
+                                        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+                                        }
+
+                                        .sr:hover {
+                                        background-color: #6A5ACD; /* Darker green */
+                                        }
+
+                                    </style>
+                                <a href="{{ path('app_coach_back_index') }}" class="btn btn-secondary">Clear</a>
+                            </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    {# <th style="width: 250px;"><a href="{{ path('app_academy_index', {'sortField': 'name', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}">Name {{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th> #}
+                    <th style="width: 20px;"><a href="{{ path('app_coach_back_index', {'sortField': 'id', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}">Id{{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th>
+                    <th style="width: 170px;"><a href="{{ path('app_coach_back_index', {'sortField': 'name', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}">Name {{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th>
+                    <th style="width: 320px;"><a href="{{ path('app_coach_back_index', {'sortField': 'email', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}">Email {{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th>
+                    <th style="width: 200px;"><a href="{{ path('app_coach_back_index', {'sortField': 'telephone', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}">Telephone {{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th>
+                    <th style="width: 150px;color: #4169E1;">Academy</th>
+                    {# <th>actions</th> #}
+                </tr>
+            </thead>
+            <tbody>
+            {% for coach_back in coach_backs %}
+                <tr>
+                    <td>{{ coach_back.id }}</td>
+                    <td>{{ coach_back.name }}</td>
+                    <td>{{ coach_back.email }}</td>
+                    <td>{{ coach_back.telephone }}</td>
+                    <td>{{ coach_back.academy }}</td>
+                    <td>
+                        <table>
+                            <tr style="border:none;">
+                                <td>{{ include('coach_back/btnshow.html.twig') }}</td>
+                                <td>{{ include('coach_back/btnedit.html.twig') }}</td>
+                                <td>{{ include('coach_back/_delete_form.html.twig') }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
             <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        <tr>
-            <td>
-            <a href="{{ path('app_coach_back_new') }}"><img src="{{ asset ('icons/new.png') }}" width="25" height="25"> New</a>
-            </td>
-        </tr>
-        {# {% for coach_front in coach_fronts %}
-            <tr>
-                <td>{{ coach_front.id }}</td>
-                <td>{{ coach_front.name }}</td>
-                <td>{{ coach_front.email }}</td>
-                <td>{{ coach_front.telephone }}</td>
-                <td>{{ coach_front.academy }}</td>
                 <td>
-                    <a href="{{ path('app_coach_show', {'id': coach_front.id}) }}">show</a>
-                    <a href="{{ path('app_coach_edit', {'id': coach_front.id}) }}">edit</a>
-                    <a href="{{ path('app_coach_delete', {'id': coach_front.id}) }}">delete</a>
-                    {{ include('coach_back/_delete_form.html.twig') }}                    
+                <a href="{{ path('app_coach_back_new') }}"><img src="{{ asset ('icons/new.png') }}" width="25" height="25"> New</a>
                 </td>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %} #}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
     {% endblock %}

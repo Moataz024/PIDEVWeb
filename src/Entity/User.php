@@ -19,7 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-#[Vich\Uploadable]
+// #[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -60,11 +60,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     #[ORM\Column(length : 255, nullable : true)]
-    private $avatarName;
+    private ?string $avatarName = null;
 
 
-    #[Vich\UploadableField(mapping : "user_avatar",fileNameProperty : "avatarname")]
-    private $avatarFile;
+
+    // #[Vich\UploadableField(mapping : 'user_avatar',fileNameProperty : 'avatarname')]
+    // private $avatarFile;
 
     #[ORM\Column(length: 255)]
     #[Groups("users")]
@@ -78,12 +79,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups("users")]
     private ?bool $status = null;
 
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Application::class)]
+    private Collection $applications;
+
 
     public function __construct()
     {
         $this->ownedEvents = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
         $this->status = false;
+        $this->applications = new ArrayCollection();
     }
 
     /**
@@ -102,21 +107,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->avatarName = $avatarName;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAvatarFile()
-    {
-        return $this->avatarFile;
-    }
+    // /**
+    //  * @return mixed
+    //  */
+    // public function getAvatarFile()
+    // {
+    //     return $this->avatarFile;
+    // }
 
-    /**
-     * @param mixed $avatarFile
-     */
-    public function setAvatarFile($avatarFile): void
-    {
-        $this->avatarFile = $avatarFile;
-    }
+    // /**
+    //  * @param mixed $avatarFile
+    //  */
+    // public function setAvatarFile($avatarFile): void
+    // {
+    //     $this->avatarFile = $avatarFile;
+    // }
 
     public function getId(): ?int
     {
@@ -343,17 +348,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    public function __sleep()
-    {
-        return ['id', 'email', 'roles', 'password', 'avatarName', 'nomutilisateur', 'phone' , 'firstname' , 'lastname' , 'status'];
-    }
+    // public function __sleep()
+    // {
+    //     return ['id', 'email', 'roles', 'password', 'avatarName', 'nomutilisateur', 'phone' , 'firstname' , 'lastname' , 'status'];
+    // }
+    // // public function __sleep()
+    // // {
+    // //     return ['id'];
+    // // }
 
-    public function __wakeup()
-    {
-        if ($this->avatarName) {
-            $this->avatarFile = new File($this->getAvatarPath());
-        }
-    }
+    // public function __wakeup()
+    // {
+    //     if ($this->avatarName) {
+    //         $this->avatarFile = new File($this->getAvatarPath());
+    //     }
+    // }
     private function getAvatarPath(): string
     {
         return sprintf('%s/%s', $this->getUploadDir(), $this->avatarName);
@@ -363,6 +372,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return 'images/users';
     }
+
+    /**
+     * @return Collection<int, Application>
+     */
+    public function getApplications(): Collection
+    {
+        return $this->applications;
+    }
+
+    public function addApplication(Application $application): self
+    {
+        if (!$this->applications->contains($application)) {
+            $this->applications->add($application);
+            $application->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApplication(Application $application): self
+    {
+        if ($this->applications->removeElement($application)) {
+            // set the owning side to null (unless already changed)
+            if ($application->getUser() === $this) {
+                $application->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+   
 
 
 

@@ -56,108 +56,172 @@
     </header>
 {% endblock %}
 
-{% block body %}
-
-    <div class="hero overlay" style="background-image: url({{ asset('front/images/2-3.png') }});background-color: crimson;;">{#background-size: 400px 200px;#}
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-9 mx-auto text-center">
-            <h1 class="text-white">Academy</h1>
-          </div>
-        </div>
-      </div>
-    </div>
-{% endblock %}
-
-
 {% block content %}
-<div class="container">
-            <div class="row align-items-center" >
+<head>
+	<style>
+		::-webkit-scrollbar {
+			width: 10px;
+		}
 
-    <h1 style="font-size:30px; color:white; margin:10px;">Academies list</h1>
-    <html>
-    <head>
-    <style>
-    .table {
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 1em;
-        font-family: sans-serif;
-        min-width: 400px;
-        /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-        border: none; */
-    }
-    .table thead tr {
-    background-color: #3CB371;
-    color: #ffffff;
-    text-align: left;
-    }
-    .table th,
-    .table td {
-        border: none;
-        text-align: left;
-        padding: 1px 2px;
-    }
-    
+		::-webkit-scrollbar-track {
+			background: #f1f1f1;
+		}
 
-    </style>
-    </head>
-    <body>
+		::-webkit-scrollbar-thumb {
+			background: #888;
+			border-radius: 5px;
+		}
 
-    <table class="table">
-        <thead>
-            <tr>
-                {# <th>Id</th> #}
-                <th>Name</th>
-                <th>Category</th>
-                {# <th>actions</th> #}
-            </tr>
-        </thead>
-        <tbody>
-        {% for academy in academies %}
-            <tr>
-                {# <td>{{ academy.id }}</td> #}
-                <td>{{ academy.name }}</td>
-                <td>{{ academy.category }}</td>
-                <td>
-                    <form method="post" action="{{ path('app_academy_show', {'id': academy.id}) }}">   
-                        <button class="sh" ><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"><span> Show</span></button>
-                        <style>
-                            .sh {
-                            background-color: #FFFFFF; /* Green */
-                            border: none;
-                            color: black;
-                            padding: 2px 6px;
-                            text-align: center;
-                            text-decoration: none;
-                            display: inline-block;
-                            font-size: 16px;
-                            margin: 4px 2px;
-                            cursor: pointer;
-                            border-radius: 10px;
-                            box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
-                            }
+		::-webkit-scrollbar-thumb:hover {
+			background: #555;
+		}
+        .table-container {
+            text-align: center;
+        }
+ 
+	</style>
+</head>
+<div class="hero overlay" style="background-image: url({{ asset('academy/3.png') }});background-color: crimson;">
+    <div class="container" style="width: 1080px;">
+        <div class="row align-items-center">
+            <div class="col-lg-12 ml-auto" style="background-color: rgba(39, 49, 59, 0.7);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: 1px;">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-12 text-center">
+                            <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;font-size: 36px; font-weight: bold; color: #DC143C; text-shadow: 2px 2px #000000;background-color: #DC143C; color: white; padding: 5px; border-radius: 10px;width: 300px;">Academies list</h1>
+                        </div>
+                        {# <h1 style="background-color: #DC143C; color: white; padding: 10px; border-radius: 10px;">Academies list</h1> #}
 
-                            .sh:hover {
-                            background-color: #32CD32; /* Darker green */
-                            }
 
-                            </style>
-                        </form>
-                    {# <a href="{{ path('app_academy_show_client', {'id': academy.id}) }}"><img src="{{ asset ('icons/show.png') }}" alt="Show" width="25" height="25"></a> #}
-                    {# <a href="{{ path('app_academy_edit', {'id': academy.id}) }}">edit</a> #}
-                    {# {{ include('academy/_delete_form.html.twig') }} #}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    </body>
-    </html> 
 
-    {# <a href="{{ path('app_academy_new') }}">Create new</a> #}
+                        <html>
+                            <head>
+                                <style>
+                                    .table-container {
+                                        text-align: center;
+                                    }
+                                  
+                                    .table {
+                                        width: 990px;
+                                        font-weight: bold;
+                                        color: #ffffff;                                        
+                                        border-collapse: collapse;
+                                        margin: 0 auto;
+                                        font-size: 1em;
+                                        font-family: sans-serif;
+                                        /* min-width: 400px; */
+                                        border: 2px solid #ccc;
+                                        border-radius: 10px; /* adds rounded corners to the table */
+                                        overflow: hidden; 
+                                        /* clips any content that goes beyond the rounded corners */
+                                    }
+
+                                    .table thead tr {
+                                        background-color: #00BFFF;
+                                        color:	black;
+                                        text-align: left;
+                                        font-size: 1.2em;
+                                    }
+
+                                    .table th,
+                                    .table td {
+                                        border: none;
+                                        text-align: left;
+                                        padding: 2px;
+                                    }
+                                    .table tbody tr {
+                                        
+                                        border: 0.1px solid black;
+                                    }
+                                    /* .table tbody tr:nth-child(even) {
+                                        color: #ffffff;
+                                        font-weight: bold;
+                                    } */
+
+
+                                </style>
+                            </head>
+                            <body>
+                            <form action="{{ path('app_academy_index') }}" method="get">
+                                <input type="text" name="q" value="{{ searchQuery }}" placeholder="Search...">
+                                <button class="sr"><img src="{{ asset ('icons/search.png') }}" width="20" height="20"></button>
+                                    <style>
+                                        .sr {
+                                        background-color: #FFFFFF; /* Green */
+                                        border: none;
+                                        color: black;
+                                        padding: 2px 6px;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        display: inline-block;
+                                        font-size: 16px;
+                                        margin: 4px 2px;
+                                        cursor: pointer;
+                                        border-radius: 10px;
+                                        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+                                        }
+
+                                        .sr:hover {
+                                        background-color: #6A5ACD; /* Darker green */
+                                        }
+
+                                    </style>
+                                <a href="{{ path('app_academy_index') }}" class="btn btn-secondary">Clear</a>
+                            </form>
+                            <div class="table-container" style="max-height: 360px; overflow-y: auto;overflow-x: hidden;">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            {# <th>Id</th> #}
+                                            <th style="width: 300px;"><a href="{{ path('app_academy_index', {'sortField': 'name', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}" style="color:black;">Name {{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th>
+                                            <th style="width: 300px;"><a href="{{ path('app_academy_index', {'sortField': 'category', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}" style="color:black;">Category {{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th>
+                                            <th style="width: 100px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for academy in academies %}
+                                        <tr>
+
+                                            <td>{{ academy.name }}</td>
+                                            <td>{{ academy.category }}</td>
+                                            <td>
+                                                <table>
+                                                    <tr style="border:none;">
+                                                        <td>{{ include('academy/btnshow.html.twig') }}</td>
+                                                        <td>{{ include('academy/applybtn.html.twig') }}</td>
+
+
+                                                       
+
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+            
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="4">no academies found</td>
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                    
+                                </table>
+                                
+                            </div>
+                            </body>
+                        </html>
+
+
+                        {# <a href="{{ path('app_academy_new') }}">Add<img src="{{ asset ('icons/add.png') }}" width="20" height="20"></a> #}
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

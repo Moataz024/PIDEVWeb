@@ -30,7 +30,7 @@ class CoachType extends AbstractType
                     new NotBlank(),
                     new Regex([
                         'pattern'=>'/^[a-zA-Z\s]+$/',
-                        'message'=>'le nom doit contenir que des alphabets'
+                        'message'=>'The name can only contain alphabets'
                     
                 ]),
 

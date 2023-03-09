@@ -1,0 +1,37 @@
+function badwords($message){
+        $badwords = array("Bonjour1","bonsoiree","tifo");
+        $filter = array("*****","*******","**");
+        $message = str_replace($badwords,$filter,$message);
+        return $message;
+
+    }
+
+
+    /**
+     * @Route("/new", name="app_commentaires_new", methods={"GET", "POST"})
+     */
+    public function new(Request $request, EntityManagerInterface $entityManager,MailerInterface $mailer): Response
+    {
+        $commentaire = new Commentaires();
+        $form = $this->createForm(CommentairesType::class, $commentaire);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $message = $commentaire->getContenuCommentaire();
+            $filtredMessage = $this->badwords($message);
+            $commentaire->setContenuCommentaire($filtredMessage);
+           //$commentaire->setDate(new \DateTime());
+
+            $entityManager->persist($commentaire);
+            $entityManager->flush();
+            $this->sendEmail($mailer);
+            return $this->redirectToRoute('app_commentaires_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('commentaires/new.html.twig', [
+            'commentaire' => $commentaire,
+            'form' => $form->createView(),
+        ]);
+    }

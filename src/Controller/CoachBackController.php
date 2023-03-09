@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Academy;
 use App\Entity\Coach;
 use App\Form\CoachType;
@@ -15,12 +16,38 @@ use Symfony\Component\Routing\Annotation\Route;
 class CoachBackController extends AbstractController
 {
     #[Route('/', name: 'app_coach_back_index', methods: ['GET'])]
-    public function index(CoachRepository $coachrepo): Response
+    public function index(Request $request,CoachRepository $coachrepo, PaginatorInterface $paginator): Response
     {
+        // Create a query builder that fetches the entities you want to display in your table
+        $qb = $coachrepo->createQueryBuilder('c')
+        ->orderBy('c.id', 'ASC'); // default order
+        // Add sorting based on the query parameters
+        $sortField = $request->query->get('sortField', 'id');
+        $sortDirection = $request->query->get('sortDirection', 'asc');
+        $qb->orderBy("c.$sortField", $sortDirection);
+
+        // Add a search filter based on the query parameter 'q'
+        $q = $request->query->get('q');
+        if ($q) {
+            $qb->andWhere('c.name LIKE :search')
+            ->setParameter('search', '%' . $q . '%');
+        }
+
+        // Paginate the results
+        $pagination = $paginator->paginate(
+            $qb, // query builder
+            $request->query->getInt('page', 1), // current page number
+            10 // maximum number of results per page
+        );
+
         return $this->render('coach_back/index.html.twig', [
-            'coach_backs' => $coachrepo->findAll(),
+            'coach_backs' => $pagination,
+            'sortField' => $sortField,
+            'sortDirection' => $sortDirection,
+            'searchQuery' => $q,
         ]);
-    }
+}
+    
 
     #[Route('/new', name: 'app_coach_back_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CoachRepository $coachBackRepository): Response

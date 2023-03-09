@@ -56,13 +56,23 @@
 
 {% block body %}
 
-<div class="hero overlay" style="background-image: url({{ asset('front/images/2-3.png') }});background-color: crimson;">
+<div class="hero overlay" style="background-image: url({{ asset('academy/1.png') }});background-color: crimson;">
         <div class="container">
             <div class="row align-items-center" >
                 <div class="col-lg-12 ml-auto" style="background-color: rgba(39, 49, 59, 0.7);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: -50px;">
                    
 {% endblock %}
 
+
+{# {% block content %}
+     <h1>Apply to academy</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.age) }}
+        <button type="submit">Apply</button>
+    {{ form_end(form) }}
+{% endblock %}  #}
 
 {% block content %}
     <h1>Apply to academy</h1>

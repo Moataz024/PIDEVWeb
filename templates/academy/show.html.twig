@@ -58,7 +58,7 @@
 
 {% block body %}
 
-<div class="hero overlay" style="background-image: url({{ asset('front/images/2-3.png') }});background-color: crimson;">
+<div class="hero overlay" style="background-image: url({{ asset('academy/5.png') }});background-color: crimson;">
         <div class="container">
             <div class="row align-items-center" >
                 <div class="col-lg-12 ml-auto" style="background-color: rgba(39, 49, 59, 0.7);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: -50px;">
@@ -119,9 +119,9 @@
             </tr>
         </tbody>
     </table>
-    {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
+    {# {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %} #}
     <td>{{ include('academy/btnedit.html.twig') }}</td>
-    {% endif  %}
+    {# {% endif  %} #}
     {# {{ include('academy/btnedit.html.twig') }} #}
     <a href="{{ path('app_academy_index') }}"><img src="{{ asset ('icons/back.png') }}" alt="Edit" width="25" height="25"> Back</a>
 

@@ -1,8 +1,8 @@
 {# <a href="{{ path('app_academy_apply', { 'id': academy.id }) }}" class="btn btn-primary">Apply</a> #}
 <form method="post" action="{{ path('app_academy_apply', {'id': academy.id}) }}">
-    <button class="sh" ><span> Apply</span></button>
+    <button class="ap" ><img src="{{ asset ('icons/apply.png') }}" alt="Edit" width="25" height="25"><span> Apply</span></button>
     <style>
-    .sh {
+    .ap {
         background-color: #FFFFFF; /* Green */
         border: none;
         color: black;
@@ -17,8 +17,8 @@
         box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .sh:hover {
-        background-color: #32CD32; /* Darker green */
+        .ap:hover {
+        background-color: #6A5ACD; /* Darker green */
         }
 
         </style>

@@ -6,6 +6,7 @@ use App\Repository\SponsorERepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -15,23 +16,28 @@ class SponsorE
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("sponsors")]
     private ?int $id = null;
 
     #[Assert\NotBlank(message : 'Nom sponsor est obligatoire')]
     #[ORM\Column(length: 255)]
+    #[Groups("sponsors")]
     private ?string $nomSponsor = null;
 
     #[Assert\Email(message : 'Veuillez indiquer un email valide')]
     #[Assert\NotBlank(message : 'Email est obligatoire')]
     #[ORM\Column(length: 255)]
+    #[Groups("sponsors")]
     private ?string $emailSponsor = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message : 'Telephone est obligatoire')]
     #[Assert\Positive(message : 'Ce numéro n\'est pas valide')]
+    #[Groups("sponsors")]
     private ?string $telSponsor = null;
 
     #[ORM\ManyToMany(targetEntity: Event::class, inversedBy: 'sponsors')]
+    #[Groups("sponsors")]
     private Collection $sponsoredEvents;
 
     public function __construct()
@@ -102,5 +108,10 @@ class SponsorE
         $this->sponsoredEvents->removeElement($sponsoredEvent);
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nomSponsor; // or any other string representation of the object
     }
 }

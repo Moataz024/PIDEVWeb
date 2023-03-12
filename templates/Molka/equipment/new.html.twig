@@ -1,0 +1,13 @@
+{% extends "back/base.html.twig" %}
+
+{% block body %}
+    <h1>Create new Equipment</h1>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+
+    {{ include('equipment/_form.html.twig') }}
+
+    <a href="{{ path('app_equipment_index') }}"> <span class="material-icons">
+        arrow_back</span>back to list</a>
+    
+{% endblock %}

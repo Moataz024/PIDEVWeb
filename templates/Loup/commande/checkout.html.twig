@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="hero overlay" >
+        <div class="container">
+            <div class="row align-items-center" >
+                <div class="col-lg-12 ml-auto" style="background-color: rgba(39, 49, 59, 0.7);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: 15px;">
+    <h1>Checkout</h1>
+
+    <h2>Shipping Information</h2>
+
+    {{ form_start(form , {'attr' :  {'novalidate': 'novalidate' } } ) }}
+
+        <table >
+    <tr>
+        <td>
+            {{ form_label(form.firstname ,"First name : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.firstname) }}
+        </td>
+        <td>
+            {{ form_errors(form.firstname) }}
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.lastname ,"Last name : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.lastname) }}
+        </td>
+        <td>
+            {{ form_errors(form.lastname) }}
+        </td>
+
+    </tr>
+        <tr>
+        <td>
+            {{ form_label(form.email ,"email : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.email) }}
+        </td>
+        <td>
+            {{ form_errors(form.email) }}
+        </td>
+
+    </tr>
+      <tr>
+        <td>
+            {{ form_label(form.adresse ,"addresse : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.adresse) }}
+        </td>
+        <td>
+            {{ form_errors(form.adresse) }}
+        </td>
+
+    </tr> 
+    <tr>
+        <td>
+            {{ form_label(form.city ,"city : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.city) }}
+        </td>
+        <td>
+            {{ form_errors(form.city) }}
+        </td>
+
+    </tr>   
+        <tr>
+        <td>
+            {{ form_label(form.tel ,"tel : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.tel) }}
+        </td>
+        <td>
+            {{ form_errors(form.tel) }}
+        </td>
+
+    </tr>  
+        </table>
+        
+       
+        
+        {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+{% endblock %}
+{% block score %}
+{% endblock %}
+{% block latest %}
+{% endblock %}
+{% block nextmatch %}
+{% endblock %}
+{% block sitesection %}
+{% endblock %}
+{% block blog %}
+{% endblock %}
+{% block footer %}
+{% endblock %}

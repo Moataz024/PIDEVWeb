@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+  <div class="col-md-5">
+    <img src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.libelle }}" class="img-fluid rounded shadow"width="500" height="800">
+  </div>
+  <div class="col-md-7">
+    <h1 class="text-primary">{{ produit.libelle }}</h1>
+    <hr class="bg-primary">
+    <ul class="list-group list-group-flush mb-4">
+      <li class="list-group-item">
+        <h5 class="text-secondary">Product Reference:</h5>
+        <h6>{{ produit.ref }}</h6>
+      </li>
+      <li class="list-group-item">
+        <h5 class="text-secondary">Price:</h5>
+        <h6>{{ produit.prix }} €</h6>
+      </li>
+      <li class="list-group-item">
+        <h5 class="text-secondary">Stock:</h5>
+        <h6>{{ produit.stock }}</h6>
+      </li>
+      <li class="list-group-item">
+        <h5 class="text-secondary">Category:</h5>
+        <h6>{{ produit.categorie.nomCat }}</h6>
+      </li>
+    </ul>
+    <form method="POST" action="{{ path('app_cart_add', {'id': produit.id}) }}">
+      {# {{ csrf_token('add_to_cart_' ~ produit.id) }}  #}
+      <button type="submit" class="btn btn-primary btn-lg mb-2">Add to Cart</button>
+    </form>
+    <form method="GET" action="{{ path('app_produit_index') }}">
+      {# {{ csrf_token('add_to_cart_' ~ produit.id) }}  #}
+      <button type="submit" class="btn btn-secondary btn-lg mb-2">Back</button>
+    </form>
+  </div>
+</div>
+
+    {# <h1><center>{{ produit.libelle }}</center></h1>
+    <hr><hr>
+
+    <div class="row product-container">
+            <div class="col-md-4">
+                <div class="product-item text-center">
+                <img src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.libelle }}" class="product-img" width="150" height="150">
+                    
+                    
+                    <h5 style="color: red;">poduct id: {{ produit.id}}</h5>
+                    <h5 style="color: red;">product name: {{ produit.libelle }}</h5>
+                    
+                    
+                     <h5 style="color: red;">Rest in stock: {{ produit.stock }}</h5>
+                     <h5 style="color: red;">price: {{ (produit.prix) }} €</h5>
+                    <h5 style="color: red;">categorie: {{ (produit.categorie.nomCat) }} €</h5>
+                    <form method="POST" action="{{ path('app_cart_add', {'id': produit.id}) }}">
+              
+              <button type="submit" class="btn btn-success mt-2">Ajouter au panier</button>
+               <form method="POST" action="{{ path('app_produit_index') }}">
+               
+              <button type="submit" class="btn btn-success mt-2">retour</button>
+                    
+                </div>
+            </div> #}
+{% endblock %}
+{% block score %}
+{% endblock %}
+{% block latest %}
+{% endblock %}
+{% block nextmatch %}
+{% endblock %}
+{% block sitesection %}
+{% endblock %}
+{% block blog %}
+{% endblock %}
+{% block footer %}
+{{ parent() }}
+{% endblock %}

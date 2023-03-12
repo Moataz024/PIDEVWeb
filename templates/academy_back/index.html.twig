@@ -1,0 +1,140 @@
+{% extends "academy_back/base.html.twig" %}
+
+
+{% block body %}
+    <h1 style="font-size: 36px; font-weight: bold; color: rgb(130,255,100); ">Academies List</h1>
+    <html>
+        <head>
+            <style>
+                .table-container {
+                    text-align: center;
+                }
+                
+                .table {
+                    width: 990px;
+                    font-weight: bold;
+                    color: #ffffff;                                        
+                    border-collapse: collapse;
+                    margin: 0 auto;
+                    font-size: 1em;
+                    font-family: sans-serif;
+                    /* min-width: 400px; */
+                    border: 2px solid #ccc;
+                    border-radius: 10px; /* adds rounded corners to the table */
+                    overflow: hidden; 
+                    /* clips any content that goes beyond the rounded corners */
+                }
+
+                .table thead tr {
+                    background-color: #FF69B4;
+                    color:	black;
+                    text-align: left;
+                    font-size: 1.2em;
+                }
+
+                .table th,
+                .table td {
+                    border: none;
+                    text-align: left;
+                    padding: 2px;
+                }
+                .table tbody tr {
+                    
+                    border: 0.1px solid black;
+                }
+                /* .table tbody tr:nth-child(even) {
+                    color: #ffffff;
+                    font-weight: bold;
+                } */
+
+
+            </style>
+        </head>
+        <body>
+        <form action="{{ path('app_academy_back_index') }}" method="get">
+                                <input type="text" name="q" value="{{ searchQuery }}" placeholder="Search...">
+                                <button class="sr"><img src="{{ asset ('rami/public/icons/search.png') }}" width="20" height="20"></button>
+                                    <style>
+                                        .sr {
+                                        background-color: #FFFFFF; /* Green */
+                                        border: none;
+                                        color: black;
+                                        padding: 2px 6px;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        display: inline-block;
+                                        font-size: 16px;
+                                        margin: 4px 2px;
+                                        cursor: pointer;
+                                        border-radius: 10px;
+                                        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+                                        }
+
+                                        .sr:hover {
+                                        background-color: #6A5ACD; /* Darker green */
+                                        }
+
+                                    </style>
+                                <a href="{{ path('app_academy_back_index') }}" class="btn btn-secondary">Clear</a>
+                            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 20px;"><a href="{{ path('app_academy_back_index', {'sortField': 'id', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}">Id{{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th>
+                        <th style="width: 250px;"><a href="{{ path('app_academy_back_index', {'sortField': 'name', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}">Name {{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th>
+                        <th style="width: 250px;"><a href="{{ path('app_academy_back_index', {'sortField': 'category', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}">Category {{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th>
+                                            
+                        {# <th>Coach</th> #}
+                        {# <th>actions</th> #}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for academy_back in academy_backs %}
+                    <tr>
+                        <td>{{ academy_back.id }}</td>
+                        <td>{{ academy_back.name }}</td>
+                        <td>{{ academy_back.category }}</td>
+                        {# <td>{{ academy_back.Coach }}</td> #}
+                        <td>
+                            <table>
+                                <tr style="border:none;">
+                                    <td>{{ include('academy_back/btnshow.html.twig') }}</td>
+                                    <td>{{ include('academy_back/btnedit.html.twig') }}</td>
+                                    <td>{{ include('academy_back/_delete_form.html.twig') }}</td>
+                                </tr>
+                            </table>
+                            {# {{ include('academy_back/btnshow.html.twig') }}
+                            {{ include('academy_back/btnedit.html.twig') }}
+                            {{ include('academy_back/_delete_form.html.twig') }}  #}
+                        
+                        </td>                    
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>
+                        <a href="{{ path('app_academy_back_new') }}"><img src="{{ asset ('rami/public/icons/new.png') }}" width="25" height="25"> New</a>
+                        </td>
+                    </tr>
+                {# {% for academy_front in academy_fronts %}
+                    <tr>
+                        <td>{{ academy_front.id }}</td>
+                        <td>{{ academy_front.name }}</td>
+                        <td>{{ academy_front.category }}</td>
+                        <td>{{ academy_front.Coach }}</td>
+                        <td>
+                            <a href="{{ path('app_academy_back_show', {'id': academy_front.id}) }}"><img src="{{ asset ('rami/public/icons/show.png') }}" alt="Show" width="25" height="25"></a>
+                            <a href="{{ path('app_academy_back_edit', {'id': academy_front.id}) }}"><img src="{{ asset ('rami/public/icons/edit.png') }}" alt="Edit" width="25" height="25"></a>
+                            <a href="{{ path('app_academy_back_delete', {'id': academy_front.id}) }}"><img src="{{ asset ('rami/public/icons/trashbg.png') }}" alt="Delete" width="25" height="25"></a>
+                            {{ include('academy/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% endfor %} #}
+                </tbody>
+            </table>
+
+    
+{% endblock %}

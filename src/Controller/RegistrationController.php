@@ -56,8 +56,8 @@ class RegistrationController extends AbstractController
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'moataz.foudhaili@esprit.tn';
-            $mail->Password   = 'sgjlqokbzgztfjrg';
+            $mail->Username   = 'prexzcod@gmail.com';
+            $mail->Password   = 'agxdusiorgzjsptx';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
             $mail->addAddress($email);

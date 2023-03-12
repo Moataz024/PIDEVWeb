@@ -1,0 +1,153 @@
+{% extends "front/base.html.twig" %}
+{% block body %}
+  
+
+    <div class="hero overlay" style="background-image: url('images/bg_3.jpg');">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-5 mx-auto text-center">
+            <h1 class="text-white">equipments </h1>
+            <p>Your favourite Platform to rent the Equipments you need to enjoy your sport experience</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    
+    <div class="container site-section">
+      <div class="row">
+        <div class="col-6 title-section">
+          <h2 class="heading">Equipments</h2>
+        </div>
+      </div>
+      <div class="row">
+
+        {% for eq in equipment %}
+
+        <div class="col-lg-4 mb-4">
+          <div class="custom-media d-block">
+            <div class="img mb-4">
+              <a href="single.html"><img src="{{ eq.image }}" alt="Image" class="img-fluid"></a>
+            </div>
+            <div class="text">
+              <!DOCTYPE html>
+<html>
+<head>
+<!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.checked {
+  color: orange;
+}
+</style>
+</head>
+<body>
+   <div class="rating">
+    <style>.rating {
+      display: inline-block;
+    }
+    
+    .rating input {
+      display: none;
+    }
+    
+    .rating label {
+      font-size: 30px;
+      color: gray;
+      cursor: pointer;
+    }
+    
+    .rating label:hover,
+    .rating label:hover ~ label {
+      color: orange;
+    }
+    
+    .rating input:checked ~ label {
+      color: orange;
+    }
+    </style>
+    {# <input type="radio" id="star5" name="rating" value="5">
+    <label for="star5">&#9733;</label>
+    <input type="radio" id="star4" name="rating" value="4">
+    <label for="star4">&#9733;</label>
+    <input type="radio" id="star3" name="rating" value="3">
+    <label for="star3">&#9733;</label>
+    <input type="radio" id="star2" name="rating" value="2">
+    <label for="star2">&#9733;</label>
+    <input type="radio" id="star1" name="rating" value="1">
+    <label for="star1">&#9733;</label>
+    <script>const stars = document.querySelectorAll('.rating input');
+
+      stars.forEach((star) => {
+        star.addEventListener('change', (e) => {
+          console.log(`Vous avez noté ${e.target.value} étoiles`);
+        });
+      });
+    </script> #}
+  </div> 
+  {# {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+  <form method="post" action="{{ path('equipment_rate', {'id': equipment.id}) }}">
+      <input type="hidden" name="_token" value="{{ csrf_token('rate') }}">
+      <div class="form-group">
+          <label for="rating">Rating:</label>
+          <select name="rating" id="rating" class="form-control">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+          </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  {% set average_rating = get_average_rating_for_equipment(equipment.id) %}
+  <div class="rating">
+    {% for i in 1..5 %}
+      {% if i <= average_rating %}
+        <i class="fas fa-star"></i>
+      {% else %}
+        <i class="far fa-star"></i>
+      {% endif %}
+    {% endfor %}
+    <span class="average-rating">{{ average_rating }} out of 5 stars</span>
+  </div>
+{% endif %}
+
+{% endif %} #}
+
+</body>
+</html>
+             
+              <p><a href="{{ path('app_rent_new', {'id': eq.id}) }}">rent</a></p>
+              <p><a href="{{ path('app_comment_new', {'id': eq.id}) }}">Comment</a></p>
+              <p><a href="{{ path('app_equipment_show_front', {'id': eq.id}) }}">Detail</a></p>
+              <p><a href="{{ path('app_test', {'id': eq.id}) }}">QRCode</a></p>
+              Likes: {{eq.Likes}}
+              <a href="{{ path('equipment_like', {'id': eq.id}) }}"><i class="fa fa-thumbs-up"></i></a> 
+              Dislikes: {{eq.DISLikes}}
+              <a href="{{ path('equipment_dislike', {'id': eq.id}) }}"><i class="fa fa-thumbs-down"></i></a>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-7 text-center">
+          <div class="custom-pagination">
+            <a href="#">1</a>
+            <span>2</span>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+          </div>
+        </div>
+      </div> 
+    </div>
+
+
+    
+    {% endblock  %}

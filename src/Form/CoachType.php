@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Coach;
+use App\Entity\Academy;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,6 +13,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Validator\Constraints\Length;
+
 
 class CoachType extends AbstractType
 {
@@ -22,40 +29,49 @@ class CoachType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Regex([
-                        'pattern'=>'/^[a-zA-Z]+$/',
-                        'message'=>'le nom doit contenir que des alphabets'
+                        'pattern'=>'/^[a-zA-Z\s]+$/',
+                        'message'=>'The name can only contain alphabets'
                     
                 ]),
 
                 ]
                 ])
-            ->add('email',TextType::class, [
-
+            ->add('email',EmailType::class, [
+                'attr'=>[
+                    'class'=>'form-control'  
+                ],
                 'constraints' => [
                     new NotBlank(),
-                    new Regex([
-                        'pattern'=>'/^[a-zA-Z]+$/',
-                        'message'=>'le nom doit contenir que des alphabets'
-                    
-                ]),
+                    new Email(),
 
                 ]
                 ])
-            ->add('telephone',NumberType::class,[
-                
+            ->add('telephone',TelType::class,[
+                'attr'=>[
+                    'class'=>'form-control'  
+                ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'ce champ ne doit pas etre vide',
+                        'message' => 'Please enter a phone number',
                     ]),
-                    
+                    new Length([
+                        'min' => 8,
+                        'minMessage' => 'Your phone number have {{ limit }} characters',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 8,
+                    ]),
                     new Regex([
                         'pattern'=>'/^[0-9]+$/',
-                        'message'=>'veuillez entrer que des nombres'
+                        'message'=>'This is not a valid phone number'
                     
                 ]),
             ]])
-            ->add('academy')
-        ;
+            ->add('academy', EntityType::class, [
+                'class' => Academy::class,
+                'choice_label'=>'name',
+                'multiple'=>false
+            ]);            
+          ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

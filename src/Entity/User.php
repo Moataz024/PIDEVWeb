@@ -88,11 +88,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $verifToken = null;
 
+    #[ORM\OneToOne(mappedBy: 'user')]
+    private ?Card $card = null;
+
+    #[ORM\OneToMany(mappedBy: 'user',targetEntity: Commande::class)]
+    private Collection $commandes;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Terrain::class, orphanRemoval: true)]
+    private Collection $terrains;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Reservation::class, orphanRemoval: true)]
+    private Collection $reservations;
 
     public function __construct()
     {
         $this->ownedEvents = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
+        $this->terrains = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
         $this->status = false;
         $this->isVerified = false;
     }
@@ -354,7 +367,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    public function __sleep()
+    /*public function __sleep()
     {
         return ['id', 'email', 'roles', 'password', 'avatarName', 'nomutilisateur', 'phone' , 'firstname' , 'lastname' , 'status'];
     }
@@ -364,7 +377,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->avatarName) {
             $this->avatarFile = new File($this->getAvatarPath());
         }
-    }
+    }*/
     private function getAvatarPath(): string
     {
         return sprintf('%s/%s', $this->getUploadDir(), $this->avatarName);
@@ -405,6 +418,107 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
+    public function getCard() : ?Card{
+        return $this->card;
+    }
+
+    public function setCard(?Card $card): self
+    {
+        if($card === null && $this->card !== null){
+            $this->card->setUser(null);
+        }
+
+        if($card !== null && $card->getUser() !== $this){
+            $card->setUser($this);
+        }
+
+        $this->card = $card;
+
+        return $this;
+    }
 
 
+    /*
+     * @return Collection<int,Commande>
+     */
+    public function getCommandes(): Collection{
+        return $this->commandes;
+    }
+
+
+    public function addCommande(Commande $commande){
+        if(!$this->commandes->contains($commande)){
+            $this->commandes->add($commande);
+        }
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if($this->commandes->removeElement($commande)){
+            if($commande->getUser() === $this){
+                $commande->setUser(null);
+            }
+        }
+        return $this;
+    }
+    /**
+     * @return Collection<int, Terrain>
+     */
+    public function getTerrains(): Collection
+    {
+        return $this->terrains;
+    }
+
+    public function addTerrain(Terrain $terrain): self
+    {
+        if (!$this->terrains->contains($terrain)) {
+            $this->terrains->add($terrain);
+            $terrain->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTerrain(Terrain $terrain): self
+    {
+        if ($this->terrains->removeElement($terrain)) {
+            // set the owning side to null (unless already changed)
+            if ($terrain->getOwner() === $this) {
+                $terrain->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getClient() === $this) {
+                $reservation->setClient(null);
+            }
+        }
+
+        return $this;
+    }
 }

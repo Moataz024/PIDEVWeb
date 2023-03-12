@@ -1,0 +1,153 @@
+{# {% extends "back/base.html.twig" %} #}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        h1 {
+            color: #c0392b;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #logo-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px;
+        }
+
+        #logo {
+            max-width: 150px;
+        }
+
+        table {
+            width: 990px;
+            font-weight: bold;
+            color: black;
+            margin: 100px auto;
+            font-size: 1em;
+            font-family: sans-serif;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            border: 1px solid black;
+        }
+
+        th {
+            background-color: #00BFFF;
+            color: black;
+            text-align: left;
+            font-size: 1.2em;
+        }
+
+        tbody tr {
+            border: 0.1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="logo-container">
+        <img id="logo" src="{{app.request.schemeAndHttpHost ~ asset ('rami/public/front/images/lou.png') }}" alt="Logo" width="126" height="70">
+    </div>
+
+    <h1>Equipment PDF</h1>
+   
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+
+    <table class="table">
+        <thead>
+            
+            <tr>
+                
+                <th>Id</th>
+                {# <th>image</th> #}
+                <th>Category</th>
+                <th>Supplier</th>
+                <th>Name</th>
+                <th>Adress</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                {# <th>actions</th> #}
+            </tr>
+        </thead>
+        <tbody>
+        {% for equipment in equipment %}
+            <tr>
+                <td>{{ equipment.id }}</td>
+                {# <td>
+                    {% if equipment.image is not null %}
+                    <img src="{{ equipment.image }}" alt="">
+                    {% else %}
+                        pas d'image affectee
+                    {% endif %}
+
+                </td> #}
+                <td>
+                    {% if equipment.category is not null %}
+                    {{ equipment.category.nom }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+
+                </td>
+
+                <td>
+                    {% if equipment.suppliers is not null %}
+                    {{ equipment.suppliers.name }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+
+                </td>
+
+                <td>{{ equipment.name }}</td>
+                <td>{{ equipment.adress }}</td>
+                <td>{{ equipment.type }}</td>
+                <td>{{ equipment.quantity }}</td>
+                <td>{{ equipment.Price }}</td>
+                {# <td>
+                
+                 <a href="{{ path('app_equipment_show', {'id': equipment.id}) }}">show <span class="material-icons">
+                        visibility
+    
+                        </span></a>
+                    </button>
+                   
+                    
+                   <a href="{{ path('app_equipment_edit', {'id': equipment.id}) }}">edit   <span class="material-icons">
+                        edit
+                        </span></a>
+                    </button>  
+                     {{ include('equipment/_delete_form.html.twig') }} 
+                  
+               
+                </td> #}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{# 
+    <a href="{{ path('app_equipment_new') }}"> <span class="material-icons">
+        create_new_folder
+        </span> Create new </a>
+        <a href="{{ path('app_equipment_index_pdf') }}"> <span class="material-icons">
+            create_new_folder
+            </span> imprimer</a> #}
+    
+

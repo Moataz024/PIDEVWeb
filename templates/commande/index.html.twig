@@ -1,0 +1,50 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Commande index{% endblock %}
+
+{% block body %}
+    <h1>Commande index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Tel</th>
+                <th>City</th>
+                <th>Adresse</th>
+                <th>list produits</th>
+                <th>other actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.firstname }}</td>
+                <td>{{ commande.lastname }}</td>
+                <td>{{ commande.email }}</td>
+                <td>{{ commande.tel }}</td>
+                <td>{{ commande.city }}</td>
+                <td>{{ commande.adresse }}</td>
+                
+                <td> <a href="{{ path('app_commande_show', {'id': commande.id}) }}">show</a></td>
+
+                <td>
+                    <a href="{{ path('app_commandeb_show', {'id': commande.id}) }}">show</a>
+                    <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">edit</a>
+                     <a href="{{ path('app_commande_pdf', {'id': commande.id}) }}" title="generate Pdf"><i class="mdi mdi-file-pdf" style="font-size: 26px;"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_commande_new') }}">Create new</a>
+{% endblock %}

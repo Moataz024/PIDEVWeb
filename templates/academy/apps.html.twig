@@ -1,0 +1,224 @@
+{% extends "academy/base.html.twig" %}
+
+{% block title %}Academy{% endblock %}
+
+
+
+{% block header %}
+
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <header class="site-navbar py-4" role="banner">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <div class="logo">
+                    <a href="{{ path('app_template') }}">
+                        <img src="{{ asset ('rami/public/front/images/lou.png') }}" alt="Logo" width="120" height="70">
+                    </a>
+                </div>
+                <div class="ml-auto">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+                        <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                            <li><a href="{{ path('app_template') }}" class="nav-link">Home</a></li>
+                            <li><a href="{{ path('app_event_index') }}" class="nav-link">Events</a></li>
+                            <li><a href="{{ path('app_produit_index') }}" class="nav-link">Products</a></li>
+                            {% if app.user %}
+                            <a href="{{ path('cart_by_user',{ userId : app.user.id}) }}">Cart</a>
+                            {% endif %}
+                            <li><a href="{{ path('app_category_index_front') }}" class="nav-link">Equipments</a></li>
+                            <li class="active"><a href="{{ path('app_academy_index') }}" class="nav-link">Academy</a></li>
+                            <li><a href="{{ path('app_coach_index') }}" class="nav-link">Coach</a></li>
+                            
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ asset('assets/img/user.png') }}" alt="User" width="20" height="20" class="rounded-circle"> <b>{{ app.user.nomutilisateur }} </b>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="{{ path('app_profile',{'id': app.user.id}) }}">My profile</a>
+                                    <a class="dropdown-item" href="{{ path('change_password_front') }}">Change password</a>
+                                    <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
+                                class="icon-menu h3 text-white"></span></a>
+                </div>
+            </div>
+        </div>
+
+
+    </header>
+{% endblock %}
+
+{# {% block body %} #}
+{% block content %}
+<head>
+	<style>
+		::-webkit-scrollbar {
+			width: 10px;
+		}
+
+		::-webkit-scrollbar-track {
+			background: #f1f1f1;
+		}
+
+		::-webkit-scrollbar-thumb {
+			background: #888;
+			border-radius: 5px;
+		}
+
+		::-webkit-scrollbar-thumb:hover {
+			background: #555;
+		}
+        .table-container {
+            text-align: center;
+        }
+ 
+	</style>
+</head>
+<div class="hero overlay" style="background-image: url({{ asset('rami/public/academy/3.png') }});background-color: crimson;">
+    <div class="container" style="width: 1080px;">
+        <div class="row align-items-center">
+            <div class="col-lg-12 ml-auto" style="background-color: rgba(39, 49, 59, 0.7);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: 1px;">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-12 text-center">
+                            <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;font-size: 36px; font-weight: bold; color: #DC143C; text-shadow: 2px 2px #000000;background-color: #DC143C; color: white; padding: 5px; border-radius: 10px;width: 300px;">Academies list</h1>
+                        </div>
+                        {# <h1 style="background-color: #DC143C; color: white; padding: 10px; border-radius: 10px;">Academies list</h1> #}
+
+
+
+                        <html>
+                            <head>
+                                <style>
+                                    .table-container {
+                                        text-align: center;
+                                    }
+                                  
+                                    .table {
+                                        width: 990px;
+                                        font-weight: bold;
+                                        color: #ffffff;                                        
+                                        border-collapse: collapse;
+                                        margin: 0 auto;
+                                        font-size: 1em;
+                                        font-family: sans-serif;
+                                        /* min-width: 400px; */
+                                        border: 2px solid #ccc;
+                                        border-radius: 10px; /* adds rounded corners to the table */
+                                        overflow: hidden; 
+                                        /* clips any content that goes beyond the rounded corners */
+                                    }
+
+                                    .table thead tr {
+                                        background-color: #00BFFF;
+                                        color:	black;
+                                        text-align: left;
+                                        font-size: 1.2em;
+                                    }
+
+                                    .table th,
+                                    .table td {
+                                        border: none;
+                                        text-align: left;
+                                        padding: 2px;
+                                    }
+                                    .table tbody tr {
+                                        
+                                        border: 0.1px solid black;
+                                    }
+                                    /* .table tbody tr:nth-child(even) {
+                                        color: #ffffff;
+                                        font-weight: bold;
+                                    } */
+
+
+                                </style>
+                            </head>
+                            <body>
+                            <form action="{{ path('app_academy_applications', {'id': academy.id}, false) }}" method="get">
+
+                                <input type="text" name="q" value="{{ searchQuery }}" placeholder="Search...">
+                                <button class="sr"><img src="{{ asset ('rami/public/icons/search.png') }}" width="20" height="20"></button>
+                                    <style>
+                                        .sr {
+                                        background-color: #FFFFFF; /* Green */
+                                        border: none;
+                                        color: black;
+                                        padding: 2px 6px;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        display: inline-block;
+                                        font-size: 16px;
+                                        margin: 4px 2px;
+                                        cursor: pointer;
+                                        border-radius: 10px;
+                                        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+                                        }
+
+                                        .sr:hover {
+                                        background-color: #6A5ACD; /* Darker green */
+                                        }
+
+                                    </style>
+                                <a href="{{ path('app_academy_applications', {'id': academy.id}, false) }}" class="btn btn-secondary">Clear</a>
+                            </form>
+                            <div class="table-container" style="max-height: 360px; overflow-y: auto;overflow-x: hidden;">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            {# <th>Id</th> #}
+                                            <th style="width: 250px;"><a href="{{ path('app_academy_applications', {'id': academy.id}, false, {'sortField': 'name', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}" style="color:black;">Name {{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th>
+                                            <th style="width: 250px;"><a href="{{ path('app_academy_applications', {'id': academy.id}, false, {'sortField': 'age', 'sortDirection': sortDirection == 'asc' ? 'desc' : 'asc'}) }}" style="color:black;">Age {{ sortDirection == 'asc' ? '↑' : '↓' }}</a></th>
+                                            {# <th>Name</th> #}
+                                            {# <th>Age</th> #}
+                                            <th style="width: 10px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for application in applications %}
+                <tr>
+                    <td>{{ application.getAppname() }}</td>
+                    <td>{{ application.getAppage() }}</td>
+                    {# <td>{{ application.getUser().getNomutilisateur() }}</td>
+                    <td>{{ application.getUser().getEmail() }}</td>
+                    <td>{{ application.getUser().getPhone() }}</td> #}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">No applications found.</td>
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                    
+                                </table>
+                                {# <table>
+                                    <tr>
+                                        <a href="{{ path('app_academy_new') }}" class="btn">Add<img src="{{ asset ('rami/public/icons/add.png') }}" width="20" height="20"></a>
+                                    </tr>
+                                </table> #}
+                            </div>
+                            </body>
+                        </html>
+                        {# <a href="{{ path('app_academy_new') }}">Add<img src="{{ asset ('rami/public/icons/add.png') }}" width="20" height="20"></a> #}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{# {% endblock %} #}

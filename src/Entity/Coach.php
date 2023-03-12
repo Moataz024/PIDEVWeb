@@ -16,6 +16,9 @@ class Coach
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(nullable : true)]
+    private ?string $createdBy = null;
+
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
@@ -24,7 +27,10 @@ class Coach
 
     #[ORM\JoinColumn(onDelete:"SET NULL")]
     #[ORM\ManyToOne(inversedBy: 'coaches')]
-    private ?Academy $academy = null;
+    private ?Academy $academyId = null;
+
+    // #[ORM\Column(length: 255)]
+    // private ?string $sport = null;
 
     public function getId(): ?int
     {
@@ -69,13 +75,39 @@ class Coach
 
     public function getAcademy(): ?Academy
     {
-        return $this->academy;
+        return $this->academyId;
     }
 
     public function setAcademy(?Academy $Academy): self
     {
-        $this->academy = $Academy;
+        $this->academyId = $Academy;
 
         return $this;
     }
+    public function getCreatedBy(): ?string
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(string $createdBy): self
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+    // public function __toString() {
+    //     return $this->name;
+    // }
+
+    // public function getSport(): ?string
+    // {
+    //     return $this->sport;
+    // }
+
+    // public function setSport(string $sport): self
+    // {
+    //     $this->sport = $sport;
+
+    //     return $this;
+    // }
 }

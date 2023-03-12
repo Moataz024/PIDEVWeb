@@ -1,0 +1,28 @@
+{% extends "back/base.html.twig" %}
+
+{% block body %}
+
+    
+    <h1><center>{{ produit.libelle }}</center></h1>
+    <hr><hr>
+
+    <div class="row product-container">
+            <div class="col-md-4">
+                <div class="product-item text-center">
+        <img src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.libelle }}" class="card-img-top">
+                    
+                    {#<h5 style="color: red;">{{ produit.id }}</h5>#}
+                    <h5 style="color: red;">poduct id: {{ produit.id}}</h5>
+                    <h5 style="color: red;">product name: {{ produit.libelle }}</h5>
+                    
+                    
+                     <h5 style="color: red;">Rest in stock: {{ produit.stock }}</h5>
+                     <h5 style="color: red;">price: {{ (produit.prix) }} €</h5>
+                    <h5 style="color: red;">categorie: {{ (produit.categorie.nomCat) }} €</h5>
+                    
+                </div>
+            </div>
+            <a href="{{ path('app_produit_back') }}">back to list</a>
+{% endblock %}
+{% block footer %}
+{% endblock %}

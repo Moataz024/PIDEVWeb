@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        .header {
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .info {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .items {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 16px;
+        }
+        .items th, .items td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        .items th {
+            background-color: #eee;
+            font-weight: bold;
+        }
+        .items td {
+            vertical-align: middle;
+        }
+        .items tr:hover {
+            background-color: #f5f5f5;
+        }
+        .total {
+            text-align: right;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<header>
+  <img src="{{ app.request.schemeAndHttpHost ~ asset('front/images/logo.png') }}" alt="Company Logo" width=250 height="150">
+  <h1>Receipt :</h1>
+</header>
+<body>
+    
+    <div class="info">
+        <p><strong>Commande Information:</strong></p>
+        <p><strong>Firstname:</strong> {{ commande.firstname }}</p>
+        <p><strong>Lastname:</strong> {{ commande.lastname }}</p>
+        <p><strong>Email:</strong> {{ commande.email }}</p>
+        <p><strong>Tel:</strong> {{ commande.tel }}</p>
+        <p><strong>City:</strong> {{ commande.city }}</p>
+        <p><strong>Adresse:</strong> {{ commande.adresse }}</p>
+    </div>
+
+    <table class="items">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set total = 0 %}
+            {% for historique in commande.historiques %}
+            <tr>
+                <td>{{ historique.libelle }}</td>
+                <td>{{ historique.prix }}.DT</td>
+                <td>{{ historique.quantity }}</td>
+                <td>{{ historique.prix * historique.quantity }}.DT</td>
+            </tr>
+            {% set total = total + (historique.prix * historique.quantity) %}
+            {% endfor %}
+            <tr>
+                <td colspan="3" align="right">Total:</td>
+                <td class="total">{{ total }}.DT</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

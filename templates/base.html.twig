@@ -19,7 +19,26 @@
         <link rel="stylesheet" href="{{ asset ('front/fonts/flaticon/font/flaticon.css')}}">
         <link rel="stylesheet" href="{{ asset ('front/css/aos.css')}}">
         <link rel="stylesheet" href="{{ asset ('front/css/style.css')}}">
-
+          <link rel="stylesheet" href="{{ asset ('front/css/main.css')}}">
+        <link rel="stylesheet" href="{{ asset('bundles/vichuploader/css/vichuploader.css') }}">
+        <link rel="shortcut icon" href="{{ asset ('front/images/icon.png') }}" />
+   <style>
+  .table-container {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  table {
+  
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+</style>
     {% endblock %}
 
 </head>
@@ -50,9 +69,12 @@
                         <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                             <li class="active"><a href="{{ asset ('front/index.html') }}" class="nav-link">Home</a></li>
                             <li><a href="{{ path('app_event_index') }}" class="nav-link">Events</a></li>
-                            <li><a href="{{ asset ('front/players.html') }}" class="nav-link">Products</a></li>
+                            <li><a href="{{ path('app_produit_index') }}" class="nav-link">Products</a></li>
+                            {% if app.user %}
+                            <a href="{{ path('cart_by_user',{ userId : app.user.id}) }}">Cart</a>
+                            {% endif %}
                             <li><a href="{{ asset ('front/blog.html') }}" class="nav-link">Equipments</a></li>
-                            <li><a href="{{ asset ('front/contact.html') }}" class="nav-link">Contact</a></li>
+                            <li><a href="{{ path('app_academy_index') }}" class="nav-link">Academy</a></li>
 {#
                             <li><a href="{{ path('app_produit_index') }}" class="nav-link">Product</a></li>
 #}
@@ -96,6 +118,40 @@
                                             <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
                                         </div>
                                     </a>
+                                    {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('app_terrain_new', {'id_user': app.user.id}) }}" class="dropdown-item preview-item">
+                                        <div class="preview-thumbnail">
+                                            <div class="preview-icon bg-dark rounded-circle">
+                                                <i class="mdi mdi-onepassword  text-info"></i>
+                                            </div>
+                                        </div>
+                                        <div class="preview-item-content">
+                                            <p class="preview-subject ellipsis mb-1 text-small">Create Propriety</p>
+                                        </div>
+                                    </a>
+                                    <a href="{{ path('app_terrain_list',{'id_user': app.user.id}) }}" class="dropdown-item preview-item">
+                                        <div class="preview-thumbnail">
+                                            <div class="preview-icon bg-dark rounded-circle">
+                                                <i class="mdi mdi-onepassword  text-info"></i>
+                                            </div>
+                                        </div>
+                                        <div class="preview-item-content">
+                                            <p class="preview-subject ellipsis mb-1 text-small">List of Proprieties</p>
+                                        </div>
+                                    </a>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_CLIENT') %}
+                                    <a href="{{ path('app_reservation_list',{'id_user': app.user.id}) }}" class="dropdown-item preview-item">
+                                        <div class="preview-thumbnail">
+                                            <div class="preview-icon bg-dark rounded-circle">
+                                                <i class="mdi mdi-onepassword  text-info"></i>
+                                            </div>
+                                        </div>
+                                        <div class="preview-item-content">
+                                            <p class="preview-subject ellipsis mb-1 text-small">My Reservations</p>
+                                        </div>
+                                    </a>
+                                    {% endif %}
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item preview-item" href="{{ path('app_logout')}}">
                                         <div class="preview-thumbnail">
@@ -124,26 +180,45 @@
 
     </header>
     {% endblock %}
+    {% block mid %}
     <div class="hero overlay" style="background-image: url({{ asset('front/images/bg_3.jpg') }});background-color: crimson;">
         <div class="container">
             <div class="row align-items-center" >
-                <div class="col-lg-12 ml-auto" style="background-color: rgba(54, 69, 79, 0.8);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: 10px">
+                <div class="col-lg-12 ml-auto" style="background-color: rgba(54, 69, 79, 0.8);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: 100px;">
                     {% block content %}
-                    <h1 class="text-white">World Cup Event</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, molestias repudiandae pariatur.</p>
-                    <div id="date-countdown"></div>
+                    {% if is_granted('ROLE_CLIENT')%}
+                    <h1 class="text-white">Find Your Playground</h1>
+                   
+                    <h2>The Scene is set for your Epic match.</h2>
+                    <p>Book Sport Pitches and Courts in Tunisia.</p>
+                    <!--<div id="date-countdown"></div> -->
                     <p>
-                        <a href="#" class="btn btn-primary py-3 px-4 mr-3">Book Ticket</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_OWNER')%}
+                    <h1 class="text-white">Manage your estates</h1>
+                   
+                    <h2>Grow your business with us.</h2>
+                    <p>Add your Sports pitches and courts in Tunisia.</p>
+                    <!--<div id="date-countdown"></div> -->
+                    <p>
+                    {% endif %}
+                    {% if is_granted('ROLE_OWNER')%}
+                        <a href="{{ path('app_terrain_list',{'id_user': app.user.id}) }}" class="btn btn-primary py-3 px-4 mr-3">Add now</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_CLIENT')%}
+                        <a href="{{ path('app_terrain_index') }}" class="btn btn-primary py-3 px-4 mr-3">Book now</a>
+                    {% endif %}
                         <a href="#" class="more light">Learn More</a>
                     </p>
-
+                    {% endblock %}
                 </div>
-                {% endblock %}
+                </div>
             </div>
         </div>
-
     </div>
+    {% endblock %}
 
+    {% block body %}
 
     {% block score %}
     {% endblock %}
@@ -164,23 +239,24 @@
     {% endblock %}
 
 
-    {% block footer %}
+   
         <footer class="footer-section">
+        {% block footer %}
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="widget mb-3">
                             <h3>News</h3>
                             <ul class="list-unstyled links">
-                                <li><a href="#">All</a></li>
-                                <li><a href="#">Club News</a></li>
-                                <li><a href="#">Media Center</a></li>
-                                <li><a href="#">Video</a></li>
-                                <li><a href="#">RSS</a></li>
+                                <li><a href="{{ path('app_template') }}">Home</a></li>
+                                <li><a href="#">Events</a></li>
+                                <li><a href="#">Products</a></li>
+                                <li><a href="#">Equipments</a></li>
+                                <li><a href="#">Contact</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                  <!--  <div class="col-lg-3">
                         <div class="widget mb-3">
                             <h3>Tickets</h3>
                             <ul class="list-unstyled links">
@@ -203,7 +279,7 @@
                                 <li><a href="#">World League</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="col-lg-3">
                         <div class="widget mb-3">
@@ -228,7 +304,7 @@
                                 <script>
                                     document.write(new Date().getFullYear());
                                 </script> All rights reserved | This template is made with <i class="icon-heart"
-                                                                                              aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                                                                              aria-hidden="true"></i> by <a href="#" target="_blank">Creative Crew</a>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             </p>
                         </div>
@@ -236,10 +312,9 @@
 
                 </div>
             </div>
-
+{% endblock %}
         </footer>
-    {% endblock %}
-
+{% endblock %}
 
 </div>
 <!-- .site-wrap -->
@@ -259,6 +334,7 @@
 <script src="{{ asset ('front/js/jquery.sticky.js')}}"></script>
 <script src="{{ asset ('front/js/jquery.mb.YTPlayer.min.js')}}"></script>
 <script src="{{ asset ('front/js/main.js')}}"></script>
+<script src="{{ asset ('bundles/vichuploader/js/vichuploader.js') }}"></script>
 {% endblock %}
 </body>
 

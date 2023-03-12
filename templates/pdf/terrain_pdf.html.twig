@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+       <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      
+
+        <link rel="stylesheet" href="{{ app.request.schemeAndHttpHost ~ asset ('front/css/bootstrap/bootstrap.css')}}">
+        <link rel="stylesheet" href="{{ app.request.schemeAndHttpHost ~ asset ('front/css/owl.carousel.min.css')}}">
+        <link rel="stylesheet" href="{{ app.request.schemeAndHttpHost ~ asset ('front/css/owl.theme.default.min.css')}}">
+        <link rel="stylesheet" href="{{ app.request.schemeAndHttpHost ~ asset ('front/css/owl.theme.default.min.css')}}">       
+        <link rel="stylesheet" href="{{ app.request.schemeAndHttpHost ~ asset ('front/css/aos.css')}}">
+        <link rel="stylesheet" href="{{ app.request.schemeAndHttpHost ~ asset ('front/css/style.css')}}">
+        <link rel="stylesheet" href="{{ app.request.schemeAndHttpHost ~ asset ('front/css/main.css')}}">
+
+</head>
+
+<body style="background-color: white;">
+  <div class="logo">
+                    <img src="{{ app.request.schemeAndHttpHost ~ asset ('front/images/logo.png') }}" alt="Logo" width="250" height="150">
+    </div>
+    
+ <br> <br><br> <br>
+ <hr></hr>
+ <br><br> <br>
+  <section>
+  <div class="container">
+    <div>
+    <h1 style="color: #343a40;">Terrain :</h1>
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Capacity</th>
+            <th>Sport Type</th>
+            <th>Rent Price</th>
+            <th>Disponibility</th>
+            <th>Address</th>
+            <th>Number Of Reservation</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ terrain.name }}</td>
+                <td>{{ terrain.capacity }}</td>
+                <td>{{ terrain.sportType }}</td>
+                <td>{{ terrain.rentPrice }} .Dt</td>
+                <td>
+                {% if terrain.disponibility %}
+                    <span class="badge bg-success">Available</span>
+                {% else %}
+                    <span class="badge bg-danger">Not Available</span>
+                {% endif %}
+                </td>
+                <td>{{ terrain.roadNumber }} {{ terrain.roadName }}<br>{{ terrain.postalCode }} {{ terrain.city }}<br>{{ terrain.country }}</td>
+                <td>{{ terrainReservations[terrain.id]|default(0) }}</td>
+                <td class="text-center">
+                <img src="{{ app.request.schemeAndHttpHost ~ vich_uploader_asset(terrain, 'imageFile') }}" alt="{{ terrain.name }}" class="product-img" style="max-width: 250px; height: auto;">
+                </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br><br>
+</section>
+</div>
+
+<!-- .site-wrap -->
+ <footer class="footer-section">
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <div class=" pt-5">
+                            <p>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                     All rights reserved | This template is made with by Creative Crew 
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+        </footer>
+</body>
+</html>

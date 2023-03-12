@@ -25,7 +25,7 @@
     </tr>
     <tr>
         <td>
-            {{ form_label(form.telSponsor,"Email sponsor : ") }}
+            {{ form_label(form.telSponsor,"Telephone : ") }}
         </td>
         <td>
             {{ form_widget(form.telSponsor) }}
@@ -35,10 +35,12 @@
         </td>
 
     </tr>
+    {{ form_end(form) }}
 </table>
 
     <button class="btn">{{ button_label|default('Save') }}</button>
 <br/>
+
 {#{% if errors|length > 0 %}
     <ul>
         {% for error in errors %}

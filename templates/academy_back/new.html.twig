@@ -1,0 +1,47 @@
+{% extends "academy_back/base.html.twig" %}
+
+{% block body %}
+    <h1>Create new Academy</h1>
+    <div>
+        {{ form_start(form,{'attr' : {'novalidate' : 'novalidate'}}) }}
+        <table>
+            <tr>
+                <td>
+                    {{ form_label(form.name,"Name : ") }}
+                </td>
+                <td>
+                    {{ form_widget(form.name) }}
+                </td>
+                <td>
+                    {{ form_errors(form.name) }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form_label(form.category,"Category : ") }}
+                </td>
+                <td>
+                    {{ form_widget(form.category) }}
+                </td>
+                <td>
+                    {{ form_errors(form.category) }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ include('academy_back/_form.html.twig') }}
+                <td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{{ path('app_academy_back_index') }}"><img src="{{ asset ('rami/public/icons/back.png') }}" alt="Edit" width="25" height="25">back</a>
+                <td>
+            </tr>
+        </table>
+        {{ form_end(form) }}
+    </div>
+
+    {# {{ include('academy_back/_form.html.twig') }} #}
+
+    {# <a href="{{ path('app_academy_back_index') }}"><img src="{{ asset ('rami/public/icons/back.png') }}" alt="Edit" width="25" height="25">back</a> #}
+{% endblock %}

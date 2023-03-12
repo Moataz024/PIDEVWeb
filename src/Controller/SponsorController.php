@@ -24,6 +24,8 @@ class SponsorController extends AbstractController
         ]);
     }
 
+
+
     #[Route('/new', name: 'app_sponsor_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SponsorERepository $sponsorERepository,ValidatorInterface $validator): Response
     {
@@ -46,6 +48,9 @@ class SponsorController extends AbstractController
         ]);
     }
 
+
+
+
     #[Route('/{id}', name: 'app_sponsor_show', methods: ['GET'])]
     public function show(SponsorE $sponsorE): Response
     {
@@ -53,6 +58,9 @@ class SponsorController extends AbstractController
             'sponsor_e' => $sponsorE,
         ]);
     }
+
+
+
 
     #[Route('/{id}/edit', name: 'app_sponsor_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, SponsorE $sponsorE, SponsorERepository $sponsorERepository): Response

@@ -1,0 +1,44 @@
+{% extends "Molka/back/base.html.twig" %}
+
+
+{% block body %}
+
+    <h1>Category index</h1>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.nom }}</td>
+                <td>
+                    <a href="{{ path('app_category_show', {'id': category.id}) }}">show<span class="material-icons">
+                        visibility
+    
+                        </span></a>
+                    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit <span class="material-icons">
+                        edit
+                        </span></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_category_new') }}"><span class="material-icons">
+        create_new_folder
+        </span>
+        Create new</a>
+{% endblock %}

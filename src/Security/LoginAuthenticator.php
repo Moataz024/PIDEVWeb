@@ -56,7 +56,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
         if($this->security->isGranted('ROLE_ADMIN')) {
-            return new RedirectResponse($this->urlGenerator->generate('app_academy_index'));
+            return new RedirectResponse($this->urlGenerator->generate('app_academy_back_index'));
         }else{
             if(!$this->security->getUser()->isStatus())
             return new RedirectResponse($this->urlGenerator->generate('app_template'));

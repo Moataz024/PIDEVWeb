@@ -1,0 +1,7 @@
+{{ form_start(form,{ 'attr' : {'novalidate' : 'novalidate'}}) }}
+
+    {{ form_widget(form) }}
+    <div style="padding-left: 20px">
+    <button class="btn-outline-primary btn-lg" >{{ button_label|default('Save') }}</button>
+    </div>
+{{ form_end(form) }}

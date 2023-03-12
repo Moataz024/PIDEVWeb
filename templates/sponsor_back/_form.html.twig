@@ -1,0 +1,57 @@
+{{ form_start(form,{'attr' : {'novalidate' : 'novalidate'}}) }}
+<table>
+    <tr>
+        <td>
+            {{ form_label(form.nomSponsor,"Nom sponsor : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.nomSponsor,{'attr' : { 'class' : 'form-control' }}) }}
+        </td>
+        <td>
+            {{ form_errors(form.nomSponsor) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.emailSponsor,"Email sponsor : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.emailSponsor,{'attr' : { 'class' : 'form-control' }}) }}
+        </td>
+        <td>
+            {{ form_errors(form.emailSponsor) }}
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.telSponsor,"Telephone : ") }}
+        </td>
+        <td>
+            {{ form_widget(form.telSponsor,{'attr' : { 'class' : 'form-control' }}) }}
+        </td>
+        <td>
+            {{ form_errors(form.telSponsor) }}
+        </td>
+
+    </tr>
+    {{ form_end(form) }}
+</table>
+
+    <button class="btn btn-outline-primary">{{ button_label|default('Save') }}</button>
+<br/>
+
+{#{% if errors|length > 0 %}
+    <ul>
+        {% for error in errors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{{ form_end(form) }}#}
+
+{#
+->add('nomSponsor')
+->add('emailSponsor')
+->add('telSponsor')
+->add('sponsoredEvents')#}

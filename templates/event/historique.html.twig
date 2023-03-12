@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<h1>Historique des inscriptions de {{ user.firstname }}</h1>
+
+{% if inscriptions is empty %}
+    <p>Aucune inscription pour cet utilisateur.</p>
+{% else %}
+    <table>
+        <thead>
+        <tr>
+            <th>Événement</th>
+            <th>Lieu</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for inscription in inscriptions %}
+            <tr>
+                <td>{{ inscription.nom }}</td>
+                <td>{{ inscription.lieu }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% endblock %}

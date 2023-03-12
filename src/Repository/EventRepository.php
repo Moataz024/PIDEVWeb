@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\DBAL\Query\Expression\ExpressionBuilder;
 
 /**
  * @extends ServiceEntityRepository<Event>
@@ -39,6 +41,26 @@ class EventRepository extends ServiceEntityRepository
         }
     }
 
+    public function createQueryBuilderForSearch(string $query = null): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        if ($query !== null) {
+            $qb->andWhere('p.nom LIKE :query')
+                ->setParameter('query', '%'.$query.'%');
+        }
+        return $qb;
+    }
+    public function getParticipantsStats()
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('p.nom', 'COUNT(c.id) as participantsCount')
+            ->leftJoin('p.participants', 'c')
+            ->groupBy('p.id')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
 //    /**
 //     * @return Event[] Returns an array of Event objects
 //     */

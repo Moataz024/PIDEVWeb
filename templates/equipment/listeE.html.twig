@@ -1,0 +1,43 @@
+
+
+{% block body %}
+    <h1 align = "centre">liste des equipments</h1><hr>
+   
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Adress</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for equipment in equipment %}
+       
+                <td>{{ equipment.id }}</td>
+
+                <td>{{ equipment.name }}</td>
+                <td>{{ equipment.adress }}</td>
+                <td>{{ equipment.type }}</td>
+                <td>{{ equipment.quantity }}</td>
+                <td>{{ equipment.Price }}</td>
+                <td>
+                    {% endfor %}  
+             
+                   
+                    
+        
+                  
+               
+       
+        </tbody>
+    </table>
+
+
+{% endblock %}

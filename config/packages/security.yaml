@@ -35,7 +35,7 @@ security:
                 target: app_login
             remember_me:
                 secret: '%kernel.secret%' # required
-                lifetime: 3600
+                lifetime: 5
                 always_remember_me: false
                 token_provider:
                     doctrine: true
@@ -54,7 +54,7 @@ security:
          - { path: ^/user, roles: [ROLE_USER] }
          - { path: ^/pc, roles: [ROLE_OWNER,ROLE_CLIENT] }
          - { path: /prop, roles: [ROLE_OWNER] }
-    access_denied_url: app_access_denied # app_access_denied
+    access_denied_url:  app_access_denied
 
 
 when@test:

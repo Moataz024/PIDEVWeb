@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Produit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+use App\Entity\Categorie;
 /**
  * @extends ServiceEntityRepository<Produit>
  *
@@ -37,6 +37,24 @@ class ProduitRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findByCategorie(Categorie $categorie): array
+{
+    return $this->createQueryBuilder('p')
+        ->andWhere('p.categorie = :categorie')
+        ->setParameter('categorie', $categorie)
+        ->getQuery()
+        ->getResult();
+}  
+public function countProductsByCategory($categoryId)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('COUNT(p)')
+            ->where('p.categorie = :categoryId')
+            ->setParameter('categoryId', $categoryId);
+
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
 //    /**

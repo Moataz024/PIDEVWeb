@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        h1 {
+            color: #c0392b;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #logo-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px;
+        }
+
+        #logo {
+            max-width: 150px;
+        }
+
+        table {
+            width: 990px;
+            font-weight: bold;
+            color: black;
+            margin: 100px auto;
+            font-size: 1em;
+            font-family: sans-serif;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            border: 1px solid black;
+        }
+
+        th {
+            background-color: #00BFFF;
+            color: black;
+            text-align: left;
+            font-size: 1.2em;
+        }
+
+        tbody tr {
+            border: 0.1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="logo-container">
+        <img id="logo" src="{{app.request.schemeAndHttpHost ~ asset ('rami/public/front/images/lou.png') }}" alt="Logo" width="126" height="70">
+    </div>
+
+    <h1>Application Receipt</h1>
+	{# <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;font-size: 36px; font-weight: bold; color: #DC143C; text-shadow: 2px 2px #000000;background-color: #DC143C; color: white; padding: 5px; border-radius: 10px;width: 300px;">Application receipt</h1> #}
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <td>{{ "now"|date("Y-m-d H:i:s") }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ application.getAppname() }}</td>
+        </tr>
+        <tr>
+            <th>Age</th>
+            <td>{{ application.getAppage() }}</td>
+        </tr>
+        <tr>
+            <th>Academy</th>
+            <td>{{ application.getAcademy().getName() }}</td>
+        </tr>
+        <tr>
+            <th>Username</th>
+            <td>{{ application.getUser().getNomutilisateur() }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ application.getUser().getEmail() }}</td>
+        </tr>
+        <tr>
+            <th>Telephone</th>
+            <td>{{ application.getUser().getPhone() }}</td>
+        </tr>
+    </table>
+</body>
+</html>

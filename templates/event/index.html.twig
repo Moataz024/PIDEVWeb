@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Event index{% endblock %}
+{% block title %}Events{% endblock %}
 
 {% block header %}
 <div class="site-wrap">
@@ -29,7 +29,7 @@
                             <li class="active"><a href="{{ path('app_event_index') }}" class="nav-link">Events</a></li>
                             <li><a href="#" class="nav-link">Products</a></li>
                             <li><a href="#" class="nav-link">Equipments</a></li>
-                            <li><a href="#" class="nav-link">Contact</a></li>
+                            <li class="active"><a href="{{ path('show_historique', {'id':app.user.id}) }}" class="nav-link">Historique</a></li>
                             {#
                             <li><a href="{{ path('app_produit_index') }}" class="nav-link">Product</a></li>
                             #}
@@ -39,7 +39,6 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="{{ path('app_profile',{'id': app.user.id}) }}">My profile</a>
-                                    <a class="dropdown-item" href="{{ path('change_password_front') }}">Change password</a>
                                     <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
                                 </div>
                             </li>
@@ -56,41 +55,104 @@
     </header>
     {% endblock %}
 
-{% block content %}
-    <h1>Event index</h1>
+     {% block content %}
+          <h1>Events : </h1>
+         <div class="table-container" style="max-height: 380px; overflow-y: auto;overflow-x: hidden; background-color: #36454f;">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Category</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for event in events %}
-            <tr>
-                <td>{{ event.id }}</td>
-                <td>{{ event.nom }}</td>
-                <td>{{ event.category }}</td>
-                <td>
-                    <a href="{{ path('app_event_show', {'id': event.id}) }}">show</a>
-                    {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
-                        {% if app.user.id == event.organisateur.id %}
-                    <a href="{{ path('app_event_edit', {'id': event.id}) }}">edit</a>
+
+
+    <div class="container site-section">
+
+        <div class="row">
+            {% for event in events %}
+            <div class="col-lg-4 mb-4">
+                <div class="custom-media d-block">
+                    <div class="img mb-4">
+                      <a href="{{ path('app_event_show', {'id': event.id}) }}"><img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.nom }}" width="100px" height="100px"></a>
+                    </div>
+                    <div class="text">
+                        <span class="meta">{{ event.dateEvent|date('Y-m-d') }}</span>
+                        <h3 class="mb-4"><a href="{{ path('app_event_show', {'id': event.id}) }}">{{ event.nom }}</a></h3>
+                        <p>{{ event.description }}</p>
+                        <a href="{{ path('app_event_show', {'id': event.id}) }}"><button class="btn btn-outline-primary">Show</button></a>
+                        {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
+                            {% if app.user.id == event.organisateur.id %}
+                                <a href="{{ path('app_event_edit', {'id': event.id}) }}"><button class="btn btn-outline-primary">Edit</button></a>
                             {% endif %}
-                    {% endif  %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
+                        {% endif  %}
+                        {% if is_granted('ROLE_CLIENT') %}
+                            <a href="{{ path('add_participant', { 'id': event.id}) }}" class="btn btn-primary">Participer</a>
+                        {% endif  %}
+                        {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
+                            {% if app.user.id == event.organisateur.id %}
+                                <a href="{{ path('app_event_showPArticipant', {'id': event.id}) }}"><button class="btn btn-outline-primary">Show participants</button></a>
+                            {% endif %}
+                        {% endif  %}
+
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+
+
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 text-center">
+                <div class="custom-pagination">
+                    {{ knp_pagination_render(events) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
         </tbody>
     </table>
     {% if is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('app_event_new') }}">Create new</a>
+    <a href="{{ path('app_event_new') }}"><button class="btn btn-outline-primary">Create new</button></a>
     {% endif %}
+    </div>
+
 {% endblock %}
+
+
+
+    {#{% block content %}
+        <h1><center>Nos produits</center></h1>
+        <hr><hr>
+
+        <div class="row product-container">
+            {% for event in events %}
+                <div class="col-md-4">
+                    <div class="product-item text-center">
+                            <h5 style="color: red;">nom de l'evennement : {{ event.nom }}</h5>
+
+
+                            <h5 style="color: red;">lieu: {{ event.lieu }}</h5>
+                            <h5 style="color: red;">category: {{ (event.category) }} </h5>
+                            <h5 style="color: red;">description: {{ (event.description) }} €</h5>
+                        </a>
+
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+    {% block score %}
+    {% endblock %}
+    {% block latest %}
+    {% endblock %}
+    {% block nextmatch %}
+    {% endblock %}
+    {% block sitesection %}
+    {% endblock %}
+    {% block blog %}
+    {% endblock %}
+    {% block footer %}
+    {{ parent() }}
+{% endblock %}#}
+
+

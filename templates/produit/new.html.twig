@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Produit{% endblock %}
+  {% block header %}
+  {{ parent()}}
+{% endblock %}
+{% block content %}
+<div class="hero overlay" style="background-image: url({{ asset('academy/1.png') }});background-color: crimson;">
+        <div class="container">
+            <div class="row align-items-center" >
+                <div class="col-lg-12 ml-auto" style="background-color: rgba(39, 49, 59, 0.7);border-radius: 30px;border: groove rgba(120, 69, 79, 0.3);padding: 15px;">
+
+    <div >
+    <h1>Create new Product</h1>
+    </div>
+    <div style="background-color: fff;">
+    {{ include('produit/_form.html.twig') }}
+    
+    <a href="{{ path('app_produit_index') }}" class="btn btn-primary">back to list</a>
+        <a href="{{ path('app_categorie_new') }}" class="btn btn-primary">Add Categorie</a>
+</div>
+{% endblock %}
+{% block score %}
+{% endblock %}
+{% block latest %}
+{% endblock %}
+{% block nextmatch %}
+{% endblock %}
+{% block sitesection %}
+{% endblock %}
+{% block blog %}
+{% endblock %}
+{% block footer %}
+{{ parent() }}
+{% endblock %}

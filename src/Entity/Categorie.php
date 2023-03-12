@@ -13,12 +13,15 @@ class Categorie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("produits")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("produits")]
     private ?string $nomCat = null;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class)]
+    #[Groups("produits")]
     private Collection $produits;
 
     public function __construct()
@@ -71,5 +74,10 @@ class Categorie
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->nomCat; // or whatever property you want to use as the string representation
     }
 }

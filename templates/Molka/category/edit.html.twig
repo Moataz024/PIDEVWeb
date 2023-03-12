@@ -1,0 +1,16 @@
+{% extends "back/base.html.twig" %}
+
+
+{% block body %}
+    <h1>Edit Category</h1>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+
+    {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_category_index') }}"><span class="material-icons">
+        arrow_back
+        </span> back to list</a>
+
+    {{ include('category/_delete_form.html.twig') }}
+{% endblock %}

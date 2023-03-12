@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Security;
 
 class TestController extends AbstractController
 {
-    #[Route('/test', name: 'app_test')]
+    #[Route('/test', name: 'app_test_')]
     public function index(Security $security): Response
     {
         if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {

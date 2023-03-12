@@ -1,0 +1,41 @@
+{% extends 'academy_back/base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <canvas id="academy-chart"></canvas>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const academies = {{ academies|json_encode()|raw }};
+            const academyNames = academies.map(academy => academy.name);
+            const academyApplicationCounts = academies.map(academy => academy.applications.length);
+
+            const chartData = {
+                labels: academyNames,
+                datasets: [{
+                    label: 'Number of Applications',
+                    data: academyApplicationCounts,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const chartOptions = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            };
+
+            const academyChart = new Chart('academy-chart', {
+                type: 'bar',
+                data: chartData,
+                options: chartOptions
+            });
+        </script>
+    </div>
+{% endblock %}
